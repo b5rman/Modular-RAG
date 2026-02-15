@@ -71,6 +71,11 @@ Triggers (Google Drive / Webhook)
 
 ## Changelog
 
+### v1.2 - 2025-02-15
+- Enabled **Google Docs** support (Get a document node) with OAuth2 credentials
+- Added credential bindings for LlamaParse nodes (Get Processing Status, Get parsed document)
+- Preserved existing Supabase credential on Update our Record Manager
+
 ### v1.1 - 2025-02-15
 - Enabled **Plain Text** file support (Extract from text file node)
 - Enabled **Excel** file support with full pipeline:

@@ -1003,7 +1003,12 @@
       "id": "d2d8f10f-56cb-4152-9462-2134e47bebdf",
       "name": "Get a document",
       "retryOnFail": true,
-      "disabled": true
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "ULDvQQwp4fSRu9FN",
+          "name": "Google Docs account"
+        }
+      }
     },
     {
       "parameters": {
@@ -2010,6 +2015,12 @@
       ],
       "typeVersion": 4.2,
       "retryOnFail": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "lSFkzmpI1ZAMZqHr",
+          "name": "Header Auth account"
+        }
+      },
       "disabled": true
     },
     {
@@ -2241,6 +2252,12 @@
       ],
       "typeVersion": 4.2,
       "retryOnFail": true,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "lSFkzmpI1ZAMZqHr",
+          "name": "Header Auth account"
+        }
+      },
       "disabled": true
     },
     {
