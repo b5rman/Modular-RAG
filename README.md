@@ -140,6 +140,12 @@ Called by the retrieval workflow to persist conversation context:
 
 ## Changelog
 
+### v1.5 - 2025-02-15
+- **Anti-hallucination improvements** to RAG Retrieval Sub-Workflow:
+  - Enabled **Cohere rerank-v3.5** pipeline (If3 → Create Array → Rerank → Return Reordered Items)
+  - Set agent model (GPT-5.2) **temperature to 0.1** for more factual responses
+  - Strengthened **system prompt** with inline citation rules, grounding requirements, and partial-answer handling
+
 ### v1.4 - 2025-02-15
 - Enabled **CSV** file support (Extract from CSV node)
 - Enabled **Google Sheets** support (Get google sheet info + Get row(s) in sheet) with OAuth2 credentials

@@ -1203,7 +1203,7 @@
         "promptType": "define",
         "text": "={{ $('When chat message received').item.json.chatInput }}",
         "options": {
-          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information avaialble in the knowledgebase.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\n1. Based on your retrieval strategy, pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\nOnce you've collected enough information, then answer the question, based on the info in context.\n\n# Response Rules\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. Provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\"."
+          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based STRICTLY on the information available in the knowledgebase. You are a factual retrieval system, not a creative assistant.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the user's question.\n\nThe output should be a well-researched response based on the output from these tools ONLY, following the Operating Procedures and Response Rules below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\n1. Based on your retrieval strategy, pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Document's Structure\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\nOnce you've collected enough information, then answer the question, based on the info in context.\n\n# Response Rules\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n\n## Grounding & Citation Rules (CRITICAL)\n\n- Every factual claim MUST be supported by a specific retrieved chunk. Cite inline using [Document Name, p.X] format.\n- Do NOT infer, extrapolate, or combine information in ways not directly supported by the retrieved text.\n- Do NOT add background knowledge, general explanations, or context that is not present in the retrieved documents.\n- If the retrieved information only partially answers the question, explicitly state what you found and what remains unanswered. Say: \"Based on the available documents, I can answer X but not Y.\"\n- If multiple sources provide conflicting information, present both perspectives with their citations rather than choosing one.\n- Do NOT paraphrase loosely. Stay close to the original wording of the source material.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say: \"I don't have enough information in the knowledge base to answer this question.\"\n\n## References\n\n- List between 1-5 important reference sources at the end under a \"References\" section.\n- Provide Document Names and Page Numbers where these sources appear — this is in the chunk metadata.\n- Only list sources you actually cited in your response."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1371,8 +1371,7 @@
           "id": "lSFkzmpI1ZAMZqHr",
           "name": "Header Auth account"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -1385,8 +1384,7 @@
         1328
       ],
       "id": "5406bb83-8042-476f-94da-936ea19a48b8",
-      "name": "Create Array",
-      "disabled": true
+      "name": "Create Array"
     },
     {
       "parameters": {
@@ -1399,8 +1397,7 @@
         1328
       ],
       "id": "df2019a6-bef9-40a3-aa9d-75ee24933aa2",
-      "name": "Return Reordered Items1",
-      "disabled": true
+      "name": "Return Reordered Items1"
     },
     {
       "parameters": {
@@ -1468,8 +1465,7 @@
       ],
       "id": "fb0fe563-7eec-4a40-b696-d074c833a9ab",
       "name": "If3",
-      "alwaysOutputData": false,
-      "disabled": true
+      "alwaysOutputData": false
     },
     {
       "parameters": {
@@ -1482,8 +1478,7 @@
         1552
       ],
       "id": "9f1f7f57-47c0-4e08-bf79-7f3351292aef",
-      "name": "Code",
-      "disabled": true
+      "name": "Code"
     },
     {
       "parameters": {
@@ -1933,7 +1928,9 @@
           "cachedResultName": "gpt-5.2-2025-12-11"
         },
         "builtInTools": {},
-        "options": {}
+        "options": {
+          "temperature": 0.1
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
