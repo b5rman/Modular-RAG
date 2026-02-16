@@ -140,6 +140,13 @@ Called by the retrieval workflow to persist conversation context:
 
 ## Changelog
 
+### v0.1.8b - 2025-02-16
+- **Added Anthropic Claude Sonnet 4.5** model nodes to both retrieval agent and ingestion pipeline
+- **Migrated LlamaParse to v1 API** — new endpoint, Bearer auth, simplified upload params
+- **Added Edit Fields SET node** in ingestion for data minimization
+- Explicit credential bindings on all Anthropic model nodes
+- Synced both workflows from live n8n exports
+
 ### v0.1.8 - 2025-02-16
 - **Enabled OCR** — `ocr_enabled` flag set to `true` for optical character recognition on ingested documents
 - **Enabled contextual embeddings** — `contextual_embedding_enabled` flag set to `true` for richer, context-aware vector embeddings
