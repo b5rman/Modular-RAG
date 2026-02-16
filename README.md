@@ -140,6 +140,12 @@ Called by the retrieval workflow to persist conversation context:
 
 ## Changelog
 
+### v0.1.8 - 2025-02-16
+- **Enabled OCR** — `ocr_enabled` flag set to `true` for optical character recognition on ingested documents
+- **Enabled contextual embeddings** — `contextual_embedding_enabled` flag set to `true` for richer, context-aware vector embeddings
+- **Cohere reranking working** — Cohere API credential configured and named; reranking pipeline ready to be re-enabled
+- Synced ingestion workflow from live n8n export
+
 ### v0.1.7 - 2025-02-15
 - **Fixed public chat URL** — set chat trigger response mode to `lastNode` to resolve "No response received" streaming error
 - **Multi-language support** — replaced vague language instruction with explicit rule: respond in the same language the user writes in
@@ -159,7 +165,7 @@ Called by the retrieval workflow to persist conversation context:
 - Enabled `send_tabular_data_to_vector_store = true` so Excel/CSV/Sheets data gets embedded into the vector store for retrieval
 
 ### v0.1.5.1 - 2025-02-15
-- Reverted **Cohere reranking** pipeline back to disabled (caused infinite hang — needs Cohere API key setup)
+- Reverted **Cohere reranking** pipeline back to disabled (caused infinite hang — Cohere API key was missing; now resolved in v0.1.8)
 
 ### v0.1.5 - 2025-02-15
 - **Anti-hallucination improvements** to RAG Retrieval Sub-Workflow:

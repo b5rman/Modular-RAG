@@ -1,5 +1,5 @@
 {
-  "name": "RAG INGESTION",
+  "name": "RAG INGESTION v0.1.7",
   "nodes": [
     {
       "parameters": {
@@ -437,13 +437,13 @@
             {
               "id": "9d686a90-a000-415f-99cd-056798d561f7",
               "name": "ocr_enabled",
-              "value": false,
+              "value": true,
               "type": "boolean"
             },
             {
               "id": "6e9b9a47-9dc9-4912-8833-c934ec3e5d89",
               "name": "contextual_embedding_enabled",
-              "value": false,
+              "value": true,
               "type": "boolean"
             },
             {
@@ -2027,7 +2027,7 @@
       "credentials": {
         "httpHeaderAuth": {
           "id": "lSFkzmpI1ZAMZqHr",
-          "name": "Header Auth account"
+          "name": "Cohere"
         }
       },
       "disabled": true
@@ -2236,7 +2236,7 @@
       "credentials": {
         "httpHeaderAuth": {
           "id": "lSFkzmpI1ZAMZqHr",
-          "name": "Header Auth account"
+          "name": "Cohere"
         }
       },
       "disabled": true
@@ -2264,7 +2264,7 @@
       "credentials": {
         "httpHeaderAuth": {
           "id": "lSFkzmpI1ZAMZqHr",
-          "name": "Header Auth account"
+          "name": "Cohere"
         }
       },
       "disabled": true
@@ -2970,7 +2970,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        25056,
+        25072,
         17024
       ],
       "id": "3eab27c8-efbf-452f-992a-454cf8eb17b5",
@@ -3155,8 +3155,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        24784,
-        17456
+        24736,
+        16736
       ],
       "id": "d1bd2973-5c2d-45eb-92c9-9318061f8683",
       "name": "Sticky Note15"
@@ -3438,8 +3438,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        20416,
-        18640
+        25328,
+        17056
       ],
       "id": "0256fa7b-298d-434f-841c-1107286b2a4e",
       "name": "OpenAI Chat Model",
@@ -5408,7 +5408,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "2c89064b-77d9-4ef3-aa0a-2b12eea66b9b",
+  "versionId": "af7f323d-8eb1-4dff-b94b-0f8834c368a6",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "eaa3d31df30f69d853bf1887372824077726204755d7d83df055afd95f72246a"

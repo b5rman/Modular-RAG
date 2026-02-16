@@ -50,11 +50,12 @@ Upload your files directly into the **"Rag Files"** folder in Google Drive.
 ### Step 2 — Wait for Processing
 
 Once a file is detected:
-1. The system extracts the content based on file type
+1. The system extracts the content based on file type (including OCR for scanned documents)
 2. The content is split into smart chunks (preserving document structure)
 3. An AI enriches each document with a headline, summary, and metadata
-4. Chunks are embedded and stored in the vector database
-5. The original file is **archived** (moved to an archive folder in Google Drive)
+4. Contextual embeddings are generated — each chunk is embedded with surrounding context for better search accuracy
+5. Chunks are stored in the vector database
+6. The original file is **archived** (moved to an archive folder in Google Drive)
 
 You don't need to do anything — just upload and wait.
 
@@ -96,8 +97,9 @@ Tabular data (rows and columns) is handled differently from regular documents:
 The AI agent uses a multi-step retrieval process:
 
 1. **Hybrid Search** — Searches the knowledge base using a combination of semantic (meaning-based) and lexical (keyword-based) search
-2. **Document Hierarchy** — Loads the structure of the source document
-3. **Context Expansion** — Retrieves surrounding content for more complete answers
+2. **Reranking** — Results are reranked by relevance using Cohere for higher accuracy
+3. **Document Hierarchy** — Loads the structure of the source document
+4. **Context Expansion** — Retrieves surrounding content for more complete answers
 
 The AI will cite its sources with document names and page numbers at the bottom of each response.
 
