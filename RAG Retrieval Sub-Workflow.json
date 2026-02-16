@@ -1823,7 +1823,7 @@
           "value": "R_I-MybamT9nBjj0P-Gg3",
           "mode": "list",
           "cachedResultUrl": "/workflow/R_I-MybamT9nBjj0P-Gg3",
-          "cachedResultName": "Retrieval Sub-Workflow v0.1.7"
+          "cachedResultName": "Retrieval Sub-Workflow v0.1.8"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -1937,9 +1937,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "claude-sonnet-4-5-20250929",
+          "value": "claude-opus-4-6",
           "mode": "list",
-          "cachedResultName": "Claude Sonnet 4.5"
+          "cachedResultName": "Claude Opus 4.6"
         },
         "options": {}
       },
@@ -1962,9 +1962,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "claude-sonnet-4-5-20250929",
+          "value": "claude-opus-4-6",
           "mode": "list",
-          "cachedResultName": "Claude Sonnet 4.5"
+          "cachedResultName": "Claude Opus 4.6"
         },
         "options": {}
       },
@@ -3475,7 +3475,7 @@
     "timeSavedMode": "fixed",
     "callerPolicy": "any"
   },
-  "versionId": "94feea14-e848-424f-a28c-550ab8b492c9",
+  "versionId": "71684f0c-1f8f-44ec-81fd-0ba1996b0d9b",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "eaa3d31df30f69d853bf1887372824077726204755d7d83df055afd95f72246a"

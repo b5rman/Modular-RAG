@@ -140,6 +140,14 @@ Called by the retrieval workflow to persist conversation context:
 
 ## Changelog
 
+### v1.0.8c - 2026-02-16
+- **Disabled contextual vector embeddings** — `contextual_embedding_enabled` set to `false` to avoid LLM rate limits during ingestion
+- **Upgraded retrieval agent to Claude Opus 4.6** — both Anthropic model nodes (Agentic RAG, Prep Metadata) upgraded from Sonnet 4.5 to Opus 4.6
+- **Switched enrichment model to GPT-4.1-mini** — replaced Anthropic Sonnet 4.5 with OpenAI GPT-4.1-mini for metadata enrichment
+- Cleaned up unused nodes (SET 2, Anthropic Chat Model1)
+- Renamed Wait2 to "Wait 5s"
+- Synced both workflows from live n8n exports
+
 ### v0.1.8b - 2025-02-16
 - **Added Anthropic Claude Sonnet 4.5** model nodes to both retrieval agent and ingestion pipeline
 - **Migrated LlamaParse to v1 API** — new endpoint, Bearer auth, simplified upload params
