@@ -12,7 +12,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
          │                                                        │
          ▼                                                        ▼
  ┌────────────────┐                                   ┌─────────────────────────┐
- │ RAG INGESTION  │                                   │ RAG Retrieval (v2.3.3)  │
+ │ RAG INGESTION  │                                   │ RAG Retrieval (v1.0.8c) │
  │                │                                   │                         │
  │ Extract → Chunk│                                   │ Agent (GPT-5.2)         │
  │ → Embed → Store│                                   │ ├─ Dynamic Hybrid Search│
@@ -35,7 +35,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 | File | Version | Purpose |
 |------|---------|---------|
 | `RAG INGESTION.json` | v1.2 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
-| `RAG Retrieval Sub-Workflow.json` | v2.3.3 | Agentic retrieval with dynamic hybrid search and context expansion |
+| `RAG Retrieval Sub-Workflow.json` | v1.0.8c | Agentic retrieval with dynamic hybrid search and context expansion |
 | `Knowledge Graph Workflow (LightRAG).json` | v1.1 | Insert/update/delete documents in LightRAG knowledge graph |
 | `Multimodal RAG Ingestion Sub-workflow.json` | v1.2 | OCR via Mistral, image extraction to Supabase, enriched markdown output |
 | `Zep Update Long-Term Memories Sub-workflow.json` | — | Persist conversation messages to Zep threads for long-term memory |
@@ -140,13 +140,14 @@ Called by the retrieval workflow to persist conversation context:
 
 ## Changelog
 
-### v1.0.8c - 2026-02-16
-- **Disabled contextual vector embeddings** — `contextual_embedding_enabled` set to `false` to avoid LLM rate limits during ingestion
-- **Upgraded retrieval agent to Claude Opus 4.6** — both Anthropic model nodes (Agentic RAG, Prep Metadata) upgraded from Sonnet 4.5 to Opus 4.6
-- **Switched enrichment model to GPT-4.1-mini** — replaced Anthropic Sonnet 4.5 with OpenAI GPT-4.1-mini for metadata enrichment
-- Cleaned up unused nodes (SET 2, Anthropic Chat Model1)
-- Renamed Wait2 to "Wait 5s"
-- Synced both workflows from live n8n exports
+### v1.0.8c - 2026-02-19
+- **Fixed sub-workflow trigger** — changed "When Executed by Another Workflow" from `inputSource: passthrough` to explicitly defined inputs (query, type, session_id, dense/sparse/ilike/fuzzy weights, fuzzy_threshold). Passthrough mode silently fails when called from an agent toolWorkflow — defined inputs are required for `$fromAI()` parameter binding
+- **Removed stale pinned data** — cleared pinned bitcoin.pdf test results from "Trigger Dynamic Hybrid Search" that were overriding live Supabase calls
+- **Disabled Cohere reranking path** — disabled "Create Array" and "Return Reordered Items1" nodes to avoid crash from HTTP response format mismatch with `$('Trigger Dynamic Hybrid Search').all()`
+- **Removed self-referencing Dynamic Hybrid Search3** — eliminated the self-calling tool node and `callerPolicy: any` setting; "Dynamic Hybrid Search" (pointing to Blueprint workflow) now serves as the sole search tool
+- **Switched retrieval agent to GPT-5.2** — replaced Claude Opus 4.6 with GPT-5.2 for both Agentic RAG and Prep Metadata nodes
+- **Simplified agent system prompt** — removed strict citation/grounding rules in favor of standard response format
+- Synced retrieval workflow from live n8n export
 
 ### v0.1.8b - 2025-02-16
 - **Added Anthropic Claude Sonnet 4.5** model nodes to both retrieval agent and ingestion pipeline

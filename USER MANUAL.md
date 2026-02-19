@@ -53,8 +53,7 @@ Once a file is detected:
 1. The system extracts the content based on file type (including OCR for scanned documents)
 2. The content is split into smart chunks (preserving document structure)
 3. An AI enriches each document with a headline, summary, and metadata
-4. Contextual embeddings are generated — each chunk is embedded with surrounding context for better search accuracy
-5. Chunks are stored in the vector database
+4. Chunks are embedded using OpenAI and stored in the vector database
 6. The original file is **archived** (moved to an archive folder in Google Drive)
 
 You don't need to do anything — just upload and wait.
@@ -96,12 +95,11 @@ Tabular data (rows and columns) is handled differently from regular documents:
 
 The AI agent uses a multi-step retrieval process:
 
-1. **Hybrid Search** — Searches the knowledge base using a combination of semantic (meaning-based) and lexical (keyword-based) search
-2. **Reranking** — Results are reranked by relevance using Cohere for higher accuracy
-3. **Document Hierarchy** — Loads the structure of the source document
-4. **Context Expansion** — Retrieves surrounding content for more complete answers
+1. **Hybrid Search** — Searches the knowledge base using a combination of semantic (meaning-based) and lexical (keyword-based) search. The agent dynamically adjusts search weights based on query type
+2. **Document Hierarchy** — Loads the structure of the source document
+3. **Context Expansion** — Retrieves surrounding content for more complete answers
 
-The AI will cite its sources with document names and page numbers at the bottom of each response.
+The AI will provide answers based on retrieved documents from the knowledge base.
 
 ### Tips for Better Results
 
@@ -131,13 +129,13 @@ To update a document that's already in the knowledge base:
 To remove a document from the knowledge base:
 
 1. Move the file into the **"Recycling Bin"** sub-folder inside your Google Drive RAG folder
-2. The system runs a scheduled check **every 10 minutes** that:
+2. The system runs a scheduled check **every 2 minutes** that:
    - Finds all files in the Recycling Bin
    - Deletes their vectors from the database
    - Deletes the record from the record manager
    - Removes the file from Google Drive
 
-> **Note:** Deletion is not instant — it runs on a 10-minute schedule. After the next cycle, the document will no longer appear in search results.
+> **Note:** Deletion is not instant — it runs on a 2-minute schedule. After the next cycle, the document will no longer appear in search results.
 
 ---
 

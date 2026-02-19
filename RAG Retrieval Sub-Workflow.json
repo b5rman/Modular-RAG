@@ -1,5 +1,5 @@
 {
-  "name": "Retrieval Sub-Workflow v0.1.8",
+  "name": "RAG Retrieval Sub-Workflow v1.0.8c",
   "nodes": [
     {
       "parameters": {
@@ -11,10 +11,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        14592,
-        7520
+        864,
+        0
       ],
-      "id": "58048e90-ec46-47b1-86ef-c4e6096653c0",
+      "id": "ebce0334-9a7b-4a38-9516-377b1a8793ec",
       "name": "Sticky Note6"
     },
     {
@@ -27,10 +27,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        13696,
-        7504
+        0,
+        0
       ],
-      "id": "8cbb3fa7-84ed-4f19-a01c-a21293cf4d2d",
+      "id": "d649604f-d4ea-4637-b22c-9505060cb712",
       "name": "Sticky Note18"
     },
     {
@@ -40,10 +40,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        14960,
-        7952
+        1264,
+        448
       ],
-      "id": "e3ccf5cd-a982-4e6c-935a-da851d3e43d9",
+      "id": "74044404-c007-499e-8011-428e2bd1827b",
       "name": "Supabase Short-Term Memory",
       "credentials": {
         "postgres": {
@@ -62,10 +62,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        13856,
-        7872
+        160,
+        368
       ],
-      "id": "7de3f727-2f78-4d9e-a833-45371af729d5",
+      "id": "af3730c0-82ec-4486-813c-aed558653052",
       "name": "Sticky Note21"
     },
     {
@@ -78,10 +78,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        17136,
-        7504
+        3440,
+        0
       ],
-      "id": "03c619c2-a694-4929-9a7e-30a582d3dc05",
+      "id": "2d3054a0-5fcc-4b37-94f6-0498795b3c08",
       "name": "Sticky Note20",
       "disabled": true
     },
@@ -139,10 +139,10 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.1,
       "position": [
-        18336,
-        7984
+        4640,
+        480
       ],
-      "id": "4ec94b8b-e091-4f73-b003-345e62a6a768",
+      "id": "05e86177-e484-40b0-ba56-48a218cc0ebb",
       "name": "Query Knowledge Graph1",
       "retryOnFail": true,
       "maxTries": 5,
@@ -156,10 +156,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        17680,
-        7984
+        3984,
+        480
       ],
-      "id": "77b9d649-506f-45f7-9745-ef0adabd7c25",
+      "id": "4f3b6011-2766-467d-a110-8ec59d4cfaa5",
       "name": "Supabase Short-Term Memory2",
       "credentials": {
         "postgres": {
@@ -183,10 +183,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        17568,
-        7728
+        3872,
+        224
       ],
-      "id": "67db25dc-87e3-48ac-a4b5-1eead9c64bd9",
+      "id": "b1f0dea0-94b3-427c-b58f-ba4a90b2af98",
       "name": "Get Long Term Memories",
       "disabled": true
     },
@@ -197,10 +197,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        18480,
-        7792
+        4784,
+        288
       ],
-      "id": "4ee08aaf-604c-4f8a-8660-4b87fea3094e",
+      "id": "9a0b8f14-e0e2-4886-a079-5089fd1b2613",
       "name": "Respond to Webhook",
       "disabled": true
     },
@@ -221,10 +221,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        17312,
-        7728
+        3616,
+        224
       ],
-      "id": "0131c2ee-2778-4c34-86ac-09c11d4667f9",
+      "id": "0a4e43cf-a1fd-4da1-ab61-5b5bba580140",
       "name": "user_id",
       "disabled": true
     },
@@ -237,11 +237,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        17232,
-        7904
+        3536,
+        400
       ],
       "typeVersion": 1,
-      "id": "cf2cf6a5-bab3-46a6-afb4-c26a5a4168f0",
+      "id": "48ec6787-0e2e-41eb-85e0-c51347f39238",
       "name": "Sticky Note25",
       "disabled": true
     },
@@ -254,10 +254,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        17248,
-        7648
+        3552,
+        144
       ],
-      "id": "a29557cd-fe5b-451d-b1a7-b74c77bdb2fe",
+      "id": "132dde66-6ee7-4c19-b38c-8490de2fda27",
       "name": "Sticky Note26",
       "disabled": true
     },
@@ -272,10 +272,10 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.5,
       "position": [
-        18000,
-        7984
+        4304,
+        480
       ],
-      "id": "d260c6d1-91ff-4d99-80ed-9fcd2bab0888",
+      "id": "78275a46-e110-44be-ad46-91c22e07a4f7",
       "name": "Query Tabular Rows1",
       "credentials": {
         "postgres": {
@@ -321,10 +321,10 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.5,
       "position": [
-        17840,
-        7984
+        4144,
+        480
       ],
-      "id": "dee1518c-681c-458b-89a9-f1e0245a54f9",
+      "id": "c9fda40f-ad60-4fb8-b921-31d3f825dd96",
       "name": "Get datasets from record_manager1",
       "credentials": {
         "postgres": {
@@ -348,10 +348,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        18944,
-        7840
+        5248,
+        336
       ],
-      "id": "4fd847c4-7c83-4eb8-8f4f-4c1b29c3e500",
+      "id": "23c4b715-78ae-442c-b9b0-e9c5fb230400",
       "name": "Create Zep User",
       "disabled": true
     },
@@ -364,10 +364,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        18880,
-        7696
+        5184,
+        192
       ],
-      "id": "0cb7379b-3cd8-4dd1-97af-c7404ac86345",
+      "id": "ead6a292-ded6-47b5-bc96-8566fba90733",
       "name": "Sticky Note27",
       "disabled": true
     },
@@ -426,10 +426,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        18480,
-        7584
+        4784,
+        80
       ],
-      "id": "28eff85d-8c2f-4a53-be79-95d66d048385",
+      "id": "c00f6662-379f-4ae9-a1d8-32fb2bcc583a",
       "name": "Execute workflow - Save Zep long term memories",
       "disabled": true
     },
@@ -437,18 +437,17 @@
       "parameters": {
         "public": true,
         "authentication": "n8nUserAuth",
-        "initialMessages": "v0.1.7👋\n",
-        "options": {
-          "responseMode": "lastNode"
-        }
+        "initialMessages": "Hi there! 👋\n",
+        "availableInChat": true,
+        "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.3,
       "position": [
-        14048,
-        7680
+        352,
+        176
       ],
-      "id": "ed1dc4b5-ebe9-466c-a294-26737593a585",
+      "id": "b0524417-3c28-4ae4-97cf-1fad8ea10106",
       "name": "When chat message received",
       "webhookId": "5e442826-4547-4647-8d24-1641210f2a8e"
     },
@@ -507,10 +506,10 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.1,
       "position": [
-        16560,
-        7952
+        2864,
+        448
       ],
-      "id": "8ae7de5c-2450-46b2-a8d3-9fe7090e00b7",
+      "id": "1a986fa5-df98-4310-8ba5-0d76d4d7d80b",
       "name": "Query Knowledge Graph2",
       "retryOnFail": true,
       "maxTries": 5,
@@ -524,10 +523,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        15888,
-        7952
+        2192,
+        448
       ],
-      "id": "d86907df-5c28-424a-b13c-dd67f9ef91f1",
+      "id": "035167b2-f0fb-4990-a5f3-e748ab6a52db",
       "name": "Supabase Short-Term Memory3",
       "credentials": {
         "postgres": {
@@ -548,10 +547,10 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.5,
       "position": [
-        16208,
-        7952
+        2512,
+        448
       ],
-      "id": "a63d5f8f-80b9-4cf1-b80e-7a42c84a423c",
+      "id": "0e89261f-22a4-49cb-abe2-ed9310e79b51",
       "name": "Query Tabular Rows2",
       "credentials": {
         "postgres": {
@@ -597,10 +596,10 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.5,
       "position": [
-        16048,
-        7952
+        2352,
+        448
       ],
-      "id": "5b17eecf-f72f-4d4c-91d4-4331e7a4c18c",
+      "id": "f238fefe-8653-45e9-9c23-8c971aa60768",
       "name": "Get datasets from record_manager2",
       "credentials": {
         "postgres": {
@@ -620,10 +619,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        15648,
-        7520
+        1936,
+        0
       ],
-      "id": "acb30a3c-d61d-4a13-abd3-0879ee25b10b",
+      "id": "84355434-8cf9-45ee-bfa1-525aed03f5ae",
       "name": "Sticky Note"
     },
     {
@@ -635,11 +634,129 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        13856,
-        7584
+        160,
+        80
       ],
-      "id": "a0b5308f-7433-46c0-bd25-ffe1bd8d63ec",
+      "id": "083bf93c-97cd-4393-bb5e-07f70eee820f",
       "name": "Sticky Note29"
+    },
+    {
+      "parameters": {
+        "description": "=Call this tool to query data from our knowledgebase using hybrid search (vector, lexical, ilike and fuzzy)\n\nYou can set different weights of this hybrid search depending on the type of query.\n\ndense_weight float DEFAULT 0.5,\nsparse_weight float DEFAULT 0.5,\nilike_weight float DEFAULT 0\nfuzzy_weight float DEFAULT 0\nfuzzy_threshold float DEFAULT 0.8\n\nFor semantic natural lanauge queries you can prioritise dense embeddings, \nFor technical terms and more traditional search you can priorize sparse lexical search\nFor exact matches for codes and IDs you can prioritze ilike wildcard matching\nFor typos that aren't picked up by semantic search, you can prioritize fuzzy matching\n\nIf looking for matches via ilike or fuzzy matches, the query should be extremely focused and short, as otherwise it will likely return zero results. (e.g. exact ID or code)\n\nAs pattern matching and fuzzy matching can add latency, I recommend defaulting this to zero unless you want to actually use it.\n\nTotal of the 4 weights much equal 1\n\nFuzzy Threshold adds significant latency should should be as high as possible - Default to 0.8",
+        "workflowId": {
+          "__rl": true,
+          "value": "Bgl5d3deLQufGLff",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/Bgl5d3deLQufGLff",
+          "cachedResultName": "SOTA RAG Retrieval Sub-Workflow"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
+            "session_id": "={{ $json.sessionId }}",
+            "sparse_weight": "={{ $fromAI('sparse_weight', ``, 'number', 0.5) }}",
+            "dense_weight": "={{ $fromAI('dense_weight', ``, 'number', 0.5) }}",
+            "fuzzy_threshold": "={{ $fromAI('fuzzy_threshold', `this is the word similarity threshold in postgres - lower means more candidates however the call may time out`, 'number', 0.8) }}",
+            "fuzzy_weight": "={{ $fromAI('fuzzy_weight', ``, 'number', 0) }}",
+            "ilike_weight": "={{ $fromAI('ilike_weight', ``, 'number', 0) }}",
+            "type": "hybrid"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "dense_weight",
+              "displayName": "dense_weight",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "sparse_weight",
+              "displayName": "sparse_weight",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "ilike_weight",
+              "displayName": "ilike_weight",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "fuzzy_weight",
+              "displayName": "fuzzy_weight",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "fuzzy_threshold",
+              "displayName": "fuzzy_threshold",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1424,
+        448
+      ],
+      "id": "c793ede6-b98d-4166-ba20-c7bc5a839b2c",
+      "name": "Dynamic Hybrid Search"
     },
     {
       "parameters": {
@@ -654,17 +771,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        15728,
-        7952
+        2032,
+        448
       ],
-      "id": "02a71b6d-5e3d-4142-ad45-70c84bfa5949",
+      "id": "ce7123fa-2927-4892-a3c2-ec7228769394",
       "name": "Anthropic Chat Model1",
-      "credentials": {
-        "anthropicApi": {
-          "id": "UyAehXbUNQAWwZOs",
-          "name": "Claude SEB"
-        }
-      },
       "disabled": true
     },
     {
@@ -680,17 +791,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        17520,
-        7984
+        3824,
+        480
       ],
-      "id": "c5baf36f-834e-4fe7-869f-090b46f16c80",
+      "id": "c74fd6fd-21aa-4c0c-9742-b6663cd796c7",
       "name": "Anthropic Chat Model2",
-      "credentials": {
-        "anthropicApi": {
-          "id": "UyAehXbUNQAWwZOs",
-          "name": "Claude SEB"
-        }
-      },
       "disabled": true
     },
     {
@@ -805,10 +910,10 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        16384,
-        7952
+        2688,
+        448
       ],
-      "id": "2d172a06-9ed9-4729-a758-51cbf50303dd",
+      "id": "5c38a44e-a3a1-45cc-9c89-8f8f68d21fce",
       "name": "Dynamic Hybrid Search1",
       "disabled": true
     },
@@ -923,10 +1028,10 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        18176,
-        7984
+        4480,
+        480
       ],
-      "id": "752db5c4-05a6-4c63-bfe3-10e7e6765b42",
+      "id": "49a970a2-b720-4fad-baba-14ba0c7c7fdd",
       "name": "Dynamic Hybrid Search2",
       "disabled": true
     },
@@ -948,10 +1053,10 @@
       "type": "n8n-nodes-base.supabaseTool",
       "typeVersion": 1,
       "position": [
-        15280,
-        7952
+        1584,
+        448
       ],
-      "id": "a3a90ed7-0177-4e3a-ae63-7d5ac8ec1944",
+      "id": "cbc62d85-1c51-4178-9bba-f327af8b851e",
       "name": "Fetch Document Hierarchy",
       "credentials": {
         "supabaseApi": {
@@ -975,10 +1080,10 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        15456,
-        7952
+        1760,
+        448
       ],
-      "id": "bcb25e6a-e757-41df-86cc-7b00b2fff29f",
+      "id": "57fe1287-5f31-4ef9-b326-2dc6dae98190",
       "name": "Context Expansion",
       "credentials": {
         "supabaseApi": {
@@ -1005,10 +1110,10 @@
       "type": "n8n-nodes-base.supabaseTool",
       "typeVersion": 1,
       "position": [
-        16720,
-        7952
+        3024,
+        448
       ],
-      "id": "cd1f5079-6f56-4a26-9a00-33aed6a57ec1",
+      "id": "8586b512-1f36-4c51-a609-91b50d9133e7",
       "name": "Fetch Document Hierarchy1",
       "credentials": {
         "supabaseApi": {
@@ -1033,10 +1138,10 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        16896,
-        7952
+        3200,
+        448
       ],
-      "id": "ecf7fa43-0522-4a29-b471-3d28328affe2",
+      "id": "d5cd206f-cf89-4838-a997-784088dbb27a",
       "name": "Context Expansion1",
       "disabled": true
     },
@@ -1058,10 +1163,10 @@
       "type": "n8n-nodes-base.supabaseTool",
       "typeVersion": 1,
       "position": [
-        18496,
-        7984
+        4800,
+        480
       ],
-      "id": "34513430-d695-4d96-94d3-822ca49aa260",
+      "id": "76bd219e-abb8-4edd-ad1c-da731cc3bd8e",
       "name": "Fetch Document Hierarchy2",
       "credentials": {
         "supabaseApi": {
@@ -1086,10 +1191,10 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        18672,
-        7984
+        4976,
+        480
       ],
-      "id": "91d73df7-abfb-42ef-a36e-85b224b8f0aa",
+      "id": "33a485c2-d8de-415f-8ede-95c5a94dda60",
       "name": "Context Expansion2",
       "disabled": true
     },
@@ -1098,16 +1203,16 @@
         "promptType": "define",
         "text": "={{ $('When chat message received').item.json.chatInput }}",
         "options": {
-          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based STRICTLY on the information available in the knowledgebase. You are a factual retrieval system, not a creative assistant.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the user's question.\n\nThe output should be a well-researched response based on the output from these tools ONLY, following the Operating Procedures and Response Rules below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\n1. Based on your retrieval strategy, pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Document's Structure\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\nOnce you've collected enough information, then answer the question, based on the info in context.\n\n# Response Rules\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Always respond in the same language the user writes in. If the user writes in English, respond in English. If the user writes in Dutch, respond in Dutch. Never switch languages unless the user does.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n\n## Grounding & Citation Rules (CRITICAL)\n\n- Every factual claim MUST be supported by a specific retrieved chunk. Cite inline using [Document Name, p.X] format.\n- Do NOT infer, extrapolate, or combine information in ways not directly supported by the retrieved text.\n- Do NOT add background knowledge, general explanations, or context that is not present in the retrieved documents.\n- If the retrieved information only partially answers the question, explicitly state what you found and what remains unanswered. Say: \"Based on the available documents, I can answer X but not Y.\"\n- If multiple sources provide conflicting information, present both perspectives with their citations rather than choosing one.\n- Do NOT paraphrase loosely. Stay close to the original wording of the source material.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say: \"I don't have enough information in the knowledge base to answer this question.\"\n\n## References\n\n- List between 1-5 important reference sources at the end under a \"References\" section.\n- Provide Document Names and Page Numbers where these sources appear — this is in the chunk metadata.\n- Only list sources you actually cited in your response."
+          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information avaialble in the knowledgebase.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\n1. Based on your retrieval strategy, pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\nOnce you've collected enough information, then answer the question, based on the info in context.\n\n# Response Rules\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. Provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\"."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        14912,
-        7696
+        1216,
+        192
       ],
-      "id": "0f67afce-37b6-4d88-b237-78c6eb182a31",
+      "id": "ea08250d-ac8c-441f-85a2-3bc0aa847582",
       "name": "Agentic RAG 1",
       "retryOnFail": true,
       "maxTries": 5
@@ -1117,16 +1222,16 @@
         "promptType": "define",
         "text": "={{ $('When chat message received').item.json.chatInput }}",
         "options": {
-          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information provided by multiple knowledgebases - Hybrid Search, Knowledge Graph and Structured datasets.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\nBased on your retrieval strategy\n\n## Hybrid Search & Context Expansion\n\n1. Pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\n## Tabular Data\n\nIf the question involves tabular data—such as calculating sums, averages, or finding maximum values—the vector store and graph tools may be unreliable. \n\nIn that case, start by reviewing the available datasets, identify the ones most likely to contain the answer, and then construct a SQL query to analyze them.\n\n## Knowledge Graph\n\nIf you are asked questions that you think would be best answered with insights from a knowledge graph then please seach the graph\n\n---Response Rules---\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Always respond in the same language the user writes in. If the user writes in English, respond in English. If the user writes in Dutch, respond in Dutch. Never switch languages unless the user does.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. (Mark the source as (KB) for Knowledgebase, (GR) for Graph or (DB) for Database). If information is from chunks, then provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\"."
+          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information provided by multiple knowledgebases - Hybrid Search, Knowledge Graph and Structured datasets.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\nBased on your retrieval strategy\n\n## Hybrid Search & Context Expansion\n\n1. Pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\n## Tabular Data\n\nIf the question involves tabular data—such as calculating sums, averages, or finding maximum values—the vector store and graph tools may be unreliable. \n\nIn that case, start by reviewing the available datasets, identify the ones most likely to contain the answer, and then construct a SQL query to analyze them.\n\n## Knowledge Graph\n\nIf you are asked questions that you think would be best answered with insights from a knowledge graph then please seach the graph\n\n---Response Rules---\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. (Mark the source as (KB) for Knowledgebase, (GR) for Graph or (DB) for Database). If information is from chunks, then provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\"."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        16096,
-        7696
+        2400,
+        192
       ],
-      "id": "37f213e5-dc62-4d6d-8ac3-49785681d5c0",
+      "id": "9047e3bd-d886-440b-94f5-ccabd9681b00",
       "name": "Agentic RAG 2",
       "retryOnFail": true,
       "maxTries": 5,
@@ -1137,16 +1242,16 @@
         "promptType": "define",
         "text": "={{ $('When chat message received').item.json.chatInput }}",
         "options": {
-          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information provided by multiple knowledgebases - Hybrid Search, Knowledge Graph and Structured datasets.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\nBased on your retrieval strategy\n\n## Hybrid Search & Context Expansion\n\n1. Pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\n## Tabular Data\n\nIf the question involves tabular data—such as calculating sums, averages, or finding maximum values—the vector store and graph tools may be unreliable. \n\nIn that case, start by reviewing the available datasets, identify the ones most likely to contain the answer, and then construct a SQL query to analyze them.\n\n## Knowledge Graph\n\nIf you are asked questions that you think would be best answered with insights from a knowledge graph then please seach the graph\n\n---Response Rules---\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Always respond in the same language the user writes in. If the user writes in English, respond in English. If the user writes in Dutch, respond in Dutch. Never switch languages unless the user does.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. (Mark the source as (KB) for Knowledgebase, (GR) for Graph or (DB) for Database). If information is from chunks, then provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\".\n\n{{\n(() => {\n  const raw = $json.data;\n  if (raw == null) return '';\n\n  const toText = v => (typeof v === 'string' ? v : JSON.stringify(v));\n  const rawText = toText(raw);\n  const cleaned = rawText.replace(/[\\u0000-\\u001F\\u007F]/g, '').trim();\n  if (!cleaned || cleaned === '{}' || cleaned === '[]') return '';\n\n  // Parse only if the cleaned text looks like JSON\n  let obj = raw;\n  if (typeof raw === 'string') {\n    const first = cleaned[0];\n    if (first === '{' || first === '[') {\n      try { obj = JSON.parse(cleaned); } catch { return ''; }\n    } else {\n      return '';\n    }\n  }\n\n  // Support either { edges: [...] } or a bare array of edges\n  const edges = Array.isArray(obj?.edges) ? obj.edges : (Array.isArray(obj) ? obj : []);\n  if (!edges.length) return '';\n\n  const facts = [...new Set(\n    edges\n      .map(e => (e && typeof e.fact === 'string') ? e.fact.replace(/\\s+/g, ' ').trim() : '')\n      .filter(Boolean)\n  )];\n\n  return facts.length\n    ? \"---User Information---\\nThis is information about the user:\\n\" + facts.map(f => \"- \" + f).join(\"\\n\")\n    : '';\n})()\n}}"
+          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information provided by multiple knowledgebases - Hybrid Search, Knowledge Graph and Structured datasets.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\nBased on your retrieval strategy\n\n## Hybrid Search & Context Expansion\n\n1. Pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\n## Tabular Data\n\nIf the question involves tabular data—such as calculating sums, averages, or finding maximum values—the vector store and graph tools may be unreliable. \n\nIn that case, start by reviewing the available datasets, identify the ones most likely to contain the answer, and then construct a SQL query to analyze them.\n\n## Knowledge Graph\n\nIf you are asked questions that you think would be best answered with insights from a knowledge graph then please seach the graph\n\n---Response Rules---\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. (Mark the source as (KB) for Knowledgebase, (GR) for Graph or (DB) for Database). If information is from chunks, then provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\".\n\n{{\n(() => {\n  const raw = $json.data;\n  if (raw == null) return '';\n\n  const toText = v => (typeof v === 'string' ? v : JSON.stringify(v));\n  const rawText = toText(raw);\n  const cleaned = rawText.replace(/[\\u0000-\\u001F\\u007F]/g, '').trim();\n  if (!cleaned || cleaned === '{}' || cleaned === '[]') return '';\n\n  // Parse only if the cleaned text looks like JSON\n  let obj = raw;\n  if (typeof raw === 'string') {\n    const first = cleaned[0];\n    if (first === '{' || first === '[') {\n      try { obj = JSON.parse(cleaned); } catch { return ''; }\n    } else {\n      return '';\n    }\n  }\n\n  // Support either { edges: [...] } or a bare array of edges\n  const edges = Array.isArray(obj?.edges) ? obj.edges : (Array.isArray(obj) ? obj : []);\n  if (!edges.length) return '';\n\n  const facts = [...new Set(\n    edges\n      .map(e => (e && typeof e.fact === 'string') ? e.fact.replace(/\\s+/g, ' ').trim() : '')\n      .filter(Boolean)\n  )];\n\n  return facts.length\n    ? \"---User Information---\\nThis is information about the user:\\n\" + facts.map(f => \"- \" + f).join(\"\\n\")\n    : '';\n})()\n}}"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        17776,
-        7728
+        4080,
+        224
       ],
-      "id": "e89c8600-aad3-4eb4-8207-ebbdcf52d656",
+      "id": "6f470dfa-ad4c-45a9-9e75-fb9f965d9421",
       "name": "Agentic RAG 3",
       "retryOnFail": true,
       "maxTries": 5,
@@ -1154,17 +1259,48 @@
     },
     {
       "parameters": {
-        "inputSource": "passthrough"
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            },
+            {
+              "name": "type"
+            },
+            {
+              "name": "session_id"
+            },
+            {
+              "name": "dense_weight",
+              "type": "number"
+            },
+            {
+              "name": "sparse_weight",
+              "type": "number"
+            },
+            {
+              "name": "ilike_weight",
+              "type": "number"
+            },
+            {
+              "name": "fuzzy_weight",
+              "type": "number"
+            },
+            {
+              "name": "fuzzy_threshold",
+              "type": "number"
+            }
+          ]
+        }
       },
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        14704,
-        8416
+        1008,
+        912
       ],
-      "id": "e3de5483-93ec-461d-9484-4c2210fef6d1",
-      "name": "When Executed by Another Workflow",
-      "alwaysOutputData": false
+      "id": "381330dd-c4bd-4823-9cd6-42e9affc6847",
+      "name": "When Executed by Another Workflow"
     },
     {
       "parameters": {
@@ -1190,10 +1326,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        16624,
-        8448
+        2928,
+        912
       ],
-      "id": "528a2c95-2947-450b-a475-8c79cbe05c77",
+      "id": "4ddccea1-252b-4b36-a215-751e59acd0a7",
       "name": "Generate Embedding From Query",
       "credentials": {
         "openAiApi": {
@@ -1225,17 +1361,18 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        17680,
-        8416
+        3984,
+        912
       ],
-      "id": "82eeee1f-5f41-4ef7-ac47-80e56e62a2b3",
+      "id": "367a82aa-79dd-49be-84d6-b0ef8d8a00e6",
       "name": "Rerank with Cohere 3.5",
       "credentials": {
         "httpHeaderAuth": {
           "id": "lSFkzmpI1ZAMZqHr",
           "name": "Cohere"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -1244,11 +1381,12 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        17440,
-        8416
+        3744,
+        912
       ],
-      "id": "fee7fab9-6c2a-4555-a319-dfcc2a5b1945",
-      "name": "Create Array"
+      "id": "b7f5cd6d-98e0-4aa1-8b78-9ecbe038bb84",
+      "name": "Create Array",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1257,11 +1395,12 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        17904,
-        8416
+        4208,
+        912
       ],
-      "id": "bac969d0-1ada-4b72-886b-ea33b4c5f2e3",
-      "name": "Return Reordered Items1"
+      "id": "836a4244-3842-4671-a96e-3883150ec856",
+      "name": "Return Reordered Items1",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1273,10 +1412,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        16576,
-        8272
+        2880,
+        768
       ],
-      "id": "1413c48a-e23b-4566-9b2a-b155e565bd50",
+      "id": "9a96da40-d132-47a4-8aed-3a5813c78100",
       "name": "Sticky Note11"
     },
     {
@@ -1289,11 +1428,12 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        17136,
-        8272
+        3424,
+        768
       ],
-      "id": "0a079560-dee2-4bf4-bee3-f2bcb5ebcbf3",
-      "name": "Sticky Note12"
+      "id": "f80e0734-462f-4e37-b4fd-d87ee40f9d1f",
+      "name": "Sticky Note12",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1323,12 +1463,13 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        17168,
-        8416
+        3472,
+        912
       ],
-      "id": "385fe667-26ec-4f06-9aab-5bbe17ab40c2",
+      "id": "5271a51a-4ce6-47c3-a4f8-3aa566e5f2e9",
       "name": "If3",
-      "alwaysOutputData": false
+      "alwaysOutputData": false,
+      "disabled": true
     },
     {
       "parameters": {
@@ -1337,11 +1478,12 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        17440,
-        8640
+        3744,
+        1136
       ],
-      "id": "a376ed37-b6b1-4ed6-89ea-b4e8d2d533e4",
-      "name": "Code"
+      "id": "3bce6d86-0dbe-40bf-8e78-3328e83ad0d4",
+      "name": "Code",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1399,10 +1541,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        14896,
-        8416
+        1200,
+        912
       ],
-      "id": "0f563eaa-8067-4cb2-81e5-778657891da8",
+      "id": "5fe77fd1-7cf2-40a5-a369-3d4b6ff79660",
       "name": "Switch2"
     },
     {
@@ -1419,17 +1561,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        15600,
-        9024
+        1904,
+        1520
       ],
-      "id": "dc77dd73-db37-4d20-8559-4fa0ce72951c",
+      "id": "7d848338-0909-49af-b74f-56c5a616b4a9",
       "name": "Query Graph",
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "lSFkzmpI1ZAMZqHr",
-          "name": "Cohere"
-        }
-      },
       "disabled": true
     },
     {
@@ -1439,10 +1575,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        15840,
-        9024
+        2144,
+        1520
       ],
-      "id": "2e930dfc-f492-4a19-9b08-67e1a72044c2",
+      "id": "dd793a66-c03b-4fcb-97c1-ef0f3fa6cfce",
       "name": "Tidy up response",
       "disabled": true
     },
@@ -1456,10 +1592,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        15456,
-        8880
+        1760,
+        1376
       ],
-      "id": "276eb8c1-58a6-4d49-83c4-42c66059605c",
+      "id": "1e5811c3-1bb5-439f-bcff-53618f8f3750",
       "name": "Sticky Note13"
     },
     {
@@ -1472,10 +1608,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        15456,
-        8272
+        1744,
+        768
       ],
-      "id": "bdc004d6-00af-4be9-97ab-e161867aa252",
+      "id": "f1d067b7-c26d-4935-9323-42129d4da5a4",
       "name": "Sticky Note16"
     },
     {
@@ -1487,10 +1623,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryManager",
       "typeVersion": 1.1,
       "position": [
-        15152,
-        8384
+        1456,
+        880
       ],
-      "id": "62726327-340d-4d02-b9b1-41d2b79ab54f",
+      "id": "7df39cd8-f5de-430a-a9c5-766d8813954e",
       "name": "Chat Memory Manager",
       "alwaysOutputData": true
     },
@@ -1498,9 +1634,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "chatgpt-4o-latest",
+          "value": "gpt-5.2",
           "mode": "list",
-          "cachedResultName": "chatgpt-4o-latest"
+          "cachedResultName": "gpt-5.2"
         },
         "options": {
           "temperature": 0.4
@@ -1509,10 +1645,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        15952,
-        8640
+        2464,
+        1120
       ],
-      "id": "d5eff8ca-287e-47fd-938a-62519a500d9f",
+      "id": "3cc4cf87-eb90-4c0d-a665-43886f769f61",
       "name": "OpenAI Chat Model4",
       "credentials": {
         "openAiApi": {
@@ -1537,10 +1673,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.6,
       "position": [
-        16176,
-        8400
+        2480,
+        896
       ],
-      "id": "14e810c2-7125-42c7-8ad5-378ad03fbfad",
+      "id": "da82091e-4255-4788-81a0-78fa9be0b77b",
       "name": "Prep Metadata1",
       "retryOnFail": true,
       "maxTries": 5
@@ -1553,10 +1689,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        16336,
-        8624
+        2640,
+        1120
       ],
-      "id": "676846a2-4f67-4851-a016-6ee3caed4a56",
+      "id": "c05c27ba-b559-4791-882b-4ac5975bb2c6",
       "name": "Structured Output Parser"
     },
     {
@@ -1569,10 +1705,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        14592,
-        8272
+        896,
+        768
       ],
-      "id": "b602beda-2050-4743-ba88-b7c2d49cddcf",
+      "id": "fe4a3aa8-d310-44ab-b10b-0c94c5ceee3c",
       "name": "Sticky Note17"
     },
     {
@@ -1583,10 +1719,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        15520,
-        8416
+        1824,
+        912
       ],
-      "id": "ba3e0221-d13f-412b-8d75-2c0063475ccc",
+      "id": "4e2b3b2e-00cd-4112-808d-528de011c20a",
       "name": "Fetch Metadata Fields1",
       "alwaysOutputData": true,
       "credentials": {
@@ -1603,10 +1739,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        15952,
-        8416
+        2256,
+        912
       ],
-      "id": "1dd07615-b134-4b43-b0fc-b3cc95e7aa79",
+      "id": "4ad9bbad-5b92-404c-9469-19e46094adf8",
       "name": "Prep1"
     },
     {
@@ -1617,10 +1753,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        15248,
-        8576
+        1552,
+        1072
       ],
-      "id": "cf905bbb-aace-48a9-9200-437fbe532e8b",
+      "id": "67c908e0-1869-474b-b64e-4a67ed0aef3f",
       "name": "Supabase Short-Term Memory1",
       "credentials": {
         "postgres": {
@@ -1638,10 +1774,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        15520,
-        8928
+        1824,
+        1424
       ],
-      "id": "76c8d018-bcac-4196-acfe-4a260620396d",
+      "id": "fb316671-11f2-4f1e-b7a2-0a10f01c2c4b",
       "name": "Sticky Note19",
       "disabled": true
     },
@@ -1673,10 +1809,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        15728,
-        8528
+        2032,
+        1024
       ],
-      "id": "29e949e5-4eea-4e92-8a9d-727f39181b4d",
+      "id": "bdb3f321-b437-4cdb-a196-1bf1152c7826",
       "name": "If"
     },
     {
@@ -1697,10 +1833,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        16864,
-        8448
+        3168,
+        944
       ],
-      "id": "291dfd44-7bc3-48bd-88b0-5dece189576f",
+      "id": "8ef96bf7-05ac-4966-8429-a5b47511ec10",
       "name": "Trigger Dynamic Hybrid Search",
       "alwaysOutputData": true,
       "credentials": {
@@ -1719,10 +1855,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        16800,
-        8304
+        3104,
+        800
       ],
-      "id": "a8b38973-571c-4440-bdba-9c6faa6d7a9e",
+      "id": "572664a1-c4de-415c-bf58-762df028829a",
       "name": "Sticky Note22"
     },
     {
@@ -1734,11 +1870,12 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        17616,
-        8320
+        3920,
+        800
       ],
-      "id": "3474cd3a-d2f2-4296-90b2-0285a20c6340",
-      "name": "Sticky Note23"
+      "id": "2ce29bcb-ed23-489e-81d7-3446d600f104",
+      "name": "Sticky Note23",
+      "disabled": true
     },
     {
       "parameters": {
@@ -1750,10 +1887,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        13696,
-        8272
+        0,
+        768
       ],
-      "id": "19310bde-bc89-4d06-8115-6d72bfca4fe0",
+      "id": "f70ed1ba-68da-4d60-ab8d-aefc32f5a20b",
       "name": "Sticky Note24"
     },
     {
@@ -1766,10 +1903,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        13856,
-        8640
+        160,
+        1136
       ],
-      "id": "a6f7efc1-a21e-44aa-aede-896a453a34f2",
+      "id": "6e94fe3f-d975-4bbc-9871-2186ba58d5f1",
       "name": "Sticky Note28"
     },
     {
@@ -1781,10 +1918,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        13856,
-        8352
+        160,
+        848
       ],
-      "id": "853e794a-438e-4695-848c-8b423b00542c",
+      "id": "daa019ad-d010-428e-b688-d284d23facd6",
       "name": "Sticky Note30"
     },
     {
@@ -1796,17 +1933,15 @@
           "cachedResultName": "gpt-5.2-2025-12-11"
         },
         "builtInTools": {},
-        "options": {
-          "temperature": 0.1
-        }
+        "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        14784,
-        7968
+        1088,
+        464
       ],
-      "id": "83c65cde-0cf6-4abd-aa26-b4b7f1823564",
+      "id": "f34209ef-55ef-4e60-b3d2-d70e9c444be6",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -1814,1170 +1949,9 @@
           "name": "OpenAi account"
         }
       }
-    },
-    {
-      "parameters": {
-        "description": "=Call this tool to query data from our knowledgebase using hybrid search (vector, lexical, ilike and fuzzy)\n\nYou can set different weights of this hybrid search depending on the type of query.\n\ndense_weight float DEFAULT 0.5,\nsparse_weight float DEFAULT 0.5,\nilike_weight float DEFAULT 0\nfuzzy_weight float DEFAULT 0\nfuzzy_threshold float DEFAULT 0.8\n\nFor semantic natural lanauge queries you can prioritise dense embeddings, \nFor technical terms and more traditional search you can priorize sparse lexical search\nFor exact matches for codes and IDs you can prioritze ilike wildcard matching\nFor typos that aren't picked up by semantic search, you can prioritize fuzzy matching\n\nIf looking for matches via ilike or fuzzy matches, the query should be extremely focused and short, as otherwise it will likely return zero results. (e.g. exact ID or code)\n\nAs pattern matching and fuzzy matching can add latency, I recommend defaulting this to zero unless you want to actually use it.\n\nTotal of the 4 weights much equal 1\n\nFuzzy Threshold adds significant latency should should be as high as possible - Default to 0.8",
-        "workflowId": {
-          "__rl": true,
-          "value": "R_I-MybamT9nBjj0P-Gg3",
-          "mode": "list",
-          "cachedResultUrl": "/workflow/R_I-MybamT9nBjj0P-Gg3",
-          "cachedResultName": "Retrieval Sub-Workflow v0.1.8"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
-            "session_id": "={{ $json.sessionId }}",
-            "sparse_weight": "={{ $fromAI('sparse_weight', ``, 'number', 0.5) }}",
-            "dense_weight": "={{ $fromAI('dense_weight', ``, 'number', 0.5) }}",
-            "fuzzy_threshold": "={{ $fromAI('fuzzy_threshold', `this is the word similarity threshold in postgres - lower means more candidates however the call may time out`, 'number', 0.8) }}",
-            "fuzzy_weight": "={{ $fromAI('fuzzy_weight', ``, 'number', 0) }}",
-            "ilike_weight": "={{ $fromAI('ilike_weight', ``, 'number', 0) }}",
-            "type": "hybrid"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "query",
-              "displayName": "query",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "type",
-              "displayName": "type",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "session_id",
-              "displayName": "session_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "dense_weight",
-              "displayName": "dense_weight",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "sparse_weight",
-              "displayName": "sparse_weight",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "ilike_weight",
-              "displayName": "ilike_weight",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "fuzzy_weight",
-              "displayName": "fuzzy_weight",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "fuzzy_threshold",
-              "displayName": "fuzzy_threshold",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.2,
-      "position": [
-        15136,
-        7952
-      ],
-      "id": "532aa8d8-f0fc-4274-9080-118c4dbd56f2",
-      "name": "Dynamic Hybrid Search3"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "claude-opus-4-6",
-          "mode": "list",
-          "cachedResultName": "Claude Opus 4.6"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
-      "typeVersion": 1.3,
-      "position": [
-        14672,
-        7856
-      ],
-      "id": "219c9f4b-308f-490f-9b81-e7057383b461",
-      "name": "Anthropic Chat Model",
-      "credentials": {
-        "anthropicApi": {
-          "id": "UyAehXbUNQAWwZOs",
-          "name": "Claude SEB"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "claude-opus-4-6",
-          "mode": "list",
-          "cachedResultName": "Claude Opus 4.6"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
-      "typeVersion": 1.3,
-      "position": [
-        16112,
-        8656
-      ],
-      "id": "b2045592-2539-4d79-be83-be1d75358571",
-      "name": "Anthropic Chat Model3",
-      "credentials": {
-        "anthropicApi": {
-          "id": "UyAehXbUNQAWwZOs",
-          "name": "Claude SEB"
-        }
-      }
     }
   ],
-  "pinData": {
-    "Trigger Dynamic Hybrid Search": [
-      {
-        "json": {
-          "id": 2017,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 12)\n\n. If two nodes broadcast different versions of the next block simultaneously, somenodes may receive one or the other first. In that case, they work on the first one they received,but save the other branch in case it becomes longer. The tie will be broken when the next proof-of-work is found and one branch becomes longer; the nodes that were working on the otherbranch will then switch to the longer one.3BlockPrev Hash NonceTx Tx ...BlockPrev Hash NonceTx Tx ...New transaction broadcasts do not necessarily need to reach all nodes. As long as they reachmany nodes, they will get into a block before long. Block broadcasts are also tolerant of droppedmessages. If a node does not receive a block, it will request it when it receives the next block andrealizes it missed one.6",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 11,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 895,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 12,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.243462956467712,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00655737704918033
-        }
-      },
-      {
-        "json": {
-          "id": 2020,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 15)\n\n. To facilitate this without breaking the block's hash,transactions are hashed in a Merkle Tree [7][2][5], with only the root included in the block's hash.Old blocks can then be compacted by stubbing off branches of the tree. The interior hashes donot need to be stored.A block header with no transactions would be about 80 bytes. If we suppose blocks aregenerated every 10 minutes, 80 bytes * 6 * 24 * 365 = 4.2MB per year",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 14,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 541,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 15,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.238770485593651,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00645161290322581
-        }
-      },
-      {
-        "json": {
-          "id": 2016,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 11)\n\n. If they're generated too fast, the difficulty increases.5. NetworkThe steps to run the network are as follows:1) New transactions are broadcast to all nodes.2) Each node collects new transactions into a block.3) Each node works on finding a difficult proof-of-work for its block.4) When a node finds a proof-of-work, it broadcasts the block to all nodes.5) Nodes accept the block only if all transactions in it are valid and not already spent.6) Nodes express their acceptance of the block by working on creating the next block in thechain, using the hash of the accepted block as the previous hash.Nodes always consider the longest chain to be the correct one and will keep working onextending it",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 10,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 817,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 11,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.237578064203264,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00634920634920635
-        }
-      },
-      {
-        "json": {
-          "id": 2034,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 29)\n\n. To solve this, weproposed a peer-to-peer network using proof-of-work to record a public history of transactionsthat quickly becomes computationally impractical for an attacker to change if honest nodescontrol a majority of CPU power. The network is robust in its unstructured simplicity. Nodeswork all at once with little coordination. They do not need to be identified, since messages arenot routed to any particular place and only need to be delivered on a best effort basis. Nodes canleave and rejoin the network at will, accepting the proof-of-work chain as proof of whathappened while they were gone. They vote with their CPU power, expressing their acceptance ofvalid blocks by working on extending them and rejecting invalid blocks by refusing to work onthem",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 28,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 885,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 29,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.231006293356794,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00625
-        }
-      },
-      {
-        "json": {
-          "id": 2026,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 21)\n\n. Some linking is still unavoidable with multi-inputtransactions, which necessarily reveal that their inputs were owned by the same owner. The riskis that if the owner of a key is revealed, linking could reveal other transactions that belonged tothe same owner.11. CalculationsWe consider the scenario of an attacker trying to generate an alternate chain faster than the honestchain. Even if this is accomplished, it does not throw the system open to arbitrary changes, suchas creating value out of thin air or taking money that never belonged to the attacker. Nodes arenot going to accept an invalid transaction as payment, and honest nodes will never accept a blockcontaining them",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 20,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 800,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 21,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.230620059798373,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00615384615384615
-        }
-      },
-      {
-        "json": {
-          "id": 2023,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 18)\n\n. While network nodes can verifytransactions for themselves, the simplified method can be fooled by an attacker's fabricatedtransactions for as long as the attacker can continue to overpower the network. One strategy toprotect against this would be to accept alerts from network nodes when they detect an invalidblock, prompting the user's software to download the full block and alerted transactions toconfirm the inconsistency. Businesses that receive frequent payments will probably still want torun their own nodes for more independent security and quicker verification.9. Combining and Splitting ValueAlthough it would be possible to handle coins individually, it would be unwieldy to make aseparate transaction for every cent in a transfer",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 17,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 863,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 18,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.205391906727817,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00606060606060606
-        }
-      },
-      {
-        "json": {
-          "id": 2021,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 16)\n\n. With computer systemstypically selling with 2GB of RAM as of 2008, and Moore's Law predicting current growth of1.2GB per year, storage should not be a problem even if the block headers must be kept inmemory.4BlockBlock Block Header (Block Hash)Prev Hash NonceHash01Hash0 Hash1 Hash2 Hash3Hash23Root HashHash01Hash2Tx3Hash23Block Header (Block Hash)Root HashTransactions Hashed in a Merkle Tree After Pruning Tx0-2 from the BlockPrev Hash NonceHash3Tx0 Tx1 Tx2 Tx38. Simplified Payment VerificationIt is possible to verify payments without running a full network node",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 15,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 686,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 16,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.198880785570238,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00597014925373134
-        }
-      },
-      {
-        "json": {
-          "id": 2022,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 17)\n\n. A user only needs to keepa copy of the block headers of the longest proof-of-work chain, which he can get by queryingnetwork nodes until he's convinced he has the longest chain, and obtain the Merkle branchlinking the transaction to the block it's timestamped in. He can't check the transaction forhimself, but by linking it to a place in the chain, he can see that a network node has accepted it,and blocks added after it further confirm the network has accepted it.As such, the verification is reliable as long as honest nodes control the network, but is morevulnerable if the network is overpowered by an attacker",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 16,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 736,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 17,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.193930413957263,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00588235294117647
-        }
-      },
-      {
-        "json": {
-          "id": 2024,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 19)\n\n. To allow value to be split and combined,transactions contain multiple inputs and outputs. Normally there will be either a single inputfrom a larger previous transaction or multiple inputs combining smaller amounts, and at most twooutputs: one for the payment, and one returning the change, if any, back to the sender.It should be noted that fan-out, where a transaction depends on several transactions, and thosetransactions depend on many more, is not a problem here. There is never the need to extract acomplete standalone copy of a transaction's history.5TransactionIn...In Out...Hash01Hash2 Hash3Hash23Block HeaderMerkle RootPrev Hash NonceBlock HeaderMerkle RootPrev Hash NonceBlock HeaderMerkle RootPrev Hash NonceMerkle Branch for Tx3Longest Proof-of-Work ChainTx310",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 18,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 893,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 19,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.192312650956231,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00579710144927536
-        }
-      },
-      {
-        "json": {
-          "id": 2018,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 13)\n\n. IncentiveBy convention, the first transaction in a block is a special transaction that starts a new coin ownedby the creator of the block. This adds an incentive for nodes to support the network, and providesa way to initially distribute coins into circulation, since there is no central authority to issue them.The steady addition of a constant of amount of new coins is analogous to gold miners expendingresources to add gold to circulation. In our case, it is CPU time and electricity that is expended.The incentive can also be funded with transaction fees. If the output value of a transaction isless than its input value, the difference is a transaction fee that is added to the incentive value ofthe block containing the transaction",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 12,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 858,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 13,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.183450113740571,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00571428571428571
-        }
-      },
-      {
-        "json": {
-          "id": 2010,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 5)\n\n. Thesystem is secure as long as honest nodes collectively control more CPU power than anycooperating group of attacker nodes.12. TransactionsWe define an electronic coin as a chain of digital signatures. Each owner transfers the coin to thenext by digitally signing a hash of the previous transaction and the public key of the next ownerand adding these to the end of the coin. A payee can verify the signatures to verify the chain ofownership.The problem of course is the payee can't verify that one of the owners did not double-spendthe coin. A common solution is to introduce a trusted central authority, or mint, that checks everytransaction for double spending",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 4,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 783,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 5,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.17929144203663,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00563380281690141
-        }
-      },
-      {
-        "json": {
-          "id": 2014,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 9)\n\n. The average work required is exponential in the numberof zero bits required and can be verified by executing a single hash.For our timestamp network, we implement the proof-of-work by incrementing a nonce in theblock until a value is found that gives the block's hash the required zero bits. Once the CPUeffort has been expended to make it satisfy the proof-of-work, the block cannot be changedwithout redoing the work. As later blocks are chained after it, the work to change the blockwould include redoing all the blocks after it.The proof-of-work also solves the problem of determining representation in majority decisionmaking. If the majority were based on one-IP-address-one-vote, it could be subverted by anyoneable to allocate many IPs. Proof-of-work is essentially one-CPU-one-vote",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 8,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 909,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 9,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.169843594422555,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00555555555555556
-        }
-      },
-      {
-        "json": {
-          "id": 2013,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 8)\n\n. Each timestamp includes the previous timestamp inits hash, forming a chain, with each additional timestamp reinforcing the ones before it.2BlockItem Item ...HashBlockItem Item ...HashTransactionOwner 1'sPublic KeyOwner 0'sSignatureHashTransactionOwner 2'sPublic KeyOwner 1'sSignatureHashVerifyTransactionOwner 3'sPublic KeyOwner 2'sSignatureHashVerifyOwner 2'sPrivate KeyOwner 1'sPrivate KeySignSignOwner 3'sPrivate Key4. Proof-of-WorkTo implement a distributed timestamp server on a peer-to-peer basis, we will need to use a proof-of-work system similar to Adam Back's Hashcash [6], rather than newspaper or Usenet posts.The proof-of-work involves scanning for a value that when hashed, such as with SHA-256, thehash begins with a number of zero bits",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 7,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 870,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 8,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.169065932575818,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00547945205479452
-        }
-      },
-      {
-        "json": {
-          "id": 2006,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 1)\n\nBitcoin: A Peer-to-Peer Electronic Cash SystemSatoshi Nakamotosatoshin@gmx.comwww.bitcoin.orgAbstract. A purely peer-to-peer version of electronic cash would allow onlinepayments to be sent directly from one party to another without going through afinancial institution. Digital signatures provide part of the solution, but the mainbenefits are lost if a trusted third party is still required to prevent double-spending.We propose a solution to the double-spending problem using a peer-to-peer network.The network timestamps transactions by hashing them into an ongoing chain ofhash-based proof-of-work, forming a record that cannot be changed without redoingthe proof-of-work",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 0,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 793,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 1,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.167980740546033,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00540540540540541
-        }
-      },
-      {
-        "json": {
-          "id": 2030,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 25)\n\n. This prevents the sender from preparing a chain of blocks ahead of time by working onit continuously until he is lucky enough to get far enough ahead, then executing the transaction atthat moment. Once the transaction is sent, the dishonest sender starts working in secret on aparallel chain containing an alternate version of his transaction.The recipient waits until the transaction has been added to a block and z blocks have beenlinked after it",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 24,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 568,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 25,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.158969430739182,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00533333333333333
-        }
-      },
-      {
-        "json": {
-          "id": 2012,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 7)\n\n. To accomplish this without a trusted party, transactions must bepublicly announced [1], and we need a system for participants to agree on a single history of theorder in which they were received. The payee needs proof that at the time of each transaction, themajority of nodes agreed it was the first received.3. Timestamp ServerThe solution we propose begins with a timestamp server. A timestamp server works by taking ahash of a block of items to be timestamped and widely publishing the hash, such as in anewspaper or Usenet post [2-5]. The timestamp proves that the data must have existed at thetime, obviously, in order to get into the hash",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 6,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 764,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 7,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.158670942941796,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00526315789473684
-        }
-      },
-      {
-        "json": {
-          "id": 2015,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 10)\n\n. The majoritydecision is represented by the longest chain, which has the greatest proof-of-work effort investedin it. If a majority of CPU power is controlled by honest nodes, the honest chain will grow thefastest and outpace any competing chains. To modify a past block, an attacker would have toredo the proof-of-work of the block and all blocks after it and then catch up with and surpass thework of the honest nodes. We will show later that the probability of a slower attacker catching updiminishes exponentially as subsequent blocks are added.To compensate for increasing hardware speed and varying interest in running nodes over time,the proof-of-work difficulty is determined by a moving average targeting an average number ofblocks per hour",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 9,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 868,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 10,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.155856540450066,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00519480519480519
-        }
-      },
-      {
-        "json": {
-          "id": 2033,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 28)\n\n. This prevents the sender from preparing a chain of blocks ahead of time by working onit continuously until he is lucky enough to get far enough ahead, then executing the transaction atthat moment. Once the transaction is sent, the dishonest sender starts working in secret on aparallel chain containing an alternate version of his transaction.The recipient waits until the transaction has been added to a block and z blocks have beenlinked after it. ConclusionWe have proposed a system for electronic transactions without relying on trust. We started withthe usual framework of coins made from digital signatures, which provides strong control ofownership, but is incomplete without a way to prevent double-spending",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 27,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 835,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 28,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.153302123945827,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00512820512820513
-        }
-      },
-      {
-        "json": {
-          "id": 2036,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 31)\n\n. Stornetta, \"Secure names for bit-strings,\" In Proceedings of the 4th ACM Conferenceon Computer and Communications Security, pages 28-35, April 1997.[6] A. Back, \"Hashcash - a denial of service counter-measure,\"http://www.hashcash.org/papers/hashcash.pdf, 2002.[7] R.C. Merkle, \"Protocols for public key cryptosystems,\" In Proc. 1980 Symposium on Security andPrivacy, IEEE Computer Society, pages 122-133, April 1980.[8] W. Feller, \"An introduction to probability theory and its applications,\" 1957.9",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 30,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 619,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 31,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.152660949766125,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00506329113924051
-        }
-      },
-      {
-        "json": {
-          "id": 2019,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 14)\n\n. Once a predetermined number of coins have enteredcirculation, the incentive can transition entirely to transaction fees and be completely inflationfree.The incentive may help encourage nodes to stay honest. If a greedy attacker is able toassemble more CPU power than all the honest nodes, he would have to choose between using itto defraud people by stealing back his payments, or using it to generate new coins. He ought tofind it more profitable to play by the rules, such rules that favour him with more new coins thaneveryone else combined, than to undermine the system and the validity of his own wealth.7. Reclaiming Disk SpaceOnce the latest transaction in a coin is buried under enough blocks, the spent transactions beforeit can be discarded to save disk space",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 13,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 889,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 14,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.150207452506938,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.005
-        }
-      },
-      {
-        "json": {
-          "id": 2025,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 20)\n\n. PrivacyThe traditional banking model achieves a level of privacy by limiting access to information to theparties involved and the trusted third party. The necessity to announce all transactions publiclyprecludes this method, but privacy can still be maintained by breaking the flow of information inanother place: by keeping public keys anonymous. The public can see that someone is sendingan amount to someone else, but without information linking the transaction to anyone. This issimilar to the level of information released by stock exchanges, where the time and size ofindividual trades, the \"tape\", is made public, but without telling who the parties were.As an additional firewall, a new key pair should be used for each transaction to keep themfrom being linked to a common owner",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 19,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 907,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 20,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.145946609490706,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00493827160493827
-        }
-      },
-      {
-        "json": {
-          "id": 2007,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 2)\n\n. The longest chain not only serves as proof of the sequence ofevents witnessed, but proof that it came from the largest pool of CPU power. Aslong as a majority of CPU power is controlled by nodes that are not cooperating toattack the network, they'll generate the longest chain and outpace attackers. Thenetwork itself requires minimal structure. Messages are broadcast on a best effortbasis, and nodes can leave and rejoin the network at will, accepting the longestproof-of-work chain as proof of what happened while they were gone.1. IntroductionCommerce on the Internet has come to rely almost exclusively on financial institutions serving astrusted third parties to process electronic payments",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 1,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 815,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 2,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.143755274266633,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.0048780487804878
-        }
-      },
-      {
-        "json": {
-          "id": 2027,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 22)\n\n. An attacker can only try to change one of his own transactions to take backmoney he recently spent.The race between the honest chain and an attacker chain can be characterized as a BinomialRandom Walk. The success event is the honest chain being extended by one block, increasing itslead by +1, and the failure event is the attacker's chain being extended by one block, reducing thegap by -1.The probability of an attacker catching up from a given deficit is analogous to a Gambler'sRuin problem. Suppose a gambler with unlimited credit starts at a deficit and plays potentially aninfinite number of trials to try to reach breakeven",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 21,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 752,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 22,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.138097822666169,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00481927710843374
-        }
-      },
-      {
-        "json": {
-          "id": 2011,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 6)\n\n. After each transaction, the coin must be returned to the mint toissue a new coin, and only coins issued directly from the mint are trusted not to be double-spent.The problem with this solution is that the fate of the entire money system depends on thecompany running the mint, with every transaction having to go through them, just like a bank.We need a way for the payee to know that the previous owners did not sign any earliertransactions. For our purposes, the earliest transaction is the one that counts, so we don't careabout later attempts to double-spend. The only way to confirm the absence of a transaction is tobe aware of all transactions. In the mint based model, the mint was aware of all transactions anddecided which arrived first",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 5,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 865,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 6,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.128271006242693,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00476190476190476
-        }
-      },
-      {
-        "json": {
-          "id": 2028,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 23)\n\n. We can calculate the probability he everreaches breakeven, or that an attacker ever catches up with the honest chain, as follows [8]:p = probability an honest node finds the next blockq = probability the attacker finds the next blockqz = probability the attacker will ever catch up from z blocks behindq z={ 1 if p≤qq / pz if pq}6Identities Transactions TrustedThird Party Counterparty PublicIdentities Transactions PublicNew Privacy ModelTraditional Privacy ModelGiven our assumption that p > q, the probability drops exponentially as the number of blocks theattacker has to catch up with increases",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 22,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 722,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 23,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.124458581209184,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00470588235294118
-        }
-      },
-      {
-        "json": {
-          "id": 2035,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 30)\n\n. Any needed rules and incentives can be enforced with this consensus mechanism.8References[1] W. Dai, \"b-money,\" http://www.weidai.com/bmoney.txt, 1998.[2] H. Massias, X.S. Avila, and J.-J. Quisquater, \"Design of a secure timestamping service with minimaltrust requirements,\" In 20th Symposium on Information Theory in the Benelux, May 1999.[3] S. Haber, W.S. Stornetta, \"How to time-stamp a digital document,\" In Journal of Cryptology, vol 3, no2, pages 99-111, 1991.[4] D. Bayer, S. Haber, W.S. Stornetta, \"Improving the efficiency and reliability of digital time-stamping,\"In Sequences II: Methods in Communication, Security and Computer Science, pages 329-334, 1993.[5] S. Haber, W.S",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 29,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 806,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 30,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.119687366755667,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00465116279069767
-        }
-      },
-      {
-        "json": {
-          "id": 2029,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 24)\n\n. With the odds against him, if he doesn't make a luckylunge forward early on, his chances become vanishingly small as he falls further behind.We now consider how long the recipient of a new transaction needs to wait before beingsufficiently certain the sender can't change the transaction. We assume the sender is an attackerwho wants to make the recipient believe he paid him for a while, then switch it to pay back tohimself after some time has passed. The receiver will be alerted when that happens, but thesender hopes it will be too late.The receiver generates a new key pair and gives the public key to the sender shortly beforesigning",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 23,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 760,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 24,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.106562024746062,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00459770114942529
-        }
-      },
-      {
-        "json": {
-          "id": 2009,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 4)\n\n. These costs and payment uncertaintiescan be avoided in person by using physical currency, but no mechanism exists to make paymentsover a communications channel without a trusted party.What is needed is an electronic payment system based on cryptographic proof instead of trust,allowing any two willing parties to transact directly with each other without the need for a trustedthird party. Transactions that are computationally impractical to reverse would protect sellersfrom fraud, and routine escrow mechanisms could easily be implemented to protect buyers. Inthis paper, we propose a solution to the double-spending problem using a peer-to-peer distributedtimestamp server to generate computational proof of the chronological order of transactions",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 3,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 870,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 4,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.10629791654932,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00454545454545455
-        }
-      },
-      {
-        "json": {
-          "id": 2008,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 3)\n\n. While the system works well enough formost transactions, it still suffers from the inherent weaknesses of the trust based model.Completely non-reversible transactions are not really possible, since financial institutions cannotavoid mediating disputes. The cost of mediation increases transaction costs, limiting theminimum practical transaction size and cutting off the possibility for small casual transactions,and there is a broader cost in the loss of ability to make non-reversible payments for non-reversible services. With the possibility of reversal, the need for trust spreads. Merchants mustbe wary of their customers, hassling them for more information than they would otherwise need.A certain percentage of fraud is accepted as unavoidable",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 2,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.957Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 870,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 3,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.105885634352473,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00449438202247191
-        }
-      },
-      {
-        "json": {
-          "id": 2031,
-          "content": "This chunk is from a foundational paper on Bitcoin's peer-to-peer electronic cash, specifically # Document (Part 26)\n\n. He doesn't know the exact amount of progress the attacker has made, butassuming the honest blocks took the average expected time per block, the attacker's potentialprogress will be a Poisson distribution with expected value:=z qpTo get the probability the attacker could still catch up now, we multiply the Poisson density foreach amount of progress he could have made by the probability he could catch up from that point:∑k =0∞ k e−k! ⋅{q / p z−k  if k ≤ z1 if k  z}Rearranging to avoid summing the infinite tail of the distribution...1−∑k =0z k e−k! 1−q / p z− k Converting to C code...#include <math.h>double AttackerSuccessProbability(double q, int z){double p = 1.0 - q;double lambda = z * (q / p);double sum = 1.0;int i, k;for (k = 0; k <= z; k++){double poisson =",
-          "metadata": {
-            "pages": [
-              1
-            ],
-            "doc_id": "1QPUdDN71t-VWQoxNbhrBSHRCvyP8hN8x",
-            "doc_name": "bitcoin.pdf",
-            "childRange": [
-              0,
-              30
-            ],
-            "department": "Legal",
-            "chunk_index": 25,
-            "parentRange": null,
-            "indexed_date": "2026-02-15T22:31:24.958Z",
-            "document_date": "2008-10-31",
-            "cascading_path": "Document",
-            "content_length": 906,
-            "document_summary": "This document presents Bitcoin's design as a peer-to-peer electronic cash system that enables direct online payments without relying on trusted third parties, using proof-of-work to solve double-spending.",
-            "split_part_number": 26,
-            "total_chunks_in_section": 31,
-            "document_headline_description": "A foundational paper on Bitcoin's peer-to-peer electronic cash"
-          },
-          "dense_score": 0.0702978956965711,
-          "sparse_score": 0,
-          "ilike_score": 0,
-          "fuzzy_score": 0,
-          "final_score": 0.00444444444444444
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "connections": {
     "Supabase Short-Term Memory": {
       "ai_memory": [
@@ -3083,6 +2057,17 @@
         [
           {
             "node": "Agentic RAG 2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dynamic Hybrid Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agentic RAG 1",
             "type": "ai_tool",
             "index": 0
           }
@@ -3330,7 +2315,13 @@
     },
     "OpenAI Chat Model4": {
       "ai_languageModel": [
-        []
+        [
+          {
+            "node": "Prep Metadata1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
       ]
     },
     "Prep Metadata1": {
@@ -3419,7 +2410,13 @@
     },
     "OpenAI Chat Model": {
       "ai_languageModel": [
-        []
+        [
+          {
+            "node": "Agentic RAG 1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
       ]
     },
     "When chat message received": {
@@ -3432,61 +2429,25 @@
           }
         ]
       ]
-    },
-    "Dynamic Hybrid Search3": {
-      "ai_tool": [
-        [
-          {
-            "node": "Agentic RAG 1",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Anthropic Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Agentic RAG 1",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Anthropic Chat Model3": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Prep Metadata1",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": false,
-    "timeSavedMode": "fixed",
-    "callerPolicy": "any"
+    "availableInMCP": false
   },
-  "versionId": "71684f0c-1f8f-44ec-81fd-0ba1996b0d9b",
+  "versionId": "69f4ac8d-205f-430a-956c-25ac31237c92",
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "eaa3d31df30f69d853bf1887372824077726204755d7d83df055afd95f72246a"
   },
-  "id": "R_I-MybamT9nBjj0P-Gg3",
+  "id": "Bgl5d3deLQufGLff",
   "tags": [
     {
-      "updatedAt": "2026-02-15T11:24:19.214Z",
-      "createdAt": "2026-02-15T11:24:19.214Z",
-      "id": "0wTBNFMNGqp6FfEa",
-      "name": "Claude BVIJ"
+      "updatedAt": "2026-02-15T11:24:51.266Z",
+      "createdAt": "2026-02-15T11:24:51.266Z",
+      "id": "OEoaSAg7UTdJYuMl",
+      "name": "BVIJ"
     },
     {
       "updatedAt": "2026-02-15T13:10:47.882Z",
