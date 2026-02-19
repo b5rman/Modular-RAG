@@ -1371,8 +1371,7 @@
           "id": "lSFkzmpI1ZAMZqHr",
           "name": "Cohere"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -1385,12 +1384,11 @@
         912
       ],
       "id": "b7f5cd6d-98e0-4aa1-8b78-9ecbe038bb84",
-      "name": "Create Array",
-      "disabled": true
+      "name": "Create Array"
     },
     {
       "parameters": {
-        "jsCode": "// --- Code Node to Reorder Items Based on Rerank Results (WITH METADATA) ---\n\n// --- Step 1: Get Data from Input Nodes ---\n\n// Get the ORIGINAL full items (with content + metadata) from the node that outputs them\n// Replace 'Vector Store' with the actual name of your node that outputs the chunks\nconst originalFullItems = $('Trigger Dynamic Hybrid Search').all();\n\n// Get the rerank results array from the Cohere Rerank node\nconst rerankOrderInfo = $input.first().json.results;\n\n// --- Step 2: Validate Inputs ---\nif (!Array.isArray(originalFullItems) || originalFullItems.length === 0) {\n  throw new Error(\"Could not retrieve original items with metadata. Check the source node name.\");\n}\n\nif (!Array.isArray(rerankOrderInfo) || rerankOrderInfo.length === 0) {\n  if (originalFullItems.length !== 0) {\n    throw new Error(\"Could not get valid rerank results from the input node.\");\n  }\n}\n\n// --- Step 3: Reorder the FULL Items (content + metadata) ---\nlet sortedItems = [];\n\nif (rerankOrderInfo && rerankOrderInfo.length > 0 && originalFullItems && originalFullItems.length > 0) {\n  sortedItems = rerankOrderInfo.map(rankInfo => {\n    const originalIndex = rankInfo.index;\n    \n    // Check if the index is valid\n    if (originalIndex !== undefined && originalIndex !== null && \n        originalIndex >= 0 && originalIndex < originalFullItems.length) {\n      \n      // Get the full original item (with all metadata)\n      const originalItem = originalFullItems[originalIndex].json;\n      \n      // Optionally add the rerank score to the item\n      return {\n        ...originalItem,\n        rerank_score: rankInfo.relevance_score // Cohere's relevance score\n      };\n    } else {\n      console.error(`Error: Rerank index ${originalIndex} is invalid. Skipping.`);\n      return null;\n    }\n  }).filter(item => item !== null);\n} else {\n  sortedItems = [];\n  console.log(\"Input data is empty, resulting in empty sorted output.\");\n}\n\n// --- Step 4: Return the Sorted Items ---\n// Option A: Return as multiple n8n items (one per document)\nreturn sortedItems.map(item => ({ json: item }));\n\n// Option B: Return as single item with array (uncomment if preferred)\n// return [{ json: { sortedDocuments: sortedItems } }];"
+        "jsCode": "// --- Code Node to Reorder Items Based on Rerank Results (WITH METADATA) ---\n// Fixed: Handles HTTP Request node response format where results come as\n// a single n8n item containing an array, not as multiple n8n items.\n\n// --- Step 1: Get Data from Input Nodes ---\nconst rawItems = $('Trigger Dynamic Hybrid Search').all();\n\n// HTTP Request nodes return a single n8n item where json IS the array,\n// or json contains the array. We need to normalize to individual items.\nlet originalFullItems;\nif (rawItems.length === 1 && Array.isArray(rawItems[0].json)) {\n  // Case 1: json is directly an array (e.g., [{id:1,...}, {id:2,...}])\n  originalFullItems = rawItems[0].json.map(item => ({ json: item }));\n} else if (rawItems.length === 1 && rawItems[0].json && typeof rawItems[0].json === 'object') {\n  const firstItem = rawItems[0].json;\n  // Case 2: Single object that might be a result itself\n  if (firstItem.content || firstItem.id || firstItem.metadata) {\n    originalFullItems = rawItems;\n  } else {\n    // Case 3: Object wrapping an array (e.g., {data: [...]})\n    const arrayKey = Object.keys(firstItem).find(k => Array.isArray(firstItem[k]));\n    if (arrayKey) {\n      originalFullItems = firstItem[arrayKey].map(item => ({ json: item }));\n    } else {\n      originalFullItems = rawItems;\n    }\n  }\n} else {\n  // Case 4: Already multiple n8n items (normal case)\n  originalFullItems = rawItems;\n}\n\n// Get the rerank results array from the Cohere Rerank node\nconst rerankOrderInfo = $input.first().json.results;\n\n// --- Step 2: Validate Inputs ---\nif (!Array.isArray(originalFullItems) || originalFullItems.length === 0) {\n  return [{ json: { message: 'No original items to reorder', count: 0 } }];\n}\n\nif (!Array.isArray(rerankOrderInfo) || rerankOrderInfo.length === 0) {\n  // No rerank results — return original items as-is\n  return originalFullItems.map(item => ({ json: item.json || item }));\n}\n\n// --- Step 3: Reorder the FULL Items (content + metadata) ---\nconst sortedItems = rerankOrderInfo\n  .map(rankInfo => {\n    const idx = rankInfo.index;\n    if (idx >= 0 && idx < originalFullItems.length) {\n      const originalItem = originalFullItems[idx].json || originalFullItems[idx];\n      return { ...originalItem, rerank_score: rankInfo.relevance_score };\n    }\n    return null;\n  })\n  .filter(item => item !== null);\n\nreturn sortedItems.map(item => ({ json: item }));\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -1399,8 +1397,7 @@
         912
       ],
       "id": "836a4244-3842-4671-a96e-3883150ec856",
-      "name": "Return Reordered Items1",
-      "disabled": true
+      "name": "Return Reordered Items1"
     },
     {
       "parameters": {
@@ -1468,8 +1465,7 @@
       ],
       "id": "5271a51a-4ce6-47c3-a4f8-3aa566e5f2e9",
       "name": "If3",
-      "alwaysOutputData": false,
-      "disabled": true
+      "alwaysOutputData": false
     },
     {
       "parameters": {
@@ -1482,8 +1478,7 @@
         1136
       ],
       "id": "3bce6d86-0dbe-40bf-8e78-3328e83ad0d4",
-      "name": "Code",
-      "disabled": true
+      "name": "Code"
     },
     {
       "parameters": {
@@ -1874,8 +1869,7 @@
         800
       ],
       "id": "2ce29bcb-ed23-489e-81d7-3446d600f104",
-      "name": "Sticky Note23",
-      "disabled": true
+      "name": "Sticky Note23"
     },
     {
       "parameters": {
@@ -1951,7 +1945,25 @@
       }
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "query": "Microsoft 365 E3 users",
+          "type": "hybrid",
+          "session_id": "e23baebe995f4227be5fba73e4804fc5",
+          "dense_weight": 0.4,
+          "sparse_weight": 0.6,
+          "ilike_weight": 0,
+          "fuzzy_weight": 0,
+          "fuzzy_threshold": 0.8
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
   "connections": {
     "Supabase Short-Term Memory": {
       "ai_memory": [
@@ -2437,7 +2449,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "69f4ac8d-205f-430a-956c-25ac31237c92",
+  "versionId": "434c4b4a-7fa7-416a-b88b-588328b29b81",
   "meta": {
     "instanceId": "eaa3d31df30f69d853bf1887372824077726204755d7d83df055afd95f72246a"
   },

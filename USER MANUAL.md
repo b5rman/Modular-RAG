@@ -96,8 +96,9 @@ Tabular data (rows and columns) is handled differently from regular documents:
 The AI agent uses a multi-step retrieval process:
 
 1. **Hybrid Search** — Searches the knowledge base using a combination of semantic (meaning-based) and lexical (keyword-based) search. The agent dynamically adjusts search weights based on query type
-2. **Document Hierarchy** — Loads the structure of the source document
-3. **Context Expansion** — Retrieves surrounding content for more complete answers
+2. **Reranking** — Results are reranked by relevance using Cohere for higher accuracy
+3. **Document Hierarchy** — Loads the structure of the source document
+4. **Context Expansion** — Retrieves surrounding content for more complete answers
 
 The AI will provide answers based on retrieved documents from the knowledge base.
 

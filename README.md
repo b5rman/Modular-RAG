@@ -143,7 +143,7 @@ Called by the retrieval workflow to persist conversation context:
 ### v1.0.8c - 2026-02-19
 - **Fixed sub-workflow trigger** — changed "When Executed by Another Workflow" from `inputSource: passthrough` to explicitly defined inputs (query, type, session_id, dense/sparse/ilike/fuzzy weights, fuzzy_threshold). Passthrough mode silently fails when called from an agent toolWorkflow — defined inputs are required for `$fromAI()` parameter binding
 - **Removed stale pinned data** — cleared pinned bitcoin.pdf test results from "Trigger Dynamic Hybrid Search" that were overriding live Supabase calls
-- **Disabled Cohere reranking path** — disabled "Create Array" and "Return Reordered Items1" nodes to avoid crash from HTTP response format mismatch with `$('Trigger Dynamic Hybrid Search').all()`
+- **Fixed Cohere reranking code** — rewrote "Return Reordered Items1" to handle HTTP Request node response format (single item containing array vs multiple items). Re-enabled full reranking pipeline (If3, Create Array, Rerank with Cohere 3.5, Return Reordered Items1)
 - **Removed self-referencing Dynamic Hybrid Search3** — eliminated the self-calling tool node and `callerPolicy: any` setting; "Dynamic Hybrid Search" (pointing to Blueprint workflow) now serves as the sole search tool
 - **Switched retrieval agent to GPT-5.2** — replaced Claude Opus 4.6 with GPT-5.2 for both Agentic RAG and Prep Metadata nodes
 - **Simplified agent system prompt** — removed strict citation/grounding rules in favor of standard response format
