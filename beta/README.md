@@ -16,13 +16,15 @@ Key benefits:
 - **Submit hundreds of chunks at once**
 - **Trade-off:** Async processing (up to 24h, typically minutes)
 
+**Tabular SQL Queries** — Enabled `Query Tabular Rows` as an active retrieval tool. The agent can now query the `tabular_document_rows` table directly via SQL to answer questions about structured data (Excel/CSV/Sheets). Previously disabled in production.
+
 ## Workflows
 
 | File | n8n Workflow | Description |
 |------|-------------|-------------|
 | `RAG INGESTION (Beta - Batch Contextual).json` | RAG INGESTION v0.1.8c (Beta) | Ingestion pipeline modified to route chunks to the Batch API sub-workflow |
 | `Contextual Embedding Batch (Beta).json` | Contextual Embedding Batch API (Beta) | **New** — OpenAI Batch API for contextual embeddings (submit + poll + embed + insert) |
-| `RAG Retrieval Sub-Workflow (Beta).json` | RAG Retrieval Sub-Workflow v1.0.8c BETA | Retrieval agent variant for beta testing |
+| `RAG Retrieval Sub-Workflow (Beta).json` | RAG Retrieval Sub-Workflow v1.0.8c BETA | Retrieval agent with tabular SQL queries enabled |
 
 ## Contextual Embedding Batch API
 
@@ -80,7 +82,8 @@ Key benefits:
 - Ingestion now supports async contextual embeddings via batch processing
 
 **Modified: Retrieval Sub-Workflow**
-- Beta variant for testing with batch-embedded contextual vectors
+- Enabled `Query Tabular Rows` tool — agent can now query `tabular_document_rows` via SQL for structured data retrieval (Excel/CSV/Sheets)
+- Production has this disabled (`Query Tabular Rows1` and `Query Tabular Rows2` both disabled)
 
 **Database:**
 - New `openai_batches` table in Supabase for batch job tracking
