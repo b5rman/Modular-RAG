@@ -159,7 +159,7 @@ Called by the retrieval workflow to persist conversation context:
 - **Fixed If3 type validation error** — changed condition from `$json` (object notEmpty, strict) to `$json.metadata_name` (string notEmpty, loose). The Supabase metadata query result was failing strict object type validation when receiving empty data
 - **Set workflow execution order to v1** — explicit execution order setting
 
-### v1.0.8c - 2026-02-19
+### v0.1.8c - 2026-02-19
 
 **Retrieval Workflow:**
 - **Fixed sub-workflow trigger** — changed "When Executed by Another Workflow" from `inputSource: passthrough` to explicitly defined inputs (query, type, session_id, dense/sparse/ilike/fuzzy weights, fuzzy_threshold). Passthrough mode silently fails when called from an agent toolWorkflow — defined inputs are required for `$fromAI()` parameter binding
