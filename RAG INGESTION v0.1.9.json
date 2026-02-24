@@ -3358,7 +3358,7 @@
           "batching": {
             "batch": {
               "batchSize": 1,
-              "batchInterval": 0
+              "batchInterval": 1000
             }
           }
         }
