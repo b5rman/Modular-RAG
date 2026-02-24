@@ -1,5 +1,5 @@
 {
-  "name": "RAG INGESTION v0.1.8c",
+  "name": "RAG INGESTION v0.1.8c (Beta)",
   "nodes": [
     {
       "parameters": {
@@ -10,10 +10,10 @@
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
       "position": [
-        19584,
-        17120
+        1856,
+        5120
       ],
-      "id": "6822da5f-651f-4d58-98b2-343f564c88ef",
+      "id": "98d97b72-7faf-484c-89b6-fdc89adc6547",
       "name": "Generate Hash"
     },
     {
@@ -39,10 +39,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        19824,
-        17120
+        2096,
+        5120
       ],
-      "id": "92d29544-2855-4e5a-9242-16d3da2ccdcf",
+      "id": "29ed06c4-1057-43b3-83d7-b7bbc168f984",
       "name": "Search Record Manager",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -92,10 +92,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        20960,
-        16992
+        3232,
+        4992
       ],
-      "id": "f38b57f4-3842-44c1-86d2-013875bf4e74",
+      "id": "7db678b8-1a84-47ac-8f0f-adef39e2e259",
       "name": "Create Row in Record Manager",
       "retryOnFail": true,
       "credentials": {
@@ -112,10 +112,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        19136,
-        13584
+        1408,
+        1584
       ],
-      "id": "ac7c49b9-1026-46ee-91c9-db969717d1d4",
+      "id": "9f738705-a798-434b-b925-a1e50329ebde",
       "name": "Loop Over Items"
     },
     {
@@ -128,10 +128,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        20688,
-        17280
+        2960,
+        5280
       ],
-      "id": "9c3a8d78-362a-4ac3-a091-39887e3b88ca",
+      "id": "ad4605c8-d79a-4ad6-a744-8d15b09cab31",
       "name": "Delete Previous Vectors",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -171,10 +171,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        21168,
-        17280
+        3440,
+        5280
       ],
-      "id": "404e224f-2544-42f1-8d2f-f4e9262f5e04",
+      "id": "b2b9a571-ca8f-432b-8c57-cb70b7720d8d",
       "name": "Update our Record Manager",
       "retryOnFail": true,
       "credentials": {
@@ -192,10 +192,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        20944,
-        17280
+        3216,
+        5280
       ],
-      "id": "c4d6adc9-ab1b-49e6-8536-c00f6df9cffd",
+      "id": "23d039e5-1d6b-401d-9ca4-6dda61c0acf9",
       "name": "Aggregate"
     },
     {
@@ -221,10 +221,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        26096,
-        13936
+        8368,
+        1936
       ],
-      "id": "aed4a147-8493-4561-bcac-31b2e56aa90b",
+      "id": "8c6ebe29-7b9c-4d17-b712-4d85e25a5f12",
       "name": "Set Text"
     },
     {
@@ -250,10 +250,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        23600,
-        17120
+        5872,
+        5120
       ],
-      "id": "672ab0e9-9ade-4fc6-a06d-2ef5b1fd8f05",
+      "id": "6e90d372-28bd-4afc-88c2-8a6a37e612c6",
       "name": "Set up Text for Embedding"
     },
     {
@@ -265,10 +265,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        23696,
-        13984
+        5968,
+        1984
       ],
-      "id": "2d415624-e162-4831-a618-f3c55c170a5e",
+      "id": "7be1d3b3-d17b-4a38-b9fd-97d396e59cea",
       "name": "Extract from File"
     },
     {
@@ -297,10 +297,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        23680,
-        13600
+        5952,
+        1600
       ],
-      "id": "410eb02b-e8ba-457f-b6ef-b54e06d490ee",
+      "id": "21ec24c6-7bae-4031-b3aa-b488ecf4b2ad",
       "name": "Upload File",
       "retryOnFail": true,
       "credentials": {
@@ -333,10 +333,10 @@
       "type": "n8n-nodes-base.googleDriveTrigger",
       "typeVersion": 1,
       "position": [
-        18656,
-        13584
+        928,
+        1584
       ],
-      "id": "598b05ca-eea5-4006-a621-0aaa0b0706d3",
+      "id": "579550b8-aaca-4efa-848d-9f3ff014ff4d",
       "name": "New Files",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -366,10 +366,10 @@
       "type": "n8n-nodes-base.googleDriveTrigger",
       "typeVersion": 1,
       "position": [
-        18656,
-        13824
+        928,
+        1824
       ],
-      "id": "b6a54fb9-a51f-4c8c-ac8f-e1e4902d9e17",
+      "id": "1be2f209-fc52-4128-bdfb-a67e7cad6f80",
       "name": "Updated Files",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -392,10 +392,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        18560,
-        12160
+        832,
+        160
       ],
-      "id": "f1e69487-c12b-4a1b-8ba6-67658ef50733",
+      "id": "11010567-6ba3-4d55-b050-b124c8fa693f",
       "name": "Trigger Firecrawl",
       "retryOnFail": false,
       "disabled": true
@@ -409,10 +409,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        19184,
-        12912
+        1456,
+        912
       ],
-      "id": "c2181546-1d73-4136-8c4b-df2003ebfd0e",
+      "id": "c8cd5314-7fbd-4aa9-9d4a-48d6342361e0",
       "name": "Webhook",
       "webhookId": "788b2977-a0b3-4393-9dd2-047ca9a10cb7"
     },
@@ -473,6 +473,12 @@
               "name": "doc_type",
               "value": "={{ $('Webhook').isExecuted ? \"webpage\" : \"file\" }}",
               "type": "string"
+            },
+            {
+              "id": "2c9da711-e4df-4230-a411-bae0208ba257",
+              "name": "batch_mode_enabled",
+              "value": true,
+              "type": "boolean"
             }
           ]
         },
@@ -482,20 +488,20 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        19504,
-        13680
+        1776,
+        1680
       ],
-      "id": "fec4e0dd-af13-4c8b-b79a-de29fe1ea68f",
+      "id": "5d4cb2d4-a962-4b46-8182-70e208701992",
       "name": "Set Data"
     },
     {
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "loose"
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
           },
           "conditions": [
             {
@@ -516,10 +522,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        19504,
-        12912
+        1776,
+        912
       ],
-      "id": "25b4f262-38af-4875-8c4a-228db065a43c",
+      "id": "9138c8a8-0dca-418e-b4a4-eff668756419",
       "name": "If2"
     },
     {
@@ -546,10 +552,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        18656,
-        14592
+        928,
+        2592
       ],
-      "id": "188e3cca-95a9-4d5c-b375-1276867616ce",
+      "id": "1117dd69-682b-4496-b433-e908d127987c",
       "name": "Archive File",
       "retryOnFail": true,
       "credentials": {
@@ -573,16 +579,16 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        18336,
-        12160
+        608,
+        160
       ],
-      "id": "92196bc8-a479-4d81-b907-708a80cc6c07",
+      "id": "f990e721-9d41-4ab9-9d6c-e8f3251e6535",
       "name": "Schedule Trigger",
       "disabled": true
     },
     {
       "parameters": {
-        "batchSize": 2,
+        "batchSize": 4,
         "options": {
           "reset": "={{ $node['Loop over Chunks'].context.done }}"
         }
@@ -590,10 +596,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        24464,
-        17232
+        6736,
+        5264
       ],
-      "id": "504258f1-1740-4555-89bb-47095f18feb3",
+      "id": "3b870d03-0157-46e3-8b5e-83cdf67e47c0",
       "name": "Loop over Chunks"
     },
     {
@@ -675,10 +681,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        20000,
-        17088
+        2272,
+        5088
       ],
-      "id": "cbf864ed-5010-4be9-8ca1-04bfb8e83fff",
+      "id": "9e722c20-25df-4a41-8bca-abb3dcd2fe0b",
       "name": "Switch"
     },
     {
@@ -689,10 +695,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        25552,
-        17632
+        7824,
+        5632
       ],
-      "id": "cb48c3f9-893f-45ee-b2c4-996c0168fd80",
+      "id": "43eb79e4-20ba-4978-94f0-8925a1fbcf4a",
       "name": "Aggregate2"
     },
     {
@@ -705,10 +711,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        21456,
-        16112
+        3728,
+        4112
       ],
-      "id": "bac49a6b-8f26-41b1-a73d-84f5cde4a437",
+      "id": "fe8f0cbb-89c5-4ae8-a22d-19d003d14d44",
       "name": "Sticky Note14",
       "disabled": true
     },
@@ -720,10 +726,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        23168,
-        17024
+        5440,
+        5024
       ],
-      "id": "484ef991-ae7a-46ef-89de-a1f6a8d4ae9e",
+      "id": "ea9de0d3-b286-4e5e-8808-542d18a4ffc6",
       "name": "Structured Output Parser2"
     },
     {
@@ -734,10 +740,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        22304,
-        17088
+        4576,
+        5088
       ],
-      "id": "06c34d65-a1bd-4e45-a165-9dc6fa2765ec",
+      "id": "a683d9f2-6a67-4e48-bdd5-2d00c4d6b03c",
       "name": "Fetch Metadata Fields",
       "retryOnFail": true,
       "alwaysOutputData": true,
@@ -755,10 +761,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        22528,
-        16832
+        4800,
+        4832
       ],
-      "id": "3acf34fd-82d5-4fa5-a127-fc570be7ce13",
+      "id": "971b7a11-c1cc-4c33-93b7-65af4b181f71",
       "name": "Prep"
     },
     {
@@ -777,10 +783,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.6,
       "position": [
-        23024,
-        16816
+        5296,
+        4816
       ],
-      "id": "aa4907ad-3281-4ff9-97d7-9e54cbd9a20b",
+      "id": "a13ec657-ec52-462c-a982-53b746a3eda3",
       "name": "Enrich",
       "retryOnFail": true,
       "maxTries": 5,
@@ -850,10 +856,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        21984,
-        16960
+        4256,
+        4960
       ],
-      "id": "b14248b1-6d86-4707-b7dd-483479a49c9b",
+      "id": "fb75a29a-ba37-444a-826b-f5ee517dfd0c",
       "name": "Is LightRAG enabled?"
     },
     {
@@ -919,10 +925,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        21568,
-        16400
+        3840,
+        4400
       ],
-      "id": "cbdab14e-e1ca-43f8-ab8a-faab3384c4dc",
+      "id": "ed223d99-a535-4fd8-b0a5-0fb6ccd9dfd0",
       "name": "Is LightRAG enabled?1",
       "disabled": true
     },
@@ -930,10 +936,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "strict"
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
           },
           "conditions": [
             {
@@ -954,10 +960,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        22688,
-        13536
+        4960,
+        1536
       ],
-      "id": "bbaf6cfb-19f0-49e3-9f69-99b004af7641",
+      "id": "616cea37-6b32-4b81-bcd2-0e8f9e2a6baf",
       "name": "Is Multimodal enabled?"
     },
     {
@@ -968,10 +974,10 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 2,
       "position": [
-        23392,
-        13120
+        5664,
+        1120
       ],
-      "id": "6ae6dd0b-ef48-4e97-bb4f-49220dc92469",
+      "id": "b4a810c7-3613-4481-a021-898bf69b9264",
       "name": "Get a document",
       "retryOnFail": true,
       "credentials": {
@@ -986,13 +992,13 @@
         "operation": "xlsx",
         "options": {}
       },
-      "id": "37a25fa4-93c3-4c6c-ab47-f71efc97e242",
+      "id": "778f54c1-4522-48d9-8687-75174e0cda50",
       "name": "Extract from Excel",
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        23472,
-        14992
+        5744,
+        2992
       ]
     },
     {
@@ -1002,10 +1008,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        23472,
-        14784
+        5744,
+        2784
       ],
-      "id": "cc23638a-e5af-4818-b98f-c607258d23c6",
+      "id": "2272b609-4148-4995-9f3f-9b62095a8c8b",
       "name": "Extract from CSV"
     },
     {
@@ -1020,13 +1026,13 @@
         },
         "options": {}
       },
-      "id": "be47d387-9c46-4b0a-bf4b-838a0dc0262b",
+      "id": "b19bf372-3f74-4229-9b15-8565dcd23442",
       "name": "Summarize",
       "type": "n8n-nodes-base.summarize",
       "typeVersion": 1,
       "position": [
-        24928,
-        14928
+        7200,
+        2928
       ]
     },
     {
@@ -1046,10 +1052,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        23472,
-        15200
+        5744,
+        3200
       ],
-      "id": "16d51afe-08b4-48c3-b638-8018abd95912",
+      "id": "cd155b07-2b5a-4fad-b00c-24c447f0a516",
       "name": "Get row(s) in sheet",
       "retryOnFail": true,
       "credentials": {
@@ -1076,10 +1082,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        24928,
-        14736
+        7200,
+        2736
       ],
-      "id": "1ebd8c07-0a24-4778-963d-eb8945afc411",
+      "id": "e2639822-f5a7-42da-adbc-8a2db51ef1a0",
       "name": "Array keys"
     },
     {
@@ -1091,10 +1097,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        25344,
-        14800
+        7616,
+        2800
       ],
-      "id": "12e91df2-3729-4788-b27e-3703cb4d556d",
+      "id": "de777250-cebe-47e9-9dcc-ccf16fa51ded",
       "name": "Merge"
     },
     {
@@ -1132,10 +1138,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        25824,
-        14800
+        8096,
+        2800
       ],
-      "id": "0fb57fb5-c33a-4de6-a8db-7224614e672a",
+      "id": "c78359ac-736b-442e-b12f-2f2b365e0071",
       "name": "Set Text for Tabular Data"
     },
     {
@@ -1148,10 +1154,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        22528,
-        14944
+        4800,
+        2944
       ],
-      "id": "816a05d4-4c8f-4fce-89be-5710b3c365d6",
+      "id": "1c9f417e-7d2f-4238-909f-d117e60f1bfd",
       "name": "Get google sheet info",
       "retryOnFail": true,
       "credentials": {
@@ -1168,13 +1174,13 @@
         "fieldsToExclude": "row_number",
         "options": {}
       },
-      "id": "bb099734-6726-4e63-a6b1-688cdb070c19",
+      "id": "e1f43092-5a30-40d0-9428-2c91ed79a9ba",
       "name": "Aggregate3",
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        24656,
-        14848
+        6928,
+        2848
       ]
     },
     {
@@ -1414,10 +1420,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        21520,
-        13584
+        3792,
+        1584
       ],
-      "id": "1287a317-f00a-46a8-8629-8b729dedf9d3",
+      "id": "9b937092-eec7-41b4-a8ff-babda1160c89",
       "name": "Switch1"
     },
     {
@@ -1455,10 +1461,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        26320,
-        14560
+        8592,
+        2560
       ],
-      "id": "e30e3fa9-6fa5-48ad-b824-b52844f523ee",
+      "id": "527935c3-ea02-4f22-a31f-688c8455377f",
       "name": "Set Text (Merged)"
     },
     {
@@ -1471,10 +1477,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        23264,
-        16112
+        5536,
+        4112
       ],
-      "id": "764a6c03-20ed-4bae-bda6-6db072822109",
+      "id": "49d3d44c-b8e4-437c-a40d-9d28dc733a7b",
       "name": "Sticky Note23"
     },
     {
@@ -1494,10 +1500,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        23440,
-        16224
+        5712,
+        4224
       ],
-      "id": "b590f424-a17b-4208-a35c-79c8e8ab6a05",
+      "id": "e8b9bd58-98de-495c-9f80-ac028d016bf1",
       "name": "Delete Old Data Rows",
       "alwaysOutputData": true,
       "executeOnce": true,
@@ -1581,10 +1587,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        24160,
-        16224
+        6432,
+        4224
       ],
-      "id": "c6e278fa-1dd1-4cd0-a391-7ea20588a3b0",
+      "id": "1f0ee544-920d-492c-afff-652b572124b9",
       "name": "Insert rows in a table",
       "retryOnFail": true,
       "credentials": {
@@ -1602,10 +1608,10 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        23920,
-        16224
+        6192,
+        4224
       ],
-      "id": "28150bb5-c834-4a62-a89f-ddf954b1b502",
+      "id": "5b8338bd-b6af-4f9f-9f23-cc3a2a1fd759",
       "name": "Split Out"
     },
     {
@@ -1668,10 +1674,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        21776,
-        16864
+        4048,
+        4864
       ],
-      "id": "96feca3a-cb0f-4042-8ffb-18e1f2abf90f",
+      "id": "131b246d-1c1d-41b7-8cec-e0b3866f92e1",
       "name": "Check data type"
     },
     {
@@ -1691,10 +1697,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        23680,
-        16224
+        5952,
+        4224
       ],
-      "id": "0e56be5a-c4de-457d-b14a-963540f43697",
+      "id": "88187bc4-a3c8-4a41-a0a3-60a5d1ac3bd7",
       "name": "data_rows"
     },
     {
@@ -1733,10 +1739,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        23920,
-        13408
+        6192,
+        1408
       ],
-      "id": "89ac86f4-bcf0-4131-baf5-225d9ff290d9",
+      "id": "0ca0fde9-cca3-4702-965c-b271bc78108d",
       "name": "Execute Workflow",
       "disabled": true
     },
@@ -1838,10 +1844,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        22480,
-        16256
+        4752,
+        4256
       ],
-      "id": "acf83cd1-f991-411d-92ec-294f9a117b0e",
+      "id": "295faff6-1304-450a-a397-d5c0532161b7",
       "name": "Execute Knowledge Graph Updates",
       "alwaysOutputData": true,
       "disabled": true
@@ -1850,10 +1856,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "strict"
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
           },
           "conditions": [
             {
@@ -1874,10 +1880,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        24784,
-        17152
+        7056,
+        5152
       ],
-      "id": "24399303-0ed2-4f11-ad66-d8172b4a45b9",
+      "id": "11796079-8901-487c-9c54-5b9cecdc74c5",
       "name": "Contextual embedding enabled?"
     },
     {
@@ -1897,10 +1903,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        25808,
-        17008
+        8080,
+        5008
       ],
-      "id": "bded688c-65fe-48ea-84a2-a8eab6c677d7",
+      "id": "94ed9391-eb02-443d-adc9-38916ee61182",
       "name": "Chunk with contextual embedding"
     },
     {
@@ -1963,10 +1969,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        21904,
-        16240
+        4176,
+        4240
       ],
-      "id": "743e6c54-32a1-4860-a705-946ab6683346",
+      "id": "f3f35ce6-fe3b-4f69-b28b-4facd12c31ea",
       "name": "Check data type1",
       "disabled": true
     },
@@ -1986,21 +1992,22 @@
         },
         "options": {}
       },
-      "id": "2e3d46b8-4665-4132-b87d-a2d66a3bbf0a",
+      "id": "c41f7877-6d4e-43c3-8eb6-b72f5d9756ca",
       "name": "Get Processing Status",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        24512,
-        14512
+        6784,
+        2512
       ],
       "typeVersion": 4.2,
       "retryOnFail": true,
       "credentials": {
         "httpHeaderAuth": {
-          "id": "QW0dS0SpMHI8lxUS",
-          "name": "Llama"
+          "id": "lSFkzmpI1ZAMZqHr",
+          "name": "Cohere"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -2136,19 +2143,20 @@
           "allMatchingOutputs": false
         }
       },
-      "id": "6836bf3d-6b8e-4bcf-96b8-e9a1a28d9c08",
+      "id": "04ea88fc-a668-423d-8cf0-882219018988",
       "name": "Is Job Ready?",
       "type": "n8n-nodes-base.switch",
       "position": [
-        24032,
-        14272
+        6304,
+        2272
       ],
-      "typeVersion": 3
+      "typeVersion": 3,
+      "disabled": true
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.cloud.llamaindex.ai/api/parsing/upload",
+        "url": "https://api.cloud.llamaindex.ai/api/v1/files/",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -2165,9 +2173,8 @@
         "bodyParameters": {
           "parameters": [
             {
-              "parameterType": "formBinaryData",
               "name": "file",
-              "inputDataFieldName": "data"
+              "value": "data"
             }
           ]
         },
@@ -2177,12 +2184,12 @@
           }
         }
       },
-      "id": "9c582f19-8bd1-425a-aee5-c1db83768c14",
+      "id": "a586334b-6a21-4f61-a02d-35049225240a",
       "name": "Upload file to LlamaParse",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        22864,
-        14192
+        5136,
+        2192
       ],
       "typeVersion": 4.2,
       "retryOnFail": true,
@@ -2195,7 +2202,8 @@
           "id": "ejO0nAyM8Qz1010m",
           "name": "Bearer Auth account"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
@@ -2208,35 +2216,37 @@
           }
         }
       },
-      "id": "a28251c0-f2d1-4414-9d90-efefa428cf5e",
+      "id": "fe65ae62-13c6-4827-8bcc-f0e3c388e0cd",
       "name": "Get parsed document",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
-        24256,
-        14144
+        6528,
+        2144
       ],
       "typeVersion": 4.2,
       "retryOnFail": true,
       "credentials": {
         "httpHeaderAuth": {
-          "id": "QW0dS0SpMHI8lxUS",
-          "name": "Llama"
+          "id": "lSFkzmpI1ZAMZqHr",
+          "name": "Cohere"
         }
-      }
+      },
+      "disabled": true
     },
     {
       "parameters": {
         "amount": 3
       },
-      "id": "e3812cbf-3a3c-460f-9830-5070d7e0b4ea",
+      "id": "723088db-b93d-43f6-88f4-0ed8b1c2bd32",
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
-        24256,
-        14464
+        6528,
+        2464
       ],
       "webhookId": "36c73a09-89bd-4a27-aba0-084aa7d2a987",
-      "typeVersion": 1.1
+      "typeVersion": 1.1,
+      "disabled": true
     },
     {
       "parameters": {
@@ -2245,12 +2255,13 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        23312,
-        14240
+        5584,
+        2240
       ],
-      "id": "b81be37a-8701-42ee-9f5e-627f128835d2",
+      "id": "7307cef8-9731-48fa-a76b-6ca3e6b99346",
       "name": "Wait1",
-      "webhookId": "a8f5059d-c449-4319-841b-f3da2bb3eb13"
+      "webhookId": "a8f5059d-c449-4319-841b-f3da2bb3eb13",
+      "disabled": true
     },
     {
       "parameters": {
@@ -2281,11 +2292,12 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        23632,
-        14464
+        5904,
+        2464
       ],
-      "id": "fc6a3474-ba77-4b55-9437-e7d5d698c192",
-      "name": "Counter"
+      "id": "6e68447f-5b7f-407d-b72c-6565f55ea62c",
+      "name": "Counter",
+      "disabled": true
     },
     {
       "parameters": {
@@ -2310,11 +2322,12 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        23552,
-        14256
+        5824,
+        2256
       ],
-      "id": "c4109f08-06ef-4510-bd64-ee92752e0065",
-      "name": "Set counter"
+      "id": "8e7358f2-fae0-4a82-8ffd-060b55337e6c",
+      "name": "Set counter",
+      "disabled": true
     },
     {
       "parameters": {
@@ -2354,10 +2367,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        24800,
-        16352
+        7072,
+        4352
       ],
-      "id": "0f05725b-1bf8-47be-9599-46d90fa98136",
+      "id": "598249db-657f-4b39-842d-fa44c175953e",
       "name": "Send tabular data to vector store?"
     },
     {
@@ -2374,10 +2387,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        24464,
-        16224
+        6736,
+        4224
       ],
-      "id": "fc474055-96da-4a08-95de-107f45db6f51",
+      "id": "d96feb21-ad6a-4c19-affc-8fb05c7a8c66",
       "name": "Aggregate4"
     },
     {
@@ -2394,10 +2407,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        26272,
-        17168
+        8544,
+        5168
       ],
-      "id": "5ec6bad5-17cc-4e52-93e4-b621822900e6",
+      "id": "f782beb2-da58-4850-bed2-740d0a6651f7",
       "name": "Create OpenAI Embeddings",
       "retryOnFail": true,
       "maxTries": 5,
@@ -2417,10 +2430,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        26000,
-        17200
+        8272,
+        5200
       ],
-      "id": "18e267fa-5172-4b03-8dbd-afe625e0b705",
+      "id": "36e30a6e-24b8-463d-aef3-5d3926623039",
       "name": "Setup Chunk for Embedding1"
     },
     {
@@ -2430,10 +2443,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        26528,
-        17168
+        8800,
+        5168
       ],
-      "id": "4b8aea4d-0333-4bb2-8b09-70d374a57294",
+      "id": "920e3526-63d1-4625-a499-7c46d551c0fb",
       "name": "Setup Chunk for Batch Insertion"
     },
     {
@@ -2447,10 +2460,10 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        26816,
-        17232
+        9088,
+        5232
       ],
-      "id": "e478c1a0-e2af-41a7-bdf3-0d73a2c4bf36",
+      "id": "591bf191-d000-4ae1-8de5-eab36d399e6a",
       "name": "Insert into Vector Store",
       "retryOnFail": true,
       "maxTries": 5,
@@ -2466,10 +2479,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "strict"
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
           },
           "conditions": [
             {
@@ -2490,20 +2503,20 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        23008,
-        13600
+        5280,
+        1600
       ],
-      "id": "ad9ff4db-822e-4f74-b046-c83109b78c72",
+      "id": "4ed3e712-5ff8-491f-99cb-ee8f5dde4091",
       "name": "Is OCR enabled?"
     },
     {
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "loose"
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
           },
           "conditions": [
             {
@@ -2512,7 +2525,8 @@
               "rightValue": "",
               "operator": {
                 "type": "boolean",
-                "operation": "exists"
+                "operation": "exists",
+                "singleValue": true
               }
             }
           ],
@@ -2524,10 +2538,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        27728,
-        15680
+        10000,
+        3680
       ],
-      "id": "53a99c26-bc47-48a6-82e0-773c28ace013",
+      "id": "60c9be91-8d69-45f7-81f8-b266432c912b",
       "name": "If4"
     },
     {
@@ -2537,10 +2551,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        24208,
-        13792
+        6480,
+        1792
       ],
-      "id": "75db3abb-c7ee-4f75-8961-0a0c238d6d5b",
+      "id": "3fc26789-91fd-44e0-a61b-d7f8af6280b5",
       "name": "Sanitize Text"
     },
     {
@@ -2571,10 +2585,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        23920,
-        13600
+        6192,
+        1600
       ],
-      "id": "90ee53c3-4736-42a8-83f6-2a5d922b152f",
+      "id": "8ac0de5c-f4f8-4036-89a0-4940c8943e15",
       "name": "Get File URL",
       "retryOnFail": true,
       "credentials": {
@@ -2598,10 +2612,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        24144,
-        13600
+        6416,
+        1600
       ],
-      "id": "20b3f13f-4a2e-4d85-bc7b-9fa577bde5f4",
+      "id": "e513faf8-e2f0-434f-8406-354718530e5d",
       "name": "Get OCR",
       "retryOnFail": true,
       "credentials": {
@@ -2619,10 +2633,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        23680,
-        13792
+        5952,
+        1792
       ],
-      "id": "44f664f5-be53-406c-b262-0006c48c6761",
+      "id": "8a46e441-8907-48ae-bd97-223255d2fa5c",
       "name": "Extract Text"
     },
     {
@@ -2634,10 +2648,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        23632,
-        13408
+        5904,
+        1408
       ],
-      "id": "5b43aae8-bbf7-4443-a0a6-f6a4a5ab924f",
+      "id": "2673fe24-0d41-45d7-a276-3a6cecdcdf59",
       "name": "Base64 File",
       "disabled": true
     },
@@ -2651,44 +2665,44 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        19088,
-        13456
+        1360,
+        1456
       ],
-      "id": "c314e95a-f417-4c31-9e76-a82959103d7d",
+      "id": "87a0d82b-6a12-4cd8-9058-5619f98e5ea3",
       "name": "Sticky Note31"
     },
     {
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "loose"
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
           },
           "conditions": [
             {
               "id": "a4697977-31b6-4740-ae7c-0e3a35ecfdf0",
-              "leftValue": "={{ $json.metadata_name }}",
+              "leftValue": "={{ $json }}",
               "rightValue": "",
               "operator": {
-                "type": "string",
-                "operation": "notEmpty"
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
               }
             }
           ],
           "combinator": "and"
         },
-        "looseTypeValidation": true,
         "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        22512,
-        17088
+        4784,
+        5088
       ],
-      "id": "8d480d35-bf0a-448b-96a9-7b9152204824",
+      "id": "2f69997f-dfde-47e3-9027-a029bb4d0b2d",
       "name": "If3"
     },
     {
@@ -2708,10 +2722,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        21552,
-        17056
+        3824,
+        5056
       ],
-      "id": "934a49b3-3a0a-46ca-87fd-e09bb5a006cb",
+      "id": "eba9104a-ad31-4725-bb4e-6a7d62c3580a",
       "name": "Set up Record ID"
     },
     {
@@ -2719,10 +2733,10 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        28096,
-        16640
+        10368,
+        4640
       ],
-      "id": "c3c225ec-2d0e-4eb0-8e3d-e9eb1a164f54",
+      "id": "75eeb723-4ba2-44c6-aac8-eeddf51d9249",
       "name": "Continue"
     },
     {
@@ -2742,20 +2756,20 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        23360,
-        12800
+        5632,
+        800
       ],
-      "id": "475aad02-7f9e-4ca9-80bf-ba56c8f87727",
+      "id": "16d416a4-87cf-4ea1-8093-30a63b27ffee",
       "name": "Webpage Markdown"
     },
     {
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "strict"
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
           },
           "conditions": [
             {
@@ -2776,10 +2790,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        19808,
-        13680
+        2080,
+        1680
       ],
-      "id": "45e4af52-5675-4056-9e36-0085992a9075",
+      "id": "9e1035ef-e243-41f5-92f1-172f535d207c",
       "name": "File Check"
     },
     {
@@ -2791,10 +2805,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        23520,
-        12928
+        5792,
+        928
       ],
-      "id": "7620d0a4-2599-417b-aeb5-5f412223d16f",
+      "id": "d0263c74-6c08-4433-9287-4240c5c53171",
       "name": "Extract from text file"
     },
     {
@@ -2806,10 +2820,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        18496,
-        12064
+        768,
+        64
       ],
-      "id": "e6df92f5-3b45-476f-adcf-af2542e4ec43",
+      "id": "a03a8d01-3db5-41d2-825c-ed9b307271ee",
       "name": "Sticky Note6",
       "disabled": true
     },
@@ -2826,10 +2840,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        20560,
-        13808
+        2832,
+        1808
       ],
-      "id": "0d99230d-3e20-4751-9d77-3e83e37a7245",
+      "id": "3523ebc8-7777-47db-8710-08ea9beff9a4",
       "name": "Main File Download",
       "retryOnFail": true,
       "credentials": {
@@ -2848,10 +2862,10 @@
       "type": "n8n-nodes-base.markdown",
       "typeVersion": 1,
       "position": [
-        23984,
-        13984
+        6256,
+        1984
       ],
-      "id": "b3795380-f839-43cb-a357-30d07ed5e27b",
+      "id": "c7eb65fa-8480-4da7-8786-516489e9c60f",
       "name": "Markdown"
     },
     {
@@ -2878,10 +2892,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        19504,
-        14256
+        1776,
+        2256
       ],
-      "id": "251b5a9a-b238-4636-8860-e5ca10ae3238",
+      "id": "ffd0b929-0fc8-4232-a56f-295314dcda28",
       "name": "Move to Error Folder",
       "retryOnFail": true,
       "credentials": {
@@ -2896,10 +2910,10 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        26320,
-        14320
+        8592,
+        2320
       ],
-      "id": "4f13a876-ecfb-443a-b431-453939f25912",
+      "id": "dbb0b33e-d942-4c9e-9451-6285f45c714e",
       "name": "Error Track"
     },
     {
@@ -2907,10 +2921,10 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        27728,
-        15472
+        10000,
+        3472
       ],
-      "id": "3fee6730-bd67-4f36-8853-d38fb65b21b6",
+      "id": "130d513a-3e47-4546-9b8a-d4990a1030a3",
       "name": "Error"
     },
     {
@@ -2922,10 +2936,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        25072,
-        16912
+        7344,
+        4912
       ],
-      "id": "13460ea4-c231-4d8b-a15c-f38686a0042e",
+      "id": "fa983838-17e2-4231-a2b9-0cc48eb1c295",
       "name": "Sticky Note34"
     },
     {
@@ -2938,10 +2952,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        18128,
-        13600
+        400,
+        1600
       ],
-      "id": "79b1e16e-0ae9-49fe-be42-ba96a6e6f48f",
+      "id": "39c4198d-4c72-47d6-928c-a4f7ff2b49a6",
       "name": "Sticky Note1"
     },
     {
@@ -2954,10 +2968,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        18128,
-        13312
+        400,
+        1312
       ],
-      "id": "e5450ec0-c029-4f43-8d47-511b49c58048",
+      "id": "bda2309c-0579-4e13-a410-85056a80456a",
       "name": "Sticky Note2"
     },
     {
@@ -2969,10 +2983,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        19424,
-        13584
+        1696,
+        1584
       ],
-      "id": "e73f1120-9aa4-4bf5-ae89-80f8cd183375",
+      "id": "110815e6-2382-4a20-9dc0-a2739b2c0736",
       "name": "Sticky Note3"
     },
     {
@@ -2984,10 +2998,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        23840,
-        13280
+        6112,
+        1280
       ],
-      "id": "bd9ba8aa-f0c9-41c3-96d3-dfd87b4e5269",
+      "id": "56ba9087-28eb-4bf6-bc91-e1e723f3929e",
       "name": "Sticky Note25"
     },
     {
@@ -2999,10 +3013,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        22400,
-        16128
+        4672,
+        4128
       ],
-      "id": "43106a43-5a9c-4d6d-859a-3ca296ae919d",
+      "id": "f9adfd45-77cc-4231-bc74-19d296142862",
       "name": "Sticky Note26",
       "disabled": true
     },
@@ -3011,10 +3025,10 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        21968,
-        16608
+        4240,
+        4608
       ],
-      "id": "ca129a6b-336f-4afb-93a0-af23c21bd949",
+      "id": "b02d6335-b1d0-4d89-922a-170233c781fa",
       "name": "Next"
     },
     {
@@ -3027,10 +3041,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        19600,
-        16784
+        1872,
+        4784
       ],
-      "id": "71312422-9d32-4eb4-a052-ae34cfbcbb0a",
+      "id": "91732106-43b3-4331-93cd-17e8d96b89a4",
       "name": "Sticky Note11"
     },
     {
@@ -3043,10 +3057,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        22320,
-        16752
+        4592,
+        4752
       ],
-      "id": "11598cf8-37ee-49e1-9ca5-7239cf816f67",
+      "id": "36b69aaa-3086-4c1d-96eb-1b005a3b8415",
       "name": "Sticky Note7"
     },
     {
@@ -3059,10 +3073,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        23552,
-        16752
+        5840,
+        4752
       ],
-      "id": "20f4bb69-e6bd-4d38-b410-963141b7ab46",
+      "id": "c3e3745a-f1a4-401c-b0a0-bcdb125eb4b9",
       "name": "Sticky Note17"
     },
     {
@@ -3074,10 +3088,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        24400,
-        17056
+        6672,
+        5056
       ],
-      "id": "230ccd27-980d-4df2-98b6-d3086c91f90e",
+      "id": "c173af52-e819-4af6-bee7-eb2935daad1c",
       "name": "Sticky Note33"
     },
     {
@@ -3090,10 +3104,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        24784,
-        16752
+        7072,
+        4768
       ],
-      "id": "d1bd2973-5c2d-45eb-92c9-9318061f8683",
+      "id": "7d17e330-e15e-45c9-9778-4f35d71270d7",
       "name": "Sticky Note15"
     },
     {
@@ -3106,10 +3120,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        26032,
-        16784
+        8304,
+        4784
       ],
-      "id": "48dfcc83-1366-4d3b-acaf-e6cf0cfe9edc",
+      "id": "a3b3dd01-834a-4d4d-b2f7-5af1f9feec17",
       "name": "Sticky Note16"
     },
     {
@@ -3121,10 +3135,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        26192,
-        17040
+        8464,
+        5040
       ],
-      "id": "75c965f4-d655-4cd1-92e9-f7c1f610df4f",
+      "id": "0ba47fa1-f3d2-470f-96dd-6979fde0a8f4",
       "name": "Sticky Note28"
     },
     {
@@ -3137,10 +3151,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        17728,
-        12048
+        0,
+        48
       ],
-      "id": "e4afb123-ed9a-4129-ad42-323c527a3e07",
+      "id": "2251060a-bcfd-444b-af9f-850e2d3f902f",
       "name": "Sticky Note5",
       "disabled": true
     },
@@ -3151,10 +3165,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        24544,
-        13632
+        6816,
+        1632
       ],
-      "id": "62454e38-ac11-49d6-b395-70b4db2d0799",
+      "id": "1974ee96-6411-404c-866d-ba375b0cc0f3",
       "name": "Aggregate Markdown with Page Numbers"
     },
     {
@@ -3164,10 +3178,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        23760,
-        16944
+        6032,
+        4944
       ],
-      "id": "707fc3ed-541b-4ff9-8bb1-18a2f69de702",
+      "id": "c34252d7-d50a-45cd-af99-bef75b026106",
       "name": "Smart Chunker"
     },
     {
@@ -3177,10 +3191,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        23952,
-        16944
+        6224,
+        4944
       ],
-      "id": "488dfb29-75ac-400c-bcfb-d3853577b057",
+      "id": "6d2a99f1-6d8e-4c5a-a9b2-3a9dd1477760",
       "name": "Document Hierarchy Extractor"
     },
     {
@@ -3190,10 +3204,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        24160,
-        16944
+        6432,
+        4944
       ],
-      "id": "7d918a97-773b-4cfb-b7bd-311104f91447",
+      "id": "0ed9ebd7-ad23-4ebc-a802-64fa772d9528",
       "name": "Merger"
     },
     {
@@ -3204,10 +3218,10 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        24224,
-        17232
+        6352,
+        5360
       ],
-      "id": "324f6ced-cab4-49c1-b825-b8be025ab305",
+      "id": "4343a7b6-247c-45e2-97bf-be3362749290",
       "name": "Split Out1"
     },
     {
@@ -3247,10 +3261,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        25792,
-        17632
+        8064,
+        5632
       ],
-      "id": "8d74a6c5-ab82-424f-9de2-a862da0a65d9",
+      "id": "086b5d2b-a4ce-469b-bf57-78210c5eac36",
       "name": "Update our Record Manager1",
       "retryOnFail": true,
       "credentials": {
@@ -3265,20 +3279,20 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        28640,
-        17696
+        10912,
+        5696
       ],
-      "id": "8ebee6e5-c327-4fa8-b9f8-0e057a7bff79",
+      "id": "2a7b84e1-f6f8-4e1c-84ab-0eb86f8a2fa3",
       "name": "Next1"
     },
     {
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "strict"
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
           },
           "conditions": [
             {
@@ -3299,10 +3313,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        18384,
-        14608
+        656,
+        2608
       ],
-      "id": "35aabff4-52e0-497b-807d-892a9b70ffd8",
+      "id": "fbeaf2d9-3eb9-4d60-a73d-623a9a2ae90c",
       "name": "If a file"
     },
     {
@@ -3315,10 +3329,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        18304,
-        14512
+        576,
+        2512
       ],
-      "id": "ccc376cc-fbb8-4d88-bc12-887a06228f4b",
+      "id": "34a6b822-d565-4254-8d05-45be0abc8aea",
       "name": "Sticky Note32"
     },
     {
@@ -3328,10 +3342,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        22240,
-        16256
+        4512,
+        4256
       ],
-      "id": "74a3b864-b1ea-44a3-a462-c14318bb1a18",
+      "id": "dae6c073-bd26-4902-81cd-fd72093e6f20",
       "name": "Remove Page Number Placeholders",
       "disabled": true
     },
@@ -3351,10 +3365,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        25408,
-        16800
+        7680,
+        4800
       ],
-      "id": "114e7ac2-417a-4bcd-9b67-1757ad8c0159",
+      "id": "a96df3c9-0be8-4c35-ab2b-e3acc2097031",
       "name": "Basic LLM Chain",
       "onError": "continueErrorOutput"
     },
@@ -3365,10 +3379,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        22752,
-        16288
+        5024,
+        4288
       ],
-      "id": "0d8a8bf2-b65e-47b8-8b65-2f2b6aceadc2",
+      "id": "05857ed7-dd5d-41e2-8e2b-1ec1715184f0",
       "name": "Wait3",
       "webhookId": "359ab095-cb8b-4b07-bc9f-73c1fea452c0",
       "disabled": true
@@ -3382,10 +3396,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        19456,
-        14176
+        1728,
+        2176
       ],
-      "id": "e319543f-9c66-4391-90b2-415a8d4a939d",
+      "id": "6f9c9821-f665-4967-93ba-2ca918126bb0",
       "name": "Sticky Note38"
     },
     {
@@ -3397,10 +3411,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        18608,
-        14512
+        880,
+        2512
       ],
-      "id": "81075d7e-f297-44a2-9f9b-a95e6cf99783",
+      "id": "5fdafc31-670e-46cb-bed0-31126e515617",
       "name": "Sticky Note39"
     },
     {
@@ -3412,10 +3426,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        18592,
-        13760
+        864,
+        1760
       ],
-      "id": "91bed668-dc2e-4769-8743-6555818a545a",
+      "id": "1a634782-5c55-48aa-8904-4aa6993e63d4",
       "name": "Sticky Note40"
     },
     {
@@ -3427,20 +3441,20 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        18592,
-        13520
+        864,
+        1520
       ],
-      "id": "316b182d-89b2-4a79-b67e-1a3fee217cd1",
+      "id": "20de440b-883e-4a17-8c60-62c387ec25b9",
       "name": "Sticky Note41"
     },
     {
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "strict"
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
           },
           "conditions": [
             {
@@ -3459,7 +3473,8 @@
               "rightValue": "",
               "operator": {
                 "type": "string",
-                "operation": "empty"
+                "operation": "empty",
+                "singleValue": true
               }
             }
           ],
@@ -3470,10 +3485,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        20288,
-        16944
+        2560,
+        4944
       ],
-      "id": "7a5709e0-aab6-4ffb-9aef-e791153fe0c3",
+      "id": "10651919-c142-4393-aa60-4311d712a911",
       "name": "If Record is Complete"
     },
     {
@@ -3485,10 +3500,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        22704,
-        16128
+        4976,
+        4128
       ],
-      "id": "5af646ab-ca76-470a-933a-abc46ac42dcd",
+      "id": "2342102e-effb-4d4d-be9d-6afd3e175732",
       "name": "Sticky Note43",
       "disabled": true
     },
@@ -3517,10 +3532,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        27088,
-        16304
+        9360,
+        4304
       ],
-      "id": "138b2453-173a-42ca-937d-40d8d7c66d06",
+      "id": "f1dffa3e-258b-4cf3-825f-a619e22143b6",
       "name": "Update our Record Manager2",
       "retryOnFail": true,
       "credentials": {
@@ -3537,10 +3552,10 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        27264,
-        16304
+        9536,
+        4304
       ],
-      "id": "54de34e1-414d-428e-a1ce-cfabe5198554",
+      "id": "7c6e1769-1ea9-4fb4-8d5c-79a37e8088cc",
       "name": "Stop and Error"
     },
     {
@@ -3560,10 +3575,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        26912,
-        16304
+        9184,
+        4304
       ],
-      "id": "73c62cfe-9265-424f-92c2-651af8824eba",
+      "id": "f030062c-16d6-4ef8-ad5d-e2003d9f08bf",
       "name": "Error Message"
     },
     {
@@ -3576,10 +3591,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        22336,
-        17280
+        4608,
+        5280
       ],
-      "id": "7c26a2b6-0833-4fc5-a42e-1c1856e7ecce",
+      "id": "76e2bddc-e238-461d-b3b1-08cd5e76ead7",
       "name": "Sticky Note35"
     },
     {
@@ -3589,10 +3604,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        18320,
-        12752
+        592,
+        752
       ],
-      "id": "86eddc99-a90b-4881-a6ee-60cf41abc3a9",
+      "id": "975e2bfb-7023-461b-9492-e61ebcce7384",
       "name": "Loop Over Items1"
     },
     {
@@ -3605,10 +3620,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        19056,
-        12656
+        1328,
+        656
       ],
-      "id": "264770f3-e0a8-4b13-a358-db09733be695",
+      "id": "dc8f8ff2-e979-4b05-9a09-1d4248ccefa8",
       "name": "Delete Previous Vectors1",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -3627,10 +3642,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        19280,
-        12656
+        1552,
+        656
       ],
-      "id": "a5350df9-8317-41ba-93f0-75a9ca1d18d4",
+      "id": "c6cd3fb4-80d7-483a-ba69-ffb48b34a1fb",
       "name": "Aggregate1"
     },
     {
@@ -3650,10 +3665,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        18560,
-        12848
+        832,
+        848
       ],
-      "id": "40fdabf4-3110-41f0-b675-5b871eacea9d",
+      "id": "7496386c-65fa-4f46-ba0e-17b7f8504384",
       "name": "Search Record Manager1",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -3668,10 +3683,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "strict"
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
           },
           "conditions": [
             {
@@ -3680,7 +3695,8 @@
               "rightValue": "",
               "operator": {
                 "type": "number",
-                "operation": "exists"
+                "operation": "exists",
+                "singleValue": true
               }
             }
           ],
@@ -3691,10 +3707,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        18752,
-        12848
+        1024,
+        848
       ],
-      "id": "fb659c79-d47f-435a-9336-49d1bdb6bdf6",
+      "id": "f7c2b279-dab1-4d68-b32c-f547a521a90b",
       "name": "If"
     },
     {
@@ -3714,10 +3730,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        19744,
-        12656
+        2016,
+        656
       ],
-      "id": "572ba84d-f2ad-4c52-8e47-5db9c1c467fc",
+      "id": "5b4a3e40-728c-422d-be47-c9170e44a31a",
       "name": "Delete Record from Record Manager",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -3741,10 +3757,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        20096,
-        12864
+        2368,
+        864
       ],
-      "id": "c54faa5e-abb7-46c4-83f3-f839d92cb610",
+      "id": "93fb11b4-9db7-424d-9c2a-d24f2ed0c815",
       "name": "Delete a file",
       "retryOnFail": true,
       "credentials": {
@@ -3771,10 +3787,10 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        19536,
-        12656
+        1808,
+        656
       ],
-      "id": "4cd9674f-638d-477f-a9ec-789e3c136d39",
+      "id": "62fe87be-6ba3-40fe-b2f0-6dced9db4970",
       "name": "Delete Old Tabular Data Rows",
       "alwaysOutputData": true,
       "executeOnce": true,
@@ -3796,10 +3812,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        17456,
-        12528
+        -272,
+        528
       ],
-      "id": "ff68429b-4469-41cd-9466-00443af4774f",
+      "id": "7e11c446-650a-420c-8b29-6f24c1b481f3",
       "name": "Sticky Note"
     },
     {
@@ -3811,10 +3827,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        17984,
-        12688
+        256,
+        688
       ],
-      "id": "df0cecb9-3eb3-4465-a21a-faccd3f88f38",
+      "id": "2a0c5a4c-5982-4aa8-9df7-36107d108ddb",
       "name": "Sticky Note42"
     },
     {
@@ -3838,10 +3854,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        18048,
-        12752
+        320,
+        752
       ],
-      "id": "7a7f2855-a97d-40e8-a821-bd408ab43522",
+      "id": "67e54c3b-d481-4a22-9a33-69749722fc49",
       "name": "Search files and folders",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -3855,7 +3871,8 @@
         "rule": {
           "interval": [
             {
-              "field": "hours"
+              "field": "minutes",
+              "minutesInterval": 2
             }
           ]
         }
@@ -3863,10 +3880,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        17792,
-        12752
+        64,
+        752
       ],
-      "id": "0e725d8e-f3fb-4f5b-93b4-3fdb690a174e",
+      "id": "3d1220b4-c681-4f20-91d4-6624e8298b9b",
       "name": "Schedule Trigger1"
     },
     {
@@ -3876,22 +3893,24 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        23936,
-        13808
+        6208,
+        1808
       ],
-      "id": "d683a891-9d48-4731-bbab-fb6b3bc2fd31",
+      "id": "7c8c9bcc-1023-40ff-b38e-fdf2b3fdaa41",
       "name": "Insert Page Markers",
       "onError": "continueRegularOutput"
     },
     {
-      "parameters": {},
+      "parameters": {
+        "amount": 4
+      },
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        25120,
-        17024
+        7392,
+        5024
       ],
-      "id": "3eab27c8-efbf-452f-992a-454cf8eb17b5",
+      "id": "ec109b4c-7e7c-4db0-b21f-0e560afdbb37",
       "name": "Wait 5s",
       "webhookId": "83d6b920-6b4b-481a-b405-5e833520194d"
     },
@@ -3908,10 +3927,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        23024,
-        17024
+        5296,
+        5024
       ],
-      "id": "f0c2ee83-a419-4cf4-bb27-956d14dee512",
+      "id": "cb222da0-2974-426a-b164-5c788025f53d",
       "name": "Anthropic Chat Model1",
       "credentials": {
         "anthropicApi": {
@@ -3924,9 +3943,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-5-nano",
+          "value": "gpt-4o-mini",
           "mode": "list",
-          "cachedResultName": "gpt-5-nano"
+          "cachedResultName": "gpt-4o-mini"
         },
         "builtInTools": {},
         "options": {}
@@ -3934,10 +3953,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        25408,
-        17024
+        7680,
+        5024
       ],
-      "id": "4622311b-13c2-44a4-b368-999dab6047ba",
+      "id": "f9fa8338-a0a4-4735-a4f0-46efb970fce2",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
@@ -3945,6 +3964,29 @@
           "name": "OpenAi account"
         }
       }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here is the chunk we want to situate within the whole document \n<chunk> \n{{ $json.content }}\n</chunk> \nPlease give a short succinct context to situate this chunk within the overall document for the purposes of improving search retrieval of the chunk. Answer only with the succinct context and nothing else. ",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=<document> \n{{ $('Set up Text for Embedding').item.json.content }} \n</document> "
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        7696,
+        5184
+      ],
+      "id": "5ef36620-0977-49e5-8b58-47bb451e8dc9",
+      "name": "Basic LLM Chain1",
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -3962,10 +4004,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.6,
       "position": [
-        23024,
-        17200
+        5296,
+        5200
       ],
-      "id": "851c9df4-c8eb-4be8-94b2-b1623ffb1932",
+      "id": "808c0f16-22a1-4242-bdf2-5f4c0f76dbb4",
       "name": "Enrich1",
       "retryOnFail": true,
       "maxTries": 5,
@@ -3980,10 +4022,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        23168,
-        17392
+        5440,
+        5392
       ],
-      "id": "6582bacc-0aba-4b20-be5e-e467a99eb996",
+      "id": "5ce201f3-5903-4371-8cfe-55077b09c047",
       "name": "Structured Output Parser"
     },
     {
@@ -3994,10 +4036,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
       "typeVersion": 1,
       "position": [
-        23024,
-        17392
+        5296,
+        5392
       ],
-      "id": "f588837c-4f84-4345-93f4-8423a8f99953",
+      "id": "056b050f-d83d-4315-81ad-469c6791b030",
       "name": "Mistral Cloud Chat Model",
       "credentials": {
         "mistralCloudApi": {
@@ -4010,26 +4052,131 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "claude-haiku-4-5-20251001",
+          "value": "gpt-4.1-nano",
           "mode": "list",
-          "cachedResultName": "Claude Haiku 4.5"
+          "cachedResultName": "gpt-4.1-nano"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        7696,
+        5392
+      ],
+      "id": "0f76597d-bb69-49ed-8e52-2233c5d16b10",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "r6dwaEmQxKEvrskM",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "beta-batch-cond-001",
+              "leftValue": "={{ $('Set Data').first().json.batch_mode_enabled }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
         },
         "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
-      "typeVersion": 1.3,
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
       "position": [
-        25568,
-        17056
+        6512,
+        5072
       ],
-      "id": "889047a5-a6f8-47bb-a464-3bdb8c693dc2",
-      "name": "Anthropic Chat Model",
-      "credentials": {
-        "anthropicApi": {
-          "id": "UyAehXbUNQAWwZOs",
-          "name": "Claude SEB"
-        }
-      }
+      "id": "32771b3d-852e-4973-8c05-5d4e5fb3f39f",
+      "name": "Batch or Direct?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Collect all chunks + metadata for batch submission\nconst data = $input.first().json;\nconst chunks = data.chunks;\nconst document = $('Set up Text for Embedding').first().json.content;\n\nconst recordManagerId = $('Create Row in Record Manager').isExecuted\n  ? $('Create Row in Record Manager').first().json.id\n  : $('Search Record Manager').first().json.id;\n\nreturn [{\n  json: {\n    document,\n    chunks: JSON.stringify(chunks.map(c => c.content)),\n    chunk_metadata: JSON.stringify(chunks.map(c => c.metadata)),\n    record_manager_id: recordManagerId,\n    document_id: $('Set Data').first().json.doc_id || 'unknown'\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6736,
+        4864
+      ],
+      "id": "e045cd27-5d58-4b35-a973-1483e82ce10c",
+      "name": "Prepare Batch Data"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "nZ8Gqdhnz32W9le8",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/nZ8Gqdhnz32W9le8",
+          "cachedResultName": "Contextual Embedding Batch API (Beta)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "document": "={{ $json.document }}",
+            "chunks": "={{ $json.chunks }}",
+            "chunk_metadata": "={{ $json.chunk_metadata }}",
+            "record_manager_id": "={{ $json.record_manager_id }}",
+            "document_id": "={{ $json.document_id }}"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        6976,
+        4864
+      ],
+      "id": "bf71a2f0-54c7-422d-9e62-d0923a7c7275",
+      "name": "Submit Contextual Batch",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        7216,
+        4864
+      ],
+      "id": "e0f053e8-8f01-4b49-9e93-1b41d9d2aa10",
+      "name": "Batch Submitted"
+    },
+    {
+      "parameters": {
+        "content": "## Batch Contextual Embedding (Beta)\nWhen `contextual_embedding_enabled = true`, chunks are submitted to the OpenAI Batch API instead of being enriched inline.\nThe batch workflow handles polling, embedding, and vector store insertion asynchronously.\n**Set the workflow ID** in \"Submit Contextual Batch\" after importing the batch workflow.",
+        "width": 800,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        6496,
+        4640
+      ],
+      "id": "1349ddb7-7dc1-4c46-bac2-fe87ee3d09c2",
+      "name": "Sticky Note - Batch Beta"
     }
   ],
   "pinData": {},
@@ -5245,7 +5392,7 @@
         ],
         [
           {
-            "node": "Error Message",
+            "node": "Basic LLM Chain1",
             "type": "main",
             "index": 0
           }
@@ -5458,7 +5605,47 @@
       "main": [
         [
           {
+            "node": "Batch or Direct?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch or Direct?": {
+      "main": [
+        [
+          {
+            "node": "Prepare Batch Data",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
             "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Batch Data": {
+      "main": [
+        [
+          {
+            "node": "Submit Contextual Batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit Contextual Batch": {
+      "main": [
+        [
+          {
+            "node": "Batch Submitted",
             "type": "main",
             "index": 0
           }
@@ -5471,6 +5658,24 @@
           {
             "node": "Basic LLM Chain",
             "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Chunk with contextual embedding",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Message",
+            "type": "main",
             "index": 0
           }
         ]
@@ -5516,9 +5721,26 @@
         ]
       ]
     },
-    "Anthropic Chat Model": {
+    "OpenAI Chat Model": {
       "ai_languageModel": [
-        []
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Batch Submitted": {
+      "main": [
+        [
+          {
+            "node": "Update our Record Manager1",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -5526,15 +5748,13 @@
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": false,
-    "callerPolicy": "workflowsFromSameOwner"
+    "availableInMCP": false
   },
-  "versionId": "e73e9abc-45f5-4049-a46d-f58d1392e8cf",
+  "versionId": "591f0f4c-d056-4a7f-8cf5-cc70c4ec7f18",
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "eaa3d31df30f69d853bf1887372824077726204755d7d83df055afd95f72246a"
   },
-  "id": "2Y3dfnVU2BoXJaSe",
+  "id": "UMq7KbkoShJW9Nt0",
   "tags": [
     {
       "updatedAt": "2026-02-15T11:24:19.214Z",

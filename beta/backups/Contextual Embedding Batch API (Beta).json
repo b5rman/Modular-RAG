@@ -1,0 +1,890 @@
+{
+  "name": "Contextual Embedding Batch API (Beta)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "5d83c128-3498-48ae-af99-ecd505a3b1da",
+      "name": "Start (mock data)",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        848,
+        352
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst document = data.document;\n\n// Handle chunks as string (from sub-workflow) or array (from manual trigger)\nconst chunks = typeof data.chunks === 'string' ? JSON.parse(data.chunks) : data.chunks;\nconst chunkMetadata = data.chunk_metadata\n  ? (typeof data.chunk_metadata === 'string' ? JSON.parse(data.chunk_metadata) : data.chunk_metadata)\n  : [];\nconst recordManagerId = data.record_manager_id || null;\n\nfunction createBatchRequestLine(chunk, index) {\n  return {\n    custom_id: `chunk_${index}`,\n    method: \"POST\",\n    url: \"/v1/chat/completions\",\n    body: {\n      model: \"gpt-4o-mini\",\n      messages: [\n        {\n          role: \"user\",\n          content: `<document>\\n${document}\\n</document>`\n        },\n        {\n          role: \"user\",\n          content: `Here is the chunk we want to situate within the whole document\\n<chunk>\\n${chunk}\\n</chunk>\\nPlease give a short succinct context to situate this chunk within the overall document for the purposes of improving search retrieval of the chunk. Answer only with the succinct context and nothing else.`\n        }\n      ],\n      max_tokens: 256\n    }\n  };\n}\n\nconst jsonlContent = chunks\n  .map((chunk, index) => JSON.stringify(createBatchRequestLine(chunk, index)))\n  .join('\\n');\n\nconst base64Content = Buffer.from(jsonlContent, 'utf-8').toString('base64');\n\nreturn [{\n  json: {\n    chunk_count: chunks.length,\n    document_id: data.document_id || 'unknown',\n    input_data: JSON.stringify({\n      chunks: chunks,\n      chunk_metadata: chunkMetadata,\n      record_manager_id: recordManagerId\n    })\n  },\n  binary: {\n    data: {\n      data: base64Content,\n      mimeType: 'application/x-ndjson',\n      fileName: 'contextual_embedding_batch.jsonl'\n    }\n  }\n}];"
+      },
+      "id": "1164ac49-3182-4d27-99bb-7828ff806489",
+      "name": "Convert chunks to batch JSONL",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        816,
+        800
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "purpose",
+              "value": "batch"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b0b79744-26d4-4e81-a007-fac764ea85d6",
+      "name": "Call Files API",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1040,
+        800
+      ],
+      "typeVersion": 4.2,
+      "alwaysOutputData": true,
+      "credentials": {
+        "openAiApi": {
+          "id": "r6dwaEmQxKEvrskM",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/batches",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"input_file_id\": \"{{ $json.id }}\",\n  \"endpoint\": \"/v1/chat/completions\",\n  \"completion_window\": \"24h\"\n}",
+        "options": {}
+      },
+      "id": "d6d9f249-3251-425e-a9fb-189f6c608c11",
+      "name": "Call Batch API",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1264,
+        800
+      ],
+      "typeVersion": 4.2,
+      "alwaysOutputData": true,
+      "credentials": {
+        "openAiApi": {
+          "id": "r6dwaEmQxKEvrskM",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "openai_batches",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "=id",
+              "fieldValue": "={{ $json.id }}"
+            },
+            {
+              "fieldId": "batch_status",
+              "fieldValue": "={{ $json.status }}"
+            },
+            {
+              "fieldId": "input_data",
+              "fieldValue": "={{ $('Convert chunks to batch JSONL').first().json.input_data }}"
+            }
+          ]
+        }
+      },
+      "id": "a4904a3f-232b-4c28-9d4b-10b83f238b5a",
+      "name": "Create a row in batch table",
+      "type": "n8n-nodes-base.supabase",
+      "position": [
+        1488,
+        800
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "supabaseApi": {
+          "id": "JXvQLWfqIjdcMyqm",
+          "name": "Supabase B5rman"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "8975a021-c386-4c47-8c9e-d93431cf9619",
+      "name": "Submission done",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1712,
+        800
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "# Contextual Embedding Batch API (Beta)\n\n### What this does\nReplaces the **throttled per-chunk contextual embedding** in RAG Ingestion with OpenAI's **Batch API**. Instead of calling gpt-4o-mini once per chunk (with 5s waits and batch size 4), this submits ALL chunks in a single batch job, then embeds and inserts into the vector store when complete.\n\n**Benefits:**\n- Separate (much higher) rate limits — no more throttling\n- 50% cheaper than real-time API calls\n- Submit hundreds of chunks at once\n- **Trade-off:** Async processing (up to 24h, typically much faster)\n\n### How it works\n**Phase 1 — Submit:** Takes a document + chunks + metadata, converts to `/v1/chat/completions` JSONL batch, uploads to OpenAI, stores batch ID + original data in `openai_batches`.\n\n**Phase 2 — Poll, Embed & Insert (every 5 mins):** Cron checks for completed batches, downloads contextual descriptions, pairs them with original chunks, creates embeddings via `text-embedding-3-small`, and inserts into `documents_v2` vector store.\n\n### Triggers\n- **Manual Trigger:** For standalone testing with pinned data\n- **Sub-Workflow Trigger:** Called from RAG Ingestion pipeline\n\n### Setup steps\n1. `openai_batches` table needs: `input_data` (text) column\n2. Configure **OpenAI**, **Supabase**, and **Postgres** credentials\n3. When calling from ingestion: set Execute Workflow node to this workflow's ID\n\n### Customization\n- Change model in **Convert chunks to batch JSONL** (currently `gpt-4o-mini`)\n- Adjust `max_tokens` (currently 256) for longer/shorter context\n- Adjust cron interval (currently every 5 mins)\n- Embedding model in **Create OpenAI Embeddings** (currently `text-embedding-3-small`)   ",
+        "height": 800,
+        "width": 720
+      },
+      "id": "807fde0f-812d-4216-9631-950aa5444d94",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Phase 1: Submit Contextual Embedding Batch\nConverts document chunks to `/v1/chat/completions` JSONL, uploads to OpenAI, creates batch job, stores chunks + metadata + batch ID in `openai_batches`.",
+        "height": 112,
+        "width": 480,
+        "color": 7
+      },
+      "id": "a8138e06-a49b-48a6-bc98-a41dd7d94cf8",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        800
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 7
+            }
+          ]
+        }
+      },
+      "id": "9d92f731-47c3-4d98-87cd-68e2b35af7d3",
+      "name": "Cron Job (5 mins)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        512,
+        1232
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "list",
+          "value": "openai_batches",
+          "cachedResultName": "openai_batches"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "batch_status",
+              "condition": "!=",
+              "value": "failed"
+            },
+            {
+              "column": "batch_status",
+              "condition": "!=",
+              "value": "expired"
+            },
+            {
+              "column": "batch_status",
+              "condition": "!=",
+              "value": "cancelled"
+            },
+            {
+              "column": "batch_status",
+              "condition": "!=",
+              "value": "completed"
+            }
+          ]
+        },
+        "sort": {
+          "values": [
+            {
+              "column": "created_at"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "146dee18-9062-458b-b680-04ffb30030fb",
+      "name": "Get the earliest uncompleted batch",
+      "type": "n8n-nodes-base.postgres",
+      "position": [
+        736,
+        1232
+      ],
+      "typeVersion": 2.6,
+      "credentials": {
+        "postgres": {
+          "id": "tRlTzpjOmrCVSNLF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.openai.com/v1/batches/{{ $json.id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {}
+      },
+      "id": "d756c128-0046-47f2-bbdf-5405f451d9a5",
+      "name": "Call Batch API to retrieve batch object",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        960,
+        1232
+      ],
+      "typeVersion": 4.1,
+      "credentials": {
+        "openAiApi": {
+          "id": "r6dwaEmQxKEvrskM",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 3,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "e9c51ad5-0001-4000-a000-000000000001",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "completed"
+            },
+            {
+              "id": "e9c51ad5-0002-4000-a000-000000000002",
+              "operator": {
+                "type": "string",
+                "operation": "exists"
+              },
+              "leftValue": "={{ $json.output_file_id }}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9a1fec1a-ab23-4a0f-a34a-952a878dbed7",
+      "name": "If status = completed",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1184,
+        1232
+      ],
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "url": "=https://api.openai.com/v1/files/{{ $json.output_file_id }}/content",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "28dcfd5f-14b6-4b0f-a7db-f4c4a225c1f9",
+      "name": "Download .jsonl result",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1408,
+        1136
+      ],
+      "typeVersion": 4.1,
+      "credentials": {
+        "openAiApi": {
+          "id": "r6dwaEmQxKEvrskM",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "id": "23c66f18-55fe-400b-8915-059ac0ec4d8b",
+      "name": ".jsonl to base64",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        1632,
+        1136
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "jsCode": "const base64Content = $input.first().json.data;\nconst jsonlContent = Buffer.from(base64Content, 'base64').toString('utf-8');\n\nconst lines = jsonlContent\n  .split('\\n')\n  .filter(line => line.trim())\n  .map(line => {\n    try { return JSON.parse(line); } catch { return null; }\n  })\n  .filter(line => line !== null);\n\nconst batchRow = $('Get the earliest uncompleted batch').first().json;\nlet inputData;\ntry {\n  inputData = typeof batchRow.input_data === 'string'\n    ? JSON.parse(batchRow.input_data)\n    : batchRow.input_data;\n} catch (e) {\n  inputData = { chunks: [] };\n}\n\nconst originalChunks = inputData.chunks || [];\n\nlines.sort((a, b) => {\n  const indexA = parseInt(a.custom_id.replace('chunk_', ''));\n  const indexB = parseInt(b.custom_id.replace('chunk_', ''));\n  return indexA - indexB;\n});\n\nconst batch = $('If status = completed').first().json;\nconst enrichedChunks = [];\nlet parsed = 0, errors = 0;\n\nfor (const line of lines) {\n  try {\n    if (line.error || line.response?.status_code !== 200) { errors++; continue; }\n    const context = line.response?.body?.choices?.[0]?.message?.content;\n    if (!context) { errors++; continue; }\n    const chunkIndex = parseInt(line.custom_id.replace('chunk_', ''));\n    const originalChunk = originalChunks[chunkIndex] || '';\n    enrichedChunks.push(`${context.trim()} - ${originalChunk}`);\n    parsed++;\n  } catch (e) { errors++; }\n}\n\nconst BATCH_SIZE = 20;\nconst results = [];\n\nfor (let i = 0; i < enrichedChunks.length; i += BATCH_SIZE) {\n  results.push({\n    json: {\n      chunks: enrichedChunks.slice(i, i + BATCH_SIZE),\n      start_index: i,\n      batch_index: Math.floor(i / BATCH_SIZE),\n      total_batches: Math.ceil(enrichedChunks.length / BATCH_SIZE),\n      batch_id: batch.id,\n      batch_status: batch.status,\n      output_file_id: batch.output_file_id,\n      all_enriched: i === 0 ? enrichedChunks : undefined,\n      parsed,\n      errors\n    }\n  });\n}\n\nreturn results;"
+      },
+      "id": "3d5e43e4-44fa-46fd-a073-52b0723ccfff",
+      "name": "Decode, Enrich & Split",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1856,
+        1136
+      ],
+      "typeVersion": 2,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/embeddings",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"text-embedding-3-small\",\n  \"input\": {{ JSON.stringify($json.chunks) }}\n}",
+        "options": {}
+      },
+      "id": "58614c59-af8b-4c83-8ab2-68834ed6b764",
+      "name": "Create OpenAI Embeddings",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2608,
+        1136
+      ],
+      "typeVersion": 4.2,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 2500,
+      "credentials": {
+        "openAiApi": {
+          "id": "r6dwaEmQxKEvrskM",
+          "name": "OpenAi account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const embeddings = $input.first().json.data;\nconst batchItem = $('Loop over Embedding Batches').first().json;\nconst enrichedChunks = batchItem.chunks;\nconst startIndex = batchItem.start_index;\n\nconst batchRow = $('Get the earliest uncompleted batch').first().json;\nlet inputData;\ntry {\n  inputData = typeof batchRow.input_data === 'string'\n    ? JSON.parse(batchRow.input_data)\n    : batchRow.input_data;\n} catch (e) {\n  inputData = {};\n}\nconst allMetadata = inputData.chunk_metadata || [];\nconst recordManagerId = inputData.record_manager_id;\n\nconst contents = [];\nconst metadatas = [];\nconst embeddingStrs = [];\nconst recordManagerIds = [];\n\nfor (const embeddingObj of embeddings) {\n  const idx = embeddingObj.index;\n  const globalIdx = startIndex + idx;\n  contents.push(enrichedChunks[idx]);\n  metadatas.push(JSON.stringify(allMetadata[globalIdx] || {}));\n  embeddingStrs.push(`[${embeddingObj.embedding.join(',')}]`);\n  recordManagerIds.push(recordManagerId);\n}\n\nconst insertQuery = `INSERT INTO documents_v2 (content, metadata, embedding, record_manager_id) SELECT c, m::jsonb, e::vector, r FROM unnest($1::text[], $2::text[], $3::text[], $4::int[]) AS t(c, m, e, r)`;\n\nreturn [{\n  json: {\n    insertQuery,\n    parameters: [contents, metadatas, embeddingStrs, recordManagerIds],\n    recordCount: contents.length,\n    batchInfo: `Batch ${batchItem.batch_index + 1}/${batchItem.total_batches}: inserted ${contents.length} embeddings`,\n    id: batchItem.batch_id,\n    status: batchItem.batch_status,\n    output_file_id: batchItem.output_file_id\n  }\n}];"
+      },
+      "id": "030e4a7f-b21e-4818-b782-abbf813eb6e9",
+      "name": "Build Batch INSERT",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2832,
+        1136
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "={{ $json.insertQuery }}",
+        "options": {
+          "queryReplacement": "={{ $json.parameters }}"
+        }
+      },
+      "id": "ae74e246-02dd-4eb4-b91f-2387f154d876",
+      "name": "Insert into Vector Store",
+      "type": "n8n-nodes-base.postgres",
+      "position": [
+        3056,
+        1136
+      ],
+      "typeVersion": 2.6,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 2500,
+      "credentials": {
+        "postgres": {
+          "id": "tRlTzpjOmrCVSNLF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "openai_batches",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "updated_at",
+              "fieldValue": "={{ $now }}"
+            },
+            {
+              "fieldId": "batch_status",
+              "fieldValue": "={{ $json.status }}"
+            }
+          ]
+        }
+      },
+      "id": "b37c53bb-cfa0-4d20-906d-9482f5855ad0",
+      "name": "Update status",
+      "type": "n8n-nodes-base.supabase",
+      "position": [
+        1408,
+        1328
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "supabaseApi": {
+          "id": "JXvQLWfqIjdcMyqm",
+          "name": "Supabase B5rman"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "openai_batches",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Decode, Enrich & Split').first().json.batch_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "updated_at",
+              "fieldValue": "={{ $now }}"
+            },
+            {
+              "fieldId": "batch_status",
+              "fieldValue": "={{ $('Decode, Enrich & Split').first().json.batch_status }}"
+            },
+            {
+              "fieldId": "output_file_id",
+              "fieldValue": "={{ $('Decode, Enrich & Split').first().json.output_file_id }}"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ $('Decode, Enrich & Split').first().json.all_enriched }}"
+            }
+          ]
+        }
+      },
+      "id": "a0c3cd3a-1fb0-4320-a6ad-56627b7b5557",
+      "name": "Update status and result",
+      "type": "n8n-nodes-base.supabase",
+      "position": [
+        3328,
+        1136
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "supabaseApi": {
+          "id": "JXvQLWfqIjdcMyqm",
+          "name": "Supabase B5rman"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "6f3bef13-32b2-4af2-af40-3cbf433da66e",
+      "name": "Retrieval done",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        3552,
+        1136
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Phase 2: Poll, Embed & Insert (cron)\nPolls for completed batches, decodes contextual descriptions, pairs with chunks, creates embeddings, and inserts into `documents_v2` vector store.",
+        "height": 112,
+        "width": 480,
+        "color": 7
+      },
+      "id": "7af7af0c-d4a5-4415-bff2-d69ed440733e",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -80,
+        1232
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a1b2c3d4-2222-4000-a000-000000000002",
+      "name": "Loop over Embedding Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2336,
+        1136
+      ]
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "document "
+            },
+            {
+              "name": "chunks"
+            },
+            {
+              "name": "chunk_metadata"
+            },
+            {
+              "name": "record_manager_id",
+              "type": "number"
+            },
+            {
+              "name": "document_id"
+            }
+          ]
+        }
+      },
+      "id": "19d99c61-587c-4222-adc8-bb5f67687bd9",
+      "name": "When Executed by Another Workflow - UMq7KbkoShJW9Nt0",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        608,
+        816
+      ],
+      "typeVersion": 1.1
+    }
+  ],
+  "pinData": {
+    "Start (mock data)": [
+      {
+        "json": {
+          "document": "n8n is a workflow automation tool that enables users to automate tasks across different services. It provides a visual workflow editor where users can connect nodes representing different applications and services. n8n supports both cloud-hosted and self-hosted deployment options, making it flexible for various enterprise needs. The platform offers over 400 native integrations and supports custom code execution through JavaScript and Python nodes.",
+          "chunks": [
+            "n8n is a workflow automation tool that enables users to automate tasks across different services.",
+            "It provides a visual workflow editor where users can connect nodes representing different applications and services.",
+            "n8n supports both cloud-hosted and self-hosted deployment options, making it flexible for various enterprise needs.",
+            "The platform offers over 400 native integrations and supports custom code execution through JavaScript and Python nodes."
+          ],
+          "chunk_metadata": [
+            {
+              "chunk_index": 0,
+              "doc_id": "test_doc_001",
+              "doc_name": "n8n Overview",
+              "content_length": 97,
+              "data_type": "markdown"
+            },
+            {
+              "chunk_index": 1,
+              "doc_id": "test_doc_001",
+              "doc_name": "n8n Overview",
+              "content_length": 107,
+              "data_type": "markdown"
+            },
+            {
+              "chunk_index": 2,
+              "doc_id": "test_doc_001",
+              "doc_name": "n8n Overview",
+              "content_length": 109,
+              "data_type": "markdown"
+            },
+            {
+              "chunk_index": 3,
+              "doc_id": "test_doc_001",
+              "doc_name": "n8n Overview",
+              "content_length": 115,
+              "data_type": "markdown"
+            }
+          ],
+          "record_manager_id": 65,
+          "document_id": "test_doc_001"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Start (mock data)": {
+      "main": [
+        []
+      ]
+    },
+    "Convert chunks to batch JSONL": {
+      "main": [
+        [
+          {
+            "node": "Call Files API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Files API": {
+      "main": [
+        [
+          {
+            "node": "Call Batch API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Batch API": {
+      "main": [
+        [
+          {
+            "node": "Create a row in batch table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row in batch table": {
+      "main": [
+        [
+          {
+            "node": "Submission done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cron Job (5 mins)": {
+      "main": [
+        [
+          {
+            "node": "Get the earliest uncompleted batch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get the earliest uncompleted batch": {
+      "main": [
+        [
+          {
+            "node": "Call Batch API to retrieve batch object",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Batch API to retrieve batch object": {
+      "main": [
+        [
+          {
+            "node": "If status = completed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If status = completed": {
+      "main": [
+        [
+          {
+            "node": "Download .jsonl result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download .jsonl result": {
+      "main": [
+        [
+          {
+            "node": ".jsonl to base64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    ".jsonl to base64": {
+      "main": [
+        [
+          {
+            "node": "Decode, Enrich & Split",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create OpenAI Embeddings": {
+      "main": [
+        [
+          {
+            "node": "Build Batch INSERT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Batch INSERT": {
+      "main": [
+        [
+          {
+            "node": "Insert into Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update status and result": {
+      "main": [
+        [
+          {
+            "node": "Retrieval done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop over Embedding Batches": {
+      "main": [
+        [
+          {
+            "node": "Update status and result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create OpenAI Embeddings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert into Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Loop over Embedding Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Decode, Enrich & Split": {
+      "main": [
+        [
+          {
+            "node": "Loop over Embedding Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow - UMq7KbkoShJW9Nt0": {
+      "main": [
+        [
+          {
+            "node": "Convert chunks to batch JSONL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "5f9e77a1-0121-4ca3-8224-8d8084ba4b80",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "eaa3d31df30f69d853bf1887372824077726204755d7d83df055afd95f72246a"
+  },
+  "id": "nZ8Gqdhnz32W9le8",
+  "tags": [
+    {
+      "updatedAt": "2026-02-15T11:24:51.266Z",
+      "createdAt": "2026-02-15T11:24:51.266Z",
+      "id": "OEoaSAg7UTdJYuMl",
+      "name": "BVIJ"
+    },
+    {
+      "updatedAt": "2026-02-15T13:10:47.882Z",
+      "createdAt": "2026-02-15T13:10:47.882Z",
+      "id": "Z2OUf4P51HExgS2t",
+      "name": "DEV"
+    }
+  ]
+}
