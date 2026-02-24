@@ -69,10 +69,11 @@ You can verify your document was processed by asking the chat a question about i
 | Category | Formats |
 |----------|---------|
 | **Text** | Plain Text (.txt), Markdown (.md) |
-| **Documents** | PDF, Google Docs, HTML |
+| **Documents** | PDF, Google Docs, HTML, Word (.doc/.docx) |
 | **Spreadsheets** | Excel (.xlsx), CSV, Google Sheets |
+| **Via LlamaParse** | PowerPoint, RTF, EPUB, Images, Audio, Video |
 
-> **Not currently supported:** Word (.doc/.docx), PowerPoint, RTF, EPUB, images, audio, and video files require LlamaParse which is not enabled. These files will be moved to the Error folder if uploaded.
+> **Note:** Word documents and other complex formats are parsed via LlamaParse, which uploads the file to the LlamaParse API and polls for the parsed result. Processing may take slightly longer than native formats.
 
 ### Notes on Spreadsheets (Excel, CSV, Google Sheets)
 

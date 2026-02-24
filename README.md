@@ -49,13 +49,13 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 | Text | Plain Text (.txt), Markdown (.md) |
 | Documents | Google Docs, PDF, HTML |
 | Spreadsheets | Excel (.xlsx), CSV, Google Sheets |
-| Requires LlamaParse (disabled) | Word (.doc/.docx), PowerPoint, RTF, EPUB, Images, Audio, Video |
+| Via LlamaParse | Word (.doc/.docx), PowerPoint, RTF, EPUB, Images, Audio, Video |
 
 ### Key Features
 
 - **Smart Chunking** - Hierarchical markdown-aware splitting (min 400 / target 600 / max 800 chars) with page number tracking
 - **Deduplication** - SHA256 content hashing via `record_manager_v2`; skips unchanged docs, re-indexes changed ones
-- **LLM Enrichment** - Claude Sonnet 4.5 extracts headline, summary, and custom metadata per document
+- **LLM Enrichment** - Claude Haiku 4.5 extracts headline, summary, and custom metadata per document
 - **Batch Embedding** - Chunks batched (200/batch) with OpenAI `text-embedding-3-small`, inserted via PostgreSQL `UNNEST`
 - **Tabular Data** - Excel/CSV rows stored individually as JSON in `tabular_document_rows`, optionally embedded
 
@@ -63,7 +63,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 | Flag | Purpose |
 |------|---------|
-| `contextual_embedding_enabled` | GPT-4 mini generates contextual snippets per chunk before embedding |
+| `contextual_embedding_enabled` | Claude Haiku 4.5 generates contextual snippets per chunk before embedding |
 | `lightrag_enabled` | Routes to LightRAG sub-workflow for knowledge graph construction |
 | `multimodal_rag_enabled` | Routes to multimodal sub-workflow for image/visual content |
 | `ocr_enabled` | Mistral AI OCR for scanned documents and images |
@@ -135,13 +135,29 @@ Called by the retrieval workflow to persist conversation context:
 - **Google Drive** — File triggers and operations
 - **LightRAG** — Knowledge graph (optional)
 - **Zep** — Long-term memory (optional)
-- **LlamaParse** — Advanced document parsing (disabled by default)
+- **LlamaParse** — Advanced document parsing for Word, PowerPoint, RTF, EPUB, and other complex formats
 - **Cohere** — Reranking (rerank-v3.5, active)
 - **Firecrawl** — Web scraping (disabled by default)
 
 ---
 
 ## Changelog
+
+### v1.0.8c (5) - 2026-02-24
+
+**LlamaParse Integration (re-enabled):**
+- **Fixed LlamaParse upload endpoint** — changed from `/api/v1/files/` (file management API) to `/api/parsing/upload` (parsing API) which uploads and starts the parsing job in one step
+- **Fixed upload form data** — changed parameter type from `formData` to `formBinaryData` and field name to `file` so the actual binary file is sent instead of a string literal
+- **Re-enabled full LlamaParse polling chain** — enabled all 7 nodes: Upload, Wait1, Set counter, Is Job Ready?, Wait, Get Processing Status, Counter, Get parsed document
+- **Word documents (.doc/.docx) now supported** — routed via LlamaParse through the "Other doc types" branch in Switch1
+
+**Model Changes:**
+- **Removed duplicate contextual embedding LLM chain** — `Basic LLM Chain1` was running the same prompt as `Basic LLM Chain`, doubling API calls and token usage per chunk. Removed the duplicate
+- **Contextual embedding model remains OpenAI** — `Basic LLM Chain` still uses `OpenAI Chat Model1` (gpt-5-nano) for per-chunk contextual descriptions
+
+**Bug Fixes:**
+- **Fixed If3 type validation error** — changed condition from `$json` (object notEmpty, strict) to `$json.metadata_name` (string notEmpty, loose). The Supabase metadata query result was failing strict object type validation when receiving empty data
+- **Set workflow execution order to v1** — explicit execution order setting
 
 ### v1.0.8c - 2026-02-19
 

@@ -250,8 +250,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        23552,
-        17232
+        23600,
+        17120
       ],
       "id": "672ab0e9-9ade-4fc6-a06d-2ef5b1fd8f05",
       "name": "Set up Text for Embedding"
@@ -441,7 +441,7 @@
             {
               "id": "6e9b9a47-9dc9-4912-8833-c934ec3e5d89",
               "name": "contextual_embedding_enabled",
-              "value": false,
+              "value": true,
               "type": "boolean"
             },
             {
@@ -492,10 +492,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "loose"
           },
           "conditions": [
             {
@@ -582,7 +582,7 @@
     },
     {
       "parameters": {
-        "batchSize": 200,
+        "batchSize": 2,
         "options": {
           "reset": "={{ $node['Loop over Chunks'].context.done }}"
         }
@@ -725,33 +725,6 @@
       ],
       "id": "484ef991-ae7a-46ef-89de-a1f6a8d4ae9e",
       "name": "Structured Output Parser2"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-mini",
-          "mode": "list",
-          "cachedResultName": "gpt-4.1-mini"
-        },
-        "options": {
-          "responseFormat": "json_object"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        22752,
-        17152
-      ],
-      "id": "4b4f0d9d-b43c-418b-9865-e9ea8064f574",
-      "name": "OpenAI Chat Model3",
-      "credentials": {
-        "openAiApi": {
-          "id": "r6dwaEmQxKEvrskM",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -957,10 +930,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "strict"
           },
           "conditions": [
             {
@@ -1877,10 +1850,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "strict"
           },
           "conditions": [
             {
@@ -1905,8 +1878,7 @@
         17152
       ],
       "id": "24399303-0ed2-4f11-ad66-d8172b4a45b9",
-      "name": "Contextual embedding enabled?",
-      "disabled": true
+      "name": "Contextual embedding enabled?"
     },
     {
       "parameters": {
@@ -1925,12 +1897,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        25696,
+        25808,
         17008
       ],
       "id": "bded688c-65fe-48ea-84a2-a8eab6c677d7",
-      "name": "Chunk with contextual embedding",
-      "disabled": true
+      "name": "Chunk with contextual embedding"
     },
     {
       "parameters": {
@@ -2026,11 +1997,10 @@
       "retryOnFail": true,
       "credentials": {
         "httpHeaderAuth": {
-          "id": "lSFkzmpI1ZAMZqHr",
-          "name": "Cohere"
+          "id": "QW0dS0SpMHI8lxUS",
+          "name": "Llama"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -2173,13 +2143,12 @@
         24032,
         14272
       ],
-      "typeVersion": 3,
-      "disabled": true
+      "typeVersion": 3
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.cloud.llamaindex.ai/api/v1/files/",
+        "url": "https://api.cloud.llamaindex.ai/api/parsing/upload",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
         "sendHeaders": true,
@@ -2196,8 +2165,9 @@
         "bodyParameters": {
           "parameters": [
             {
+              "parameterType": "formBinaryData",
               "name": "file",
-              "value": "data"
+              "inputDataFieldName": "data"
             }
           ]
         },
@@ -2225,8 +2195,7 @@
           "id": "ejO0nAyM8Qz1010m",
           "name": "Bearer Auth account"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -2250,11 +2219,10 @@
       "retryOnFail": true,
       "credentials": {
         "httpHeaderAuth": {
-          "id": "lSFkzmpI1ZAMZqHr",
-          "name": "Cohere"
+          "id": "QW0dS0SpMHI8lxUS",
+          "name": "Llama"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -2268,8 +2236,7 @@
         14464
       ],
       "webhookId": "36c73a09-89bd-4a27-aba0-084aa7d2a987",
-      "typeVersion": 1.1,
-      "disabled": true
+      "typeVersion": 1.1
     },
     {
       "parameters": {
@@ -2283,8 +2250,7 @@
       ],
       "id": "b81be37a-8701-42ee-9f5e-627f128835d2",
       "name": "Wait1",
-      "webhookId": "a8f5059d-c449-4319-841b-f3da2bb3eb13",
-      "disabled": true
+      "webhookId": "a8f5059d-c449-4319-841b-f3da2bb3eb13"
     },
     {
       "parameters": {
@@ -2319,8 +2285,7 @@
         14464
       ],
       "id": "fc6a3474-ba77-4b55-9437-e7d5d698c192",
-      "name": "Counter",
-      "disabled": true
+      "name": "Counter"
     },
     {
       "parameters": {
@@ -2349,8 +2314,7 @@
         14256
       ],
       "id": "c4109f08-06ef-4510-bd64-ee92752e0065",
-      "name": "Set counter",
-      "disabled": true
+      "name": "Set counter"
     },
     {
       "parameters": {
@@ -2502,10 +2466,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "strict"
           },
           "conditions": [
             {
@@ -2536,10 +2500,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "loose"
           },
           "conditions": [
             {
@@ -2548,8 +2512,7 @@
               "rightValue": "",
               "operator": {
                 "type": "boolean",
-                "operation": "exists",
-                "singleValue": true
+                "operation": "exists"
               }
             }
           ],
@@ -2698,25 +2661,25 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "loose"
           },
           "conditions": [
             {
               "id": "a4697977-31b6-4740-ae7c-0e3a35ecfdf0",
-              "leftValue": "={{ $json }}",
+              "leftValue": "={{ $json.metadata_name }}",
               "rightValue": "",
               "operator": {
-                "type": "object",
-                "operation": "notEmpty",
-                "singleValue": true
+                "type": "string",
+                "operation": "notEmpty"
               }
             }
           ],
           "combinator": "and"
         },
+        "looseTypeValidation": true,
         "options": {}
       },
       "type": "n8n-nodes-base.if",
@@ -2789,10 +2752,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "strict"
           },
           "conditions": [
             {
@@ -2963,8 +2926,7 @@
         16912
       ],
       "id": "13460ea4-c231-4d8b-a15c-f38686a0042e",
-      "name": "Sticky Note34",
-      "disabled": true
+      "name": "Sticky Note34"
     },
     {
       "parameters": {
@@ -3082,7 +3044,7 @@
       "typeVersion": 1,
       "position": [
         22320,
-        16768
+        16752
       ],
       "id": "11598cf8-37ee-49e1-9ca5-7239cf816f67",
       "name": "Sticky Note7"
@@ -3097,8 +3059,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        23520,
-        16784
+        23552,
+        16752
       ],
       "id": "20f4bb69-e6bd-4d38-b410-963141b7ab46",
       "name": "Sticky Note17"
@@ -3128,8 +3090,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        24720,
-        16768
+        24784,
+        16752
       ],
       "id": "d1bd2973-5c2d-45eb-92c9-9318061f8683",
       "name": "Sticky Note15"
@@ -3144,8 +3106,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        25968,
-        16768
+        26032,
+        16784
       ],
       "id": "48dfcc83-1366-4d3b-acaf-e6cf0cfe9edc",
       "name": "Sticky Note16"
@@ -3215,12 +3177,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        23968,
+        23952,
         16944
       ],
       "id": "488dfb29-75ac-400c-bcfb-d3853577b057",
-      "name": "Document Hierarchy Extractor",
-      "disabled": true
+      "name": "Document Hierarchy Extractor"
     },
     {
       "parameters": {
@@ -3233,8 +3194,7 @@
         16944
       ],
       "id": "7d918a97-773b-4cfb-b7bd-311104f91447",
-      "name": "Merger",
-      "disabled": true
+      "name": "Merger"
     },
     {
       "parameters": {
@@ -3315,10 +3275,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "strict"
           },
           "conditions": [
             {
@@ -3391,39 +3351,12 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        25328,
-        16864
+        25408,
+        16800
       ],
       "id": "114e7ac2-417a-4bcd-9b67-1757ad8c0159",
       "name": "Basic LLM Chain",
-      "disabled": true,
       "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4o-mini",
-          "mode": "list",
-          "cachedResultName": "gpt-4o-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        25168,
-        17264
-      ],
-      "id": "0256fa7b-298d-434f-841c-1107286b2a4e",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "r6dwaEmQxKEvrskM",
-          "name": "OpenAi account"
-        }
-      },
-      "disabled": true
     },
     {
       "parameters": {
@@ -3504,10 +3437,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "strict"
           },
           "conditions": [
             {
@@ -3526,8 +3459,7 @@
               "rightValue": "",
               "operator": {
                 "type": "string",
-                "operation": "empty",
-                "singleValue": true
+                "operation": "empty"
               }
             }
           ],
@@ -3644,8 +3576,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        22960,
-        17200
+        22336,
+        17280
       ],
       "id": "7c26a2b6-0833-4fc5-a42e-1c1856e7ecce",
       "name": "Sticky Note35"
@@ -3736,10 +3668,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "strict"
           },
           "conditions": [
             {
@@ -3748,8 +3680,7 @@
               "rightValue": "",
               "operator": {
                 "type": "number",
-                "operation": "exists",
-                "singleValue": true
+                "operation": "exists"
               }
             }
           ],
@@ -3924,8 +3855,7 @@
         "rule": {
           "interval": [
             {
-              "field": "minutes",
-              "minutesInterval": 2
+              "field": "hours"
             }
           ]
         }
@@ -3954,76 +3884,146 @@
       "onError": "continueRegularOutput"
     },
     {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        25424,
-        17056
-      ],
-      "id": "788eb896-3a6f-4f22-8589-2f94b340a015",
-      "name": "Edit Fields",
-      "disabled": true
-    },
-    {
       "parameters": {},
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        25152,
-        17056
+        25120,
+        17024
       ],
       "id": "3eab27c8-efbf-452f-992a-454cf8eb17b5",
       "name": "Wait 5s",
-      "webhookId": "83d6b920-6b4b-481a-b405-5e833520194d",
-      "disabled": true
+      "webhookId": "83d6b920-6b4b-481a-b405-5e833520194d"
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "claude-3-5-haiku-20241022",
+          "value": "claude-haiku-4-5-20251001",
           "mode": "list",
-          "cachedResultName": "Claude Haiku 3.5"
+          "cachedResultName": "Claude Haiku 4.5"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        25344,
-        17248
+        23024,
+        17024
       ],
-      "id": "c2c67e7c-fef8-4906-9fdc-24ea566c08e6",
-      "name": "Anthropic Chat Model",
+      "id": "f0c2ee83-a419-4cf4-bb27-956d14dee512",
+      "name": "Anthropic Chat Model1",
       "credentials": {
         "anthropicApi": {
           "id": "UyAehXbUNQAWwZOs",
           "name": "Claude SEB"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
+          "value": "gpt-5-nano",
           "mode": "list",
-          "value": "claude-sonnet-4-5-20250929",
-          "cachedResultName": "Claude Sonnet 4.5"
+          "cachedResultName": "gpt-5-nano"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        25408,
+        17024
+      ],
+      "id": "4622311b-13c2-44a4-b368-999dab6047ba",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "r6dwaEmQxKEvrskM",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# File Name\n{{ $('Set Data').item.json.doc_name }}\n##################\n# File Contents\n{{ \n$('Set Text (Merged)').first().json.text.length > 10000 \n    ? $('Set Text (Merged)').first().json.text.substring(0, 10000) + '...' \n    : $('Set Text (Merged)').first().json.text \n}}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Based on the provided file name and file contents, extract out ...\n\n# headline-style description\n\nA very short, headline-style description (7-10 words). This will be used to finish the sentence \"This chunk is from\" so start it with \"an\" or \"a\"... example output\n\nan SEC filing on ACME corp's performance in Q2 2023\n\n# document summary\n\nAlso extract out a 1 sentence description of what the document is about and classify the document according to the below fields.\n\nOnly output JSON in the following format\n\n{\n\"document_headline_description\":\"<ADD>\",\n\"document_summary\":\"<ADD>\",\n{{ $json.list_of_fields ? $json.list_of_fields : \"\" }}\n}\n\nIf you are unsure of any of these, just output N/A in the field.\n\n{{ $json.list_of_fields ? $json.filterPromptInstructions : \"\" }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        23024,
+        17200
+      ],
+      "id": "851c9df4-c8eb-4be8-94b2-b1623ffb1932",
+      "name": "Enrich1",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"Generic Object with String or Number Values\",\n  \"type\": \"object\",\n  \"additionalProperties\": {\n    \"type\": [\"string\", \"number\"]\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        23168,
+        17392
+      ],
+      "id": "6582bacc-0aba-4b20-be5e-e467a99eb996",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": "magistral-small-latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        23024,
+        17392
+      ],
+      "id": "f588837c-4f84-4345-93f4-8423a8f99953",
+      "name": "Mistral Cloud Chat Model",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "mKip8B6VsCtzpp3c",
+          "name": "Mistral OCR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-haiku-4-5-20251001",
+          "mode": "list",
+          "cachedResultName": "Claude Haiku 4.5"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        22912,
-        17024
+        25568,
+        17056
       ],
-      "id": "f0c2ee83-a419-4cf4-bb27-956d14dee512",
-      "name": "Anthropic Chat Model1",
+      "id": "889047a5-a6f8-47bb-a464-3bdb8c693dc2",
+      "name": "Anthropic Chat Model",
       "credentials": {
         "anthropicApi": {
           "id": "UyAehXbUNQAWwZOs",
@@ -4298,11 +4298,6 @@
         ]
       ]
     },
-    "OpenAI Chat Model3": {
-      "ai_languageModel": [
-        []
-      ]
-    },
     "Fetch Metadata Fields": {
       "main": [
         [
@@ -4336,7 +4331,7 @@
         ],
         [
           {
-            "node": "Error Message",
+            "node": "Enrich1",
             "type": "main",
             "index": 0
           }
@@ -4685,7 +4680,7 @@
       "main": [
         [
           {
-            "node": "Basic LLM Chain",
+            "node": "Wait 5s",
             "type": "main",
             "index": 0
           }
@@ -5170,7 +5165,7 @@
       "main": [
         [
           {
-            "node": "Split Out1",
+            "node": "Document Hierarchy Extractor",
             "type": "main",
             "index": 0
           }
@@ -5237,11 +5232,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        []
       ]
     },
     "Basic LLM Chain": {
@@ -5438,22 +5428,6 @@
             "node": "Basic LLM Chain",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Anthropic Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Basic LLM Chain",
-            "type": "ai_languageModel",
-            "index": 0
           }
         ]
       ]
@@ -5468,15 +5442,94 @@
           }
         ]
       ]
+    },
+    "Document Hierarchy Extractor": {
+      "main": [
+        [
+          {
+            "node": "Merger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merger": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Enrich1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrich1": {
+      "main": [
+        [
+          {
+            "node": "Set up Text for Embedding",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Enrich1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "callerPolicy": "workflowsFromSameOwner"
   },
-  "versionId": "47d92ad0-185d-4c62-aef8-bd588cf9af1c",
+  "versionId": "e73e9abc-45f5-4049-a46d-f58d1392e8cf",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "eaa3d31df30f69d853bf1887372824077726204755d7d83df055afd95f72246a"
