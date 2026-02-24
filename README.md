@@ -34,7 +34,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 | File | Version | Purpose |
 |------|---------|---------|
-| `RAG INGESTION.json` | v1.0.8c | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
+| `RAG INGESTION.json` | v0.1.9 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
 | `RAG Retrieval Sub-Workflow.json` | v1.0.8c | Agentic retrieval with dynamic hybrid search and context expansion |
 | `Knowledge Graph Workflow (LightRAG).json` | v1.1 | Insert/update/delete documents in LightRAG knowledge graph |
 | `Multimodal RAG Ingestion Sub-workflow.json` | v1.2 | OCR via Mistral, image extraction to Supabase, enriched markdown output |
@@ -143,7 +143,7 @@ Called by the retrieval workflow to persist conversation context:
 
 ## Changelog
 
-### v1.0.8c (5) - 2026-02-24
+### v0.1.9 - 2026-02-24
 
 **LlamaParse Integration (re-enabled):**
 - **Fixed LlamaParse upload endpoint** — changed from `/api/v1/files/` (file management API) to `/api/parsing/upload` (parsing API) which uploads and starts the parsing job in one step
