@@ -34,8 +34,8 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 | File | Version | Purpose |
 |------|---------|---------|
-| `RAG INGESTION.json` | v0.1.9 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
-| `RAG Retrieval Sub-Workflow.json` | v1.0.8c | Agentic retrieval with dynamic hybrid search and context expansion |
+| `RAG INGESTION v0.1.9.json` | v0.1.9 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
+| `RAG Retrieval Sub-Workflow v1.0.8c.json` | v1.0.8c | Agentic retrieval with dynamic hybrid search and context expansion |
 | `Knowledge Graph Workflow (LightRAG).json` | v1.1 | Insert/update/delete documents in LightRAG knowledge graph |
 | `Multimodal RAG Ingestion Sub-workflow.json` | v1.2 | OCR via Mistral, image extraction to Supabase, enriched markdown output |
 | `Zep Update Long-Term Memories Sub-workflow.json` | — | Persist conversation messages to Zep threads for long-term memory |
@@ -63,7 +63,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 | Flag | Purpose |
 |------|---------|
-| `contextual_embedding_enabled` | Claude Haiku 4.5 generates contextual snippets per chunk before embedding |
+| `contextual_embedding_enabled` | Claude Haiku 4.5 generates contextual snippets per chunk before embedding (with Anthropic prompt caching for cost reduction) |
 | `lightrag_enabled` | Routes to LightRAG sub-workflow for knowledge graph construction |
 | `multimodal_rag_enabled` | Routes to multimodal sub-workflow for image/visual content |
 | `ocr_enabled` | Mistral AI OCR for scanned documents and images |
@@ -129,7 +129,7 @@ Called by the retrieval workflow to persist conversation context:
 ## External Services
 
 - **OpenAI** — Embeddings (`text-embedding-3-small`), GPT-5.2 (retrieval agent)
-- **Anthropic** — Claude Sonnet 4.5 (document enrichment), Claude Opus 4.5 (metadata prep/reranking)
+- **Anthropic** — Claude Haiku 4.5 (document enrichment, contextual embeddings with prompt caching), Claude Opus 4.5 (metadata prep/reranking)
 - **Mistral AI** — OCR (`mistral-ocr-latest`)
 - **Supabase / PostgreSQL** — Vector store, record management, image storage, edge functions (hybrid search, context expansion)
 - **Google Drive** — File triggers and operations
@@ -151,9 +151,11 @@ Called by the retrieval workflow to persist conversation context:
 - **Re-enabled full LlamaParse polling chain** — enabled all 7 nodes: Upload, Wait1, Set counter, Is Job Ready?, Wait, Get Processing Status, Counter, Get parsed document
 - **Word documents (.doc/.docx) now supported** — routed via LlamaParse through the "Other doc types" branch in Switch1
 
-**Model Changes:**
+**Model & Architecture Changes:**
+- **Switched contextual embeddings to Anthropic Claude Haiku 4.5** — replaced OpenAI gpt-5-nano with Claude Haiku 4.5 for per-chunk contextual descriptions
+- **Implemented Anthropic prompt caching** — replaced `Basic LLM Chain` + `Anthropic Chat Model` LangChain nodes with a direct `Contextual Embedding API` HTTP Request node calling the Anthropic Messages API. The full document is passed as a system message with `cache_control: { type: 'ephemeral' }`, so it's cached across all chunk iterations within a batch. Estimated ~89% input token cost reduction on documents exceeding 4,096 tokens
 - **Removed duplicate contextual embedding LLM chain** — `Basic LLM Chain1` was running the same prompt as `Basic LLM Chain`, doubling API calls and token usage per chunk. Removed the duplicate
-- **Contextual embedding model remains OpenAI** — `Basic LLM Chain` still uses `OpenAI Chat Model1` (gpt-5-nano) for per-chunk contextual descriptions
+- **Stricter contextual embedding prompt** — enforced `Context:` prefix format with explicit rules and example output
 
 **Bug Fixes:**
 - **Fixed If3 type validation error** — changed condition from `$json` (object notEmpty, strict) to `$json.metadata_name` (string notEmpty, loose). The Supabase metadata query result was failing strict object type validation when receiving empty data
