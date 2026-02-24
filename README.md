@@ -153,11 +153,14 @@ Called by the retrieval workflow to persist conversation context:
 
 **Model & Architecture Changes:**
 - **Switched contextual embeddings to Anthropic Claude Haiku 4.5** — replaced OpenAI gpt-5-nano with Claude Haiku 4.5 for per-chunk contextual descriptions
-- **Implemented Anthropic prompt caching** — replaced `Basic LLM Chain` + `Anthropic Chat Model` LangChain nodes with a direct `Contextual Embedding API` HTTP Request node calling the Anthropic Messages API. The full document is passed as a system message with `cache_control: { type: 'ephemeral' }`, so it's cached across all chunk iterations within a batch. Estimated ~89% input token cost reduction on documents exceeding 4,096 tokens
+- **Implemented Anthropic prompt caching** — replaced `Basic LLM Chain` + `Anthropic Chat Model` LangChain nodes with a direct `Contextual Embedding API` HTTP Request node calling the Anthropic Messages API. The full document is passed as a system message with `cache_control: { type: 'ephemeral' }`, so it's cached across all chunk iterations within a batch. Uses raw body mode (`contentType: raw`) to prevent n8n's JSON parse/re-serialize cycle from breaking cache key matching. Sequential processing (`batchSize: 1`) ensures each request can read the previous request's cache. Estimated ~89% input token cost reduction on documents exceeding 4,096 tokens
 - **Removed duplicate contextual embedding LLM chain** — `Basic LLM Chain1` was running the same prompt as `Basic LLM Chain`, doubling API calls and token usage per chunk. Removed the duplicate
 - **Stricter contextual embedding prompt** — enforced `Context:` prefix format with explicit rules and example output
 
 **Bug Fixes:**
+- **Fixed prompt caching not activating** — n8n's `specifyBody: "json"` mode parses the JSON string back into an object then re-serializes, potentially breaking Anthropic's byte-level cache key matching. Switched to `contentType: "raw"` with `rawContentType: "application/json"` so the `JSON.stringify()` output is sent as-is without re-serialization
+- **Fixed HTTP Request parallel execution breaking cache** — n8n's HTTP Request node processes items in parallel by default (batch of 50). Added `batchSize: 1` to force sequential processing so each request can read the cache created by the previous one
+- **Fixed Recycling Bin deletion failing** — the `If` node in the deletion flow had strict type validation on `$json.id` (number exists) which failed when Supabase returned empty/string data. Changed to loose type validation
 - **Fixed If3 type validation error** — changed condition from `$json` (object notEmpty, strict) to `$json.metadata_name` (string notEmpty, loose). The Supabase metadata query result was failing strict object type validation when receiving empty data
 - **Set workflow execution order to v1** — explicit execution order setting
 
