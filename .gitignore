@@ -2,8 +2,10 @@
 .claude/
 .mcp.json
 
-# Dev folder — live n8n exports for diffing, not published
+# Dev folders — not published to GitHub
 work/
+backup/
+live/
 
 # Dev utilities
 compare_nodes.py
