@@ -34,7 +34,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 | File | Version | Purpose |
 |------|---------|---------|
-| `RAG INGESTION v0.1.9.json` | v0.1.9 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
+| `RAG INGESTION v0.2.0.json` | v0.2.0 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
 | `RAG Retrieval Sub-Workflow v1.0.8c.json` | v1.0.8c | Agentic retrieval with dynamic hybrid search and context expansion |
 | `Knowledge Graph Workflow (LightRAG).json` | v1.1 | Insert/update/delete documents in LightRAG knowledge graph |
 | `Multimodal RAG Ingestion Sub-workflow.json` | v1.2 | OCR via Mistral, image extraction to Supabase, enriched markdown output |
@@ -143,6 +143,15 @@ Called by the retrieval workflow to persist conversation context:
 
 ## Changelog
 
+### v0.2.0 - 2026-02-25
+
+**Pipeline Optimizations:**
+- **Added `contextual_summary` metadata field** — the Haiku-generated contextual summary is now stored as a separate `contextual_summary` key in the chunk's metadata JSONB, in addition to being prepended to the content. This gives the retrieval agent clean access to the summary without parsing it from the content, and enables future use in reranking and FTS weighting. Three nodes modified: `Chunk with contextual embedding` (extracts summary), `Setup Chunk for Embedding1` (carries it through batching), `Setup Chunk for Batch Insertion` (merges into metadata)
+- **Reduced `batchInterval` from 1000ms to 500ms** — prompt cache hit rate remains high at 94.4% (vs 98.6% at 1000ms) while reducing total ingestion time
+- **Removed Wait 5s node** — no longer needed since `batchInterval` on the HTTP Request node handles inter-request pacing
+- **Fixed If3 type validation error** — changed condition from `$json` (object notEmpty, strict) to `$json.metadata_name` (string notEmpty, loose). The Supabase metadata query result was failing strict object type validation when receiving empty data
+- **Set workflow execution order to v1** — explicit execution order setting
+
 ### v0.1.9 - 2026-02-24
 
 **LlamaParse Integration (re-enabled):**
@@ -161,8 +170,6 @@ Called by the retrieval workflow to persist conversation context:
 - **Fixed prompt caching not activating** — n8n's `specifyBody: "json"` mode parses the JSON string back into an object then re-serializes, potentially breaking Anthropic's byte-level cache key matching. Switched to `contentType: "raw"` with `rawContentType: "application/json"` so the `JSON.stringify()` output is sent as-is without re-serialization
 - **Fixed HTTP Request parallel execution breaking cache** — n8n's HTTP Request node processes items in parallel by default (batch of 50). Added `batchSize: 1` to force sequential processing so each request can read the cache created by the previous one
 - **Fixed Recycling Bin deletion failing** — the `If` node in the deletion flow had strict type validation on `$json.id` (number exists) which failed when Supabase returned empty/string data. Changed to loose type validation
-- **Fixed If3 type validation error** — changed condition from `$json` (object notEmpty, strict) to `$json.metadata_name` (string notEmpty, loose). The Supabase metadata query result was failing strict object type validation when receiving empty data
-- **Set workflow execution order to v1** — explicit execution order setting
 
 ### v0.1.8c - 2026-02-19
 
