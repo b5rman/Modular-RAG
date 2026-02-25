@@ -1889,6 +1889,12 @@
               "name": "content",
               "value": "={{ $json.content[0].text }} - {{ $('Loop over Chunks').all()[$itemIndex].json.content }}",
               "type": "string"
+            },
+            {
+              "id": "a2-contextual-summary",
+              "name": "contextual_summary",
+              "value": "={{ $json.content[0].text }}",
+              "type": "string"
             }
           ]
         },
@@ -2412,7 +2418,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Aggregate all chunk strings into one array and attach to the first item only\nconst items = $input.all();\n\n// Build contents from items that look like { json: { chunk: \"...\" } }\nconst contents = items\n  .map(it => it.json?.content)\n  .filter(s => typeof s === 'string' && s.trim() !== '');\n\n// Use the first item as the carrier\nconst first = items[0] ?? { json: {} };\nfirst.json.contents = contents;\n\nreturn [first];\n"
+        "jsCode": "// Aggregate all chunk strings into one array and attach to the first item only\nconst items = $input.all();\n\n// Build contents from items that look like { json: { content: \"...\" } }\nconst contents = items\n  .map(it => it.json?.content)\n  .filter(s => typeof s === 'string' && s.trim() !== '');\n\n// Build contextual summaries array (may be undefined for non-contextual chunks)\nconst contextualSummaries = items\n  .map(it => it.json?.contextual_summary || '')\n\n// Use the first item as the carrier\nconst first = items[0] ?? { json: {} };\nfirst.json.contents = contents;\nfirst.json.contextualSummaries = contextualSummaries;\n\nreturn [first];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -2425,7 +2431,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Input: OpenAI response with multiple embeddings\n// Uses unnest-based batch INSERT for much better performance\n// Instead of N*4 parameters, we pass 4 arrays and let PostgreSQL unnest them\nconst embeddings = $input.first().json.data;\nconst originalContents = $('Setup Chunk for Embedding1').first().json.contents;\nconst loopItems = $('Loop over Chunks').all();\n\nconst recordManagerId = $('Create Row in Record Manager').isExecuted\n  ? $('Create Row in Record Manager').first().json.id\n  : $('Search Record Manager').first().json.id;\n\n// Build parallel arrays for unnest\nconst contents = [];\nconst metadatas = [];\nconst embeddingStrs = [];\nconst recordManagerIds = [];\n\nfor (const embeddingObj of embeddings) {\n  const idx = embeddingObj.index;\n  contents.push(originalContents[idx]);\n  metadatas.push(JSON.stringify(loopItems[idx].json.metadata));\n  embeddingStrs.push(`[${embeddingObj.embedding.join(',')}]`);\n  recordManagerIds.push(recordManagerId);\n}\n\n// unnest-based INSERT: only 4 parameters regardless of batch size\nconst insertQuery = `\n  INSERT INTO documents_v2 (content, metadata, embedding, record_manager_id)\n  SELECT c, m::jsonb, e::vector, r\n  FROM unnest($1::text[], $2::text[], $3::text[], $4::int[])\n    AS t(c, m, e, r)\n`;\n\nconst parameters = [contents, metadatas, embeddingStrs, recordManagerIds];\n\nreturn [{\n  insertQuery: insertQuery,\n  parameters: parameters,\n  recordCount: contents.length,\n  batchInfo: `Processed ${contents.length} embeddings via unnest batch`\n}];"
+        "jsCode": "// Input: OpenAI response with multiple embeddings\n// Uses unnest-based batch INSERT for much better performance\n// Instead of N*4 parameters, we pass 4 arrays and let PostgreSQL unnest them\nconst embeddings = $input.first().json.data;\nconst originalContents = $('Setup Chunk for Embedding1').first().json.contents;\nconst contextualSummaries = $('Setup Chunk for Embedding1').first().json.contextualSummaries || [];\nconst loopItems = $('Loop over Chunks').all();\n\nconst recordManagerId = $('Create Row in Record Manager').isExecuted\n  ? $('Create Row in Record Manager').first().json.id\n  : $('Search Record Manager').first().json.id;\n\n// Build parallel arrays for unnest\nconst contents = [];\nconst metadatas = [];\nconst embeddingStrs = [];\nconst recordManagerIds = [];\n\nfor (const embeddingObj of embeddings) {\n  const idx = embeddingObj.index;\n  contents.push(originalContents[idx]);\n  \n  // Merge contextual_summary into metadata if available\n  const metadata = { ...loopItems[idx].json.metadata };\n  if (contextualSummaries[idx] && contextualSummaries[idx].trim() !== '') {\n    metadata.contextual_summary = contextualSummaries[idx];\n  }\n  metadatas.push(JSON.stringify(metadata));\n  \n  embeddingStrs.push(`[${embeddingObj.embedding.join(',')}]`);\n  recordManagerIds.push(recordManagerId);\n}\n\n// unnest-based INSERT: only 4 parameters regardless of batch size\nconst insertQuery = `\n  INSERT INTO documents_v2 (content, metadata, embedding, record_manager_id)\n  SELECT c, m::jsonb, e::vector, r\n  FROM unnest($1::text[], $2::text[], $3::text[], $4::int[])\n    AS t(c, m, e, r)\n`;\n\nconst parameters = [contents, metadatas, embeddingStrs, recordManagerIds];\n\nreturn [{\n  insertQuery: insertQuery,\n  parameters: parameters,\n  recordCount: contents.length,\n  batchInfo: `Processed ${contents.length} embeddings via unnest batch`\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
