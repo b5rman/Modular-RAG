@@ -14,7 +14,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
  ┌────────────────┐                                   ┌─────────────────────────┐
  │ RAG INGESTION  │                                   │ RAG Retrieval (v1.0.8c) │
  │                │                                   │                         │
- │ Extract → Chunk│                                   │ Agent (GPT-5.2)         │
+ │ Extract → Chunk│                                   │ Agent (Sonnet 4.6)      │
  │ → Embed → Store│                                   │ ├─ Dynamic Hybrid Search│
  │                │──┐                                │ ├─ Context Expansion    │
  └────────────────┘  │                                │ ├─ Doc Hierarchy        │
@@ -77,7 +77,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 ## Retrieval Agent
 
-The retrieval workflow uses an agentic RAG pattern with GPT-5.2 and 3 tools:
+The retrieval workflow uses an agentic RAG pattern with Claude Sonnet 4.6 (extended thinking) and 3 tools:
 
 **Dynamic Hybrid Search** — 4-component search with configurable weights:
 
@@ -94,7 +94,9 @@ The retrieval workflow uses an agentic RAG pattern with GPT-5.2 and 3 tools:
 
 **Cohere Reranking** — Results reranked by relevance using Cohere rerank-v3.5
 
-Optional (disabled): Knowledge Graph queries, tabular SQL queries, Zep long-term memory
+**Citation Verification** — Post-processing Code node that splits the agent's output on a `---SOURCES_JSON---` delimiter, validates structured citation objects (doc_name, doc_id, pages, chunk_indices), and builds a clean References section. Graceful fallback if no sources are provided.
+
+Optional (disabled): Knowledge Graph queries, Zep long-term memory
 
 ## Sub-Workflows
 
@@ -128,8 +130,8 @@ Called by the retrieval workflow to persist conversation context:
 
 ## External Services
 
-- **OpenAI** — Embeddings (`text-embedding-3-small`), GPT-5.2 (retrieval agent)
-- **Anthropic** — Claude Haiku 4.5 (document enrichment, contextual embeddings with prompt caching), Claude Opus 4.5 (metadata prep/reranking)
+- **OpenAI** — Embeddings (`text-embedding-3-small`)
+- **Anthropic** — Claude Sonnet 4.6 (retrieval agent with extended thinking), Claude Haiku 4.5 (document enrichment, contextual embeddings with prompt caching), Claude Opus 4.5 (metadata prep/reranking)
 - **Mistral AI** — OCR (`mistral-ocr-latest`)
 - **Supabase / PostgreSQL** — Vector store, record management, image storage, edge functions (hybrid search, context expansion)
 - **Google Drive** — File triggers and operations
@@ -142,6 +144,15 @@ Called by the retrieval workflow to persist conversation context:
 ---
 
 ## Changelog
+
+### BETA — Citation Verification System Phase 1 - 2026-02-25
+
+**Retrieval Workflow (BETA workspace EQTUC67VhmFzuiAB):**
+- **Switched retrieval agent to Claude Sonnet 4.6 with extended thinking** — replaced GPT-5.2 with Anthropic Claude Sonnet 4.6 (`thinkingBudget: 10000`). Extended thinking improves structured output reliability for the new citation format
+- **Structured citation output format** — rewrote the agent system prompt with a strict `---SOURCES_JSON---` delimiter-based output format. Agent must output its answer in markdown, followed by the delimiter, followed by a JSON array of source objects with `doc_name`, `doc_id`, `pages` (int array), `chunk_indices` (int array), and `relevance`
+- **Added "Format & Verify Citations" Code node** — post-processing node after the agent that: (1) splits on the delimiter, (2) validates each source object has required fields and correct types, (3) strips any inline References from the answer, (4) builds a clean `## References` section from validated sources, (5) passes through `citationWarnings` for debugging
+- **Switched chatTrigger to `lastNode` response mode** — required to enable post-processing of the agent's output before it reaches the user. UX tradeoff: no more token-by-token streaming; users wait 15-45s for the full response
+- **Cleaned up disconnected nodes** — removed orphaned `Agentic RAG 1`, `Create Zep User`, `Dynamic Hybrid Search`, and `Query Tabular Rows` nodes that had no connections
 
 ### v0.2.0 - 2026-02-25
 
