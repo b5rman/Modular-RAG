@@ -94,7 +94,7 @@ The retrieval workflow uses an agentic RAG pattern with Claude Sonnet 4.6 (exten
 
 **Fetch Document Hierarchy** — Retrieves document structure from record_manager_v2
 
-**Cohere Reranking** — Results reranked by relevance using Cohere rerank-v3.5
+**Reranking** — Results reranked by relevance using Cohere rerank-v3.5 (production) / Voyage AI rerank-2.5 (beta v0.2.1)
 
 **Citation Verification** — Post-processing Code node that splits the agent's output on a `---SOURCES_JSON---` delimiter, validates structured citation objects (doc_name, doc_id, pages, chunk_indices), and builds a clean References section. Graceful fallback if no sources are provided.
 
@@ -140,12 +140,22 @@ Called by the retrieval workflow to persist conversation context:
 - **LightRAG** — Knowledge graph (optional)
 - **Zep** — Long-term memory (optional)
 - **LlamaParse** — Advanced document parsing for Word, PowerPoint, RTF, EPUB, and other complex formats
-- **Cohere** — Reranking (rerank-v3.5, active)
+- **Cohere** — Reranking (rerank-v3.5, production)
+- **Voyage AI** — Reranking (rerank-2.5, beta v0.2.1)
 - **Firecrawl** — Web scraping (disabled by default)
 
 ---
 
 ## Changelog
+
+### BETA v0.2.1 — Voyage AI Reranker + Bug Fixes - 2026-02-26
+
+**Retrieval Workflow (BETA workspace UH7qTvJ71mZAN4Go):**
+- **Replaced Cohere rerank-v3.5 with Voyage AI rerank-2.5** — configured new "Rerank Voyage AI" HTTP Request node (`POST https://api.voyageai.com/v1/rerank`, `top_k: 15`). Voyage AI response format (`results[].index`, `results[].relevance_score`) matches Cohere's, so no downstream code changes were needed
+- **Removed old "Rerank with Cohere 3.5" node** — replaced by the Voyage AI node in the pipeline
+- **Fixed "If" node type validation error** — the If node after "Fetch Metadata Fields1" had strict type validation checking `$json` as `object notEmpty`, which failed when the sub-workflow passed an empty string. Changed to `string notEmpty` with loose type validation
+- **Removed orphaned "Create Zep User" node** — disconnected node blocking MCP validator
+- **Tested**: 4 successful executions — cross-document comparison (3 docs, 58s), exact cost numbers extraction (58s), budget constraint reasoning (87s), initial Voyage rerank validation (71s)
 
 ### BETA — Citation Verification System Phase 1 - 2026-02-25
 
