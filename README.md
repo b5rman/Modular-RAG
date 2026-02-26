@@ -149,6 +149,12 @@ Called by the retrieval workflow to persist conversation context:
 
 ### v0.2.1 - 2026-02-26
 
+**Citation Verification System (Phase 1):**
+- **Added `Format & Verify Citations` code node** — post-processes agent output by splitting on `---SOURCES_JSON---` delimiter, validating citation structure (doc_name, doc_id, pages, chunk_indices, relevance), and building a clean References section. Invalid citations are logged as warnings rather than silently dropped
+- **Updated agent system prompt** — new structured output format requiring a `---SOURCES_JSON---` delimiter between the answer and a JSON array of source objects. Every factual claim must trace to at least one source with exact metadata from the retrieved chunks
+- **Switched chat trigger to `lastNode` response mode** — required for citation post-processing (no streaming; users wait for full response)
+- **Connection**: `Agentic RAG 1` → `Format & Verify Citations` (main output to chat)
+
 **Retrieval Workflow:**
 - **Replaced Cohere rerank-v3.5 with Voyage AI rerank-2.5** — new "Rerank Voyage AI" HTTP Request node (`top_k: 15`). Voyage response format matches Cohere, no downstream code changes needed
 - **Fixed If node type validation error** — changed from `object notEmpty` (strict) to `string notEmpty` (loose) to handle empty string from sub-workflow
