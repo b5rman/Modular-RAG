@@ -40,6 +40,8 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 | `Multimodal RAG Ingestion Sub-workflow.json` | v1.2 | OCR via Mistral, image extraction to Supabase, enriched markdown output |
 | `Zep Update Long-Term Memories Sub-workflow.json` | — | Persist conversation messages to Zep threads for long-term memory |
 
+> **Beta workflows** — Experimental features and pre-release versions are developed in a separate repository: [Modular-RAG-Beta](https://github.com/b5rman/Modular-RAG-Beta) (currently `v0.2.0-beta.1`).
+
 ## Ingestion Pipeline
 
 ### Supported File Types
