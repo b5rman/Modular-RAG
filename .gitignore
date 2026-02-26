@@ -9,6 +9,11 @@ live/
 beta/
 n8n/
 
+# Sub-workflows (configured in n8n but not used in production)
+Knowledge Graph Workflow (LightRAG).json
+Multimodal RAG Ingestion Sub-workflow.json
+Zep Update Long-Term Memories Sub-workflow.json
+
 # Dev utilities
 compare_nodes.py
 
