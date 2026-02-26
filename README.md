@@ -32,13 +32,13 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 ## Workflows
 
-| File | Version | Purpose |
-|------|---------|---------|
-| `RAG INGESTION v0.2.1.json` | v0.2.1 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
-| `RAG Retrieval Sub-Workflow v0.2.1.json` | v0.2.1 | Agentic retrieval with dynamic hybrid search, Voyage AI reranking, and citation verification |
-| `Knowledge Graph Workflow (LightRAG).json` | v1.1 | Insert/update/delete documents in LightRAG knowledge graph |
-| `Multimodal RAG Ingestion Sub-workflow.json` | v1.2 | OCR via Mistral, image extraction to Supabase, enriched markdown output |
-| `Zep Update Long-Term Memories Sub-workflow.json` | — | Persist conversation messages to Zep threads for long-term memory |
+| File | Purpose |
+|------|---------|
+| `RAG INGESTION v0.2.1.json` | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
+| `RAG Retrieval Sub-Workflow v0.2.1.json` | Agentic retrieval with dynamic hybrid search, Voyage AI reranking, and citation verification |
+| `Knowledge Graph Workflow (LightRAG).json` | Insert/update/delete documents in LightRAG knowledge graph |
+| `Multimodal RAG Ingestion Sub-workflow.json` | OCR via Mistral, image extraction to Supabase, enriched markdown output |
+| `Zep Update Long-Term Memories Sub-workflow.json` | Persist conversation messages to Zep threads for long-term memory |
 
 > **Beta workflows** — Experimental features and pre-release versions are developed in a separate repository: [Modular-RAG-Beta](https://github.com/b5rman/Modular-RAG-Beta) (currently `v0.2.0-beta.1`).
 
