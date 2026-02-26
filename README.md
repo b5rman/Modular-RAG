@@ -239,9 +239,9 @@ Called by the retrieval workflow to persist conversation context:
 - Enabled **Webpage Markdown** processing node
 
 ### v0.1.3 - 2025-02-15
-- Added **RAG Retrieval Sub-Workflow** (v2.3.3) — agentic retrieval with dynamic hybrid search
-- Added **Knowledge Graph Workflow** (LightRAG v1.1) — knowledge graph sub-workflow
-- Added **Multimodal RAG Ingestion Sub-workflow** (v1.2) — OCR and image processing
+- Added **RAG Retrieval Sub-Workflow** — agentic retrieval with dynamic hybrid search
+- Added **Knowledge Graph Workflow** — knowledge graph sub-workflow
+- Added **Multimodal RAG Ingestion Sub-workflow** — OCR and image processing
 - Added **Zep Update Long-Term Memories Sub-workflow** — conversation persistence
 - Updated README to document full system architecture
 
