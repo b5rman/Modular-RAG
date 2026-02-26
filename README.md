@@ -1,6 +1,6 @@
 # Modular RAG
 
-A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5 workflows: a main ingestion pipeline, a retrieval agent, and 3 specialized sub-workflows for knowledge graphs, multimodal content, and long-term memory.
+A production-grade n8n RAG (Retrieval-Augmented Generation) system with a main ingestion pipeline and an agentic retrieval workflow. Optional sub-workflows for knowledge graphs, multimodal content, and long-term memory are configured within n8n but not published here.
 
 ## System Architecture
 
@@ -36,9 +36,6 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 |------|---------|---------|
 | `RAG INGESTION v0.2.0.json` | v0.2.0 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
 | `RAG Retrieval Sub-Workflow v0.2.0.json` | v0.2.0 | Agentic retrieval with dynamic hybrid search, context expansion, and GPT-5.2 |
-| `Knowledge Graph Workflow (LightRAG).json` | v1.1 | Insert/update/delete documents in LightRAG knowledge graph |
-| `Multimodal RAG Ingestion Sub-workflow.json` | v1.2 | OCR via Mistral, image extraction to Supabase, enriched markdown output |
-| `Zep Update Long-Term Memories Sub-workflow.json` | — | Persist conversation messages to Zep threads for long-term memory |
 
 > **Beta workflows** — Experimental features and pre-release versions are developed in a separate repository: [Modular-RAG-Beta](https://github.com/b5rman/Modular-RAG-Beta) (currently `v0.2.0-beta.1`).
 
@@ -100,26 +97,11 @@ The retrieval workflow uses an agentic RAG pattern with Claude Sonnet 4.6 (exten
 
 Optional (disabled): Knowledge Graph queries, Zep long-term memory
 
-## Sub-Workflows
+## Sub-Workflows (configured in n8n, not published)
 
-### Knowledge Graph (LightRAG v1.1)
-Called by the ingestion pipeline when `lightrag_enabled = true`. Compares document hashes to determine action:
-- **New document** → Insert into LightRAG, store `graph_id` in record manager
-- **Changed document** → Delete old entry, re-insert
-- **Unchanged** → Skip
-
-### Multimodal RAG (v1.2)
-Called by the ingestion pipeline when `multimodal_rag_enabled = true`:
-1. Uploads file to Mistral OCR (`mistral-ocr-latest`)
-2. Extracts pages and images
-3. Uploads images to Supabase storage
-4. Returns enriched markdown with hosted image URLs and page markers
-
-### Zep Long-Term Memories
-Called by the retrieval workflow to persist conversation context:
-- Posts messages to Zep thread
-- Auto-creates thread if it doesn't exist
-- Inputs: `session_id`, `user_id`, `message_content`
+- **Knowledge Graph (LightRAG v1.1)** — Insert/update/delete documents in LightRAG knowledge graph (`lightrag_enabled` flag)
+- **Multimodal RAG (v1.2)** — Mistral OCR + Supabase image storage (`multimodal_rag_enabled` flag)
+- **Zep Long-Term Memories** — Persist conversation context to Zep threads
 
 ## Database Tables
 
