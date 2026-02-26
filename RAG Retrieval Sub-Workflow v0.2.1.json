@@ -1,5 +1,5 @@
 {
-  "name": "RAG Retrieval Sub-Workflow v1.0.8c",
+  "name": "RAG Retrieval Sub-Workflow v0.2.1",
   "nodes": [
     {
       "parameters": {
@@ -11,10 +11,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        864,
-        0
+        880,
+        16
       ],
-      "id": "ebce0334-9a7b-4a38-9516-377b1a8793ec",
+      "id": "74c20038-93af-406c-b23d-c40ced7f8227",
       "name": "Sticky Note6"
     },
     {
@@ -30,7 +30,7 @@
         0,
         0
       ],
-      "id": "d649604f-d4ea-4637-b22c-9505060cb712",
+      "id": "43b5cb25-e503-4bf1-9311-8e59e6012489",
       "name": "Sticky Note18"
     },
     {
@@ -40,10 +40,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        1264,
+        1248,
         448
       ],
-      "id": "74044404-c007-499e-8011-428e2bd1827b",
+      "id": "3283fcc6-e7fc-4fe3-babd-b7e89e5456c3",
       "name": "Supabase Short-Term Memory",
       "credentials": {
         "postgres": {
@@ -51,22 +51,6 @@
           "name": "Postgres account"
         }
       }
-    },
-    {
-      "parameters": {
-        "content": "## v2.3.3\nThis it the agentic inference workflow for both our SOTA RAG System and RAG At Scale System\n\nSOTA RAG Setup instructions here:\nhttps://community.theaiautomators.com/c/automation-templates/state-of-the-art-n8n-rag-agent\n\nRAG at Scale Setup instructions here:\nhttps://community.theaiautomators.com/c/automation-templates/rag-at-scale-system",
-        "height": 244,
-        "width": 580,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        160,
-        368
-      ],
-      "id": "af3730c0-82ec-4486-813c-aed558653052",
-      "name": "Sticky Note21"
     },
     {
       "parameters": {
@@ -81,7 +65,7 @@
         3440,
         0
       ],
-      "id": "2d3054a0-5fcc-4b37-94f6-0498795b3c08",
+      "id": "531e8732-16d5-4ce7-b769-201fce264166",
       "name": "Sticky Note20",
       "disabled": true
     },
@@ -142,7 +126,7 @@
         4640,
         480
       ],
-      "id": "05e86177-e484-40b0-ba56-48a218cc0ebb",
+      "id": "7f9c2d97-3276-4b92-a94c-caba4af774a6",
       "name": "Query Knowledge Graph1",
       "retryOnFail": true,
       "maxTries": 5,
@@ -159,7 +143,7 @@
         3984,
         480
       ],
-      "id": "4f3b6011-2766-467d-a110-8ec59d4cfaa5",
+      "id": "a11ba588-99f4-4743-95f7-a23b4a9d8812",
       "name": "Supabase Short-Term Memory2",
       "credentials": {
         "postgres": {
@@ -186,7 +170,7 @@
         3872,
         224
       ],
-      "id": "b1f0dea0-94b3-427c-b58f-ba4a90b2af98",
+      "id": "0cdab873-701c-47ff-8d82-253738044297",
       "name": "Get Long Term Memories",
       "disabled": true
     },
@@ -200,7 +184,7 @@
         4784,
         288
       ],
-      "id": "9a0b8f14-e0e2-4886-a079-5089fd1b2613",
+      "id": "15d98d5d-57b4-47c3-a8ed-1920f63678dd",
       "name": "Respond to Webhook",
       "disabled": true
     },
@@ -224,7 +208,7 @@
         3616,
         224
       ],
-      "id": "0a4e43cf-a1fd-4da1-ab61-5b5bba580140",
+      "id": "93ed8bbb-81bd-4f8e-bbf7-d64d74deab4e",
       "name": "user_id",
       "disabled": true
     },
@@ -241,7 +225,7 @@
         400
       ],
       "typeVersion": 1,
-      "id": "48ec6787-0e2e-41eb-85e0-c51347f39238",
+      "id": "4ee4dc46-b29c-4b0b-bbb9-47f2f250edca",
       "name": "Sticky Note25",
       "disabled": true
     },
@@ -257,7 +241,7 @@
         3552,
         144
       ],
-      "id": "132dde66-6ee7-4c19-b38c-8490de2fda27",
+      "id": "6b59c28a-0327-411d-99cf-a6c78eac22ae",
       "name": "Sticky Note26",
       "disabled": true
     },
@@ -266,7 +250,7 @@
         "descriptionType": "manual",
         "toolDescription": "Execute a SQL query on the tabular_document_rows table.\n\nInstructions:\n\nYou will always be querying based on a specific id.\n\nEach row in the table contains a row_data field (of type jsonb) that holds the data for that row, with keys matching the file schema defined in the record_manager table.\n\nThe record_manager_id is the id field from the record_manager table. Always filter based on this specific id when querying the tabular_document_rows table.\n\nWhen writing your SELECT clause, extract values from the row_data JSON using the ->> operator and cast them as needed (e.g., to numeric for calculations).\n\nItems within your SELECT needs to use the data within row_data field.\n\nExample query: Find maximum value for a field (e.g. \"profit\")\n\nSELECT MAX((row_data->>'profit')::numeric) AS max_profit\nFROM tabular_document_rows\nWHERE file_id = '123';\n\nExample query: Group and aggregate (e.g. total revenue by country)\n\nSELECT row_data->>'country' AS country,\n       SUM((row_data->>'revenue')::numeric) AS total_revenue\nFROM tabular_document_rows\nWHERE record_manager_id = '123'\nGROUP BY row_data->>'country';\n\nExample query: Group and aggregate (e.g. total revenue by country)\nSELECT row_data->>'salesperson' AS salesperson,\n       SUM((row_data->>'profit')::numeric) AS total_profit\nFROM tabular_document_rows\nWHERE record_manager_id = '123'\nGROUP BY row_data->>'salesperson';",
         "operation": "executeQuery",
-        "query": "{{ $fromAI('sql_query') }}",
+        "query": "={{ $fromAI('sql_query') }}",
         "options": {}
       },
       "type": "n8n-nodes-base.postgresTool",
@@ -275,7 +259,7 @@
         4304,
         480
       ],
-      "id": "78275a46-e110-44be-ad46-91c22e07a4f7",
+      "id": "ec312b1f-7a3b-4858-a409-6dd8d61644a2",
       "name": "Query Tabular Rows1",
       "credentials": {
         "postgres": {
@@ -324,7 +308,7 @@
         4144,
         480
       ],
-      "id": "c9fda40f-ad60-4fb8-b921-31d3f825dd96",
+      "id": "6d6e0139-079b-499e-a464-850839100b87",
       "name": "Get datasets from record_manager1",
       "credentials": {
         "postgres": {
@@ -332,27 +316,6 @@
           "name": "Postgres account"
         }
       },
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.getzep.com/api/v2/users",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\"user_id\":\"user1234\"}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        5248,
-        336
-      ],
-      "id": "23c4b715-78ae-442c-b9b0-e9c5fb230400",
-      "name": "Create Zep User",
       "disabled": true
     },
     {
@@ -367,7 +330,7 @@
         5184,
         192
       ],
-      "id": "ead6a292-ded6-47b5-bc96-8566fba90733",
+      "id": "7cf8dbed-cbfb-4664-bec3-00f05ac6a33f",
       "name": "Sticky Note27",
       "disabled": true
     },
@@ -429,27 +392,24 @@
         4784,
         80
       ],
-      "id": "c00f6662-379f-4ae9-a1d8-32fb2bcc583a",
+      "id": "491f311d-d5db-41b1-9140-e9c46df43e18",
       "name": "Execute workflow - Save Zep long term memories",
       "disabled": true
     },
     {
       "parameters": {
         "public": true,
-        "authentication": "n8nUserAuth",
-        "initialMessages": "Hi there! 👋\n",
-        "availableInChat": true,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.3,
+      "typeVersion": 1.4,
       "position": [
         352,
         176
       ],
-      "id": "b0524417-3c28-4ae4-97cf-1fad8ea10106",
+      "id": "f1b2f57a-c6db-494e-826d-b0caff576a8b",
       "name": "When chat message received",
-      "webhookId": "5e442826-4547-4647-8d24-1641210f2a8e"
+      "webhookId": "f53e8aa0-a8b5-4773-b8a8-8c9ed1d9bf8a"
     },
     {
       "parameters": {
@@ -509,7 +469,7 @@
         2864,
         448
       ],
-      "id": "1a986fa5-df98-4310-8ba5-0d76d4d7d80b",
+      "id": "38890640-4fa2-4350-a19b-afe1c2498db8",
       "name": "Query Knowledge Graph2",
       "retryOnFail": true,
       "maxTries": 5,
@@ -526,7 +486,7 @@
         2192,
         448
       ],
-      "id": "035167b2-f0fb-4990-a5f3-e748ab6a52db",
+      "id": "630923cc-dcc3-4403-9bd9-a8d901040d67",
       "name": "Supabase Short-Term Memory3",
       "credentials": {
         "postgres": {
@@ -541,7 +501,7 @@
         "descriptionType": "manual",
         "toolDescription": "Execute a SQL query on the tabular_document_rows table. \n\nInstructions:\n\nYou will always be querying based on a specific id.\n\nEach row in the table contains a row_data field (of type jsonb) that holds the data for that row, with keys matching the file schema defined in the record_manager table.\n\nThe record_manager_id is the id field from the record_manager table. Always filter based on this specific id when querying the tabular_document_rows table.\n\nWhen writing your SELECT clause, extract values from the row_data JSON using the ->> operator and cast them as needed (e.g., to numeric for calculations).\n\nWhen applying WHERE clauses, you should run SELECT DISTINCT queries (LIMIT 100) on the relevant fields first to understand the valid options. This applies even if the user provides a specific value—you must verify that the value exists in the data before using it.\n\nDo NOT run SELECT DISTINCT queries for ID columns.\n\nItems within your SELECT needs to use the data within row_data field.\n\nExample query: Find maximum value for a field (e.g. \"profit\")\n\nSELECT MAX((row_data->>'profit')::numeric) AS max_profit\nFROM tabular_document_rows\nWHERE file_id = '123';\n\nExample query: Group and aggregate (e.g. total revenue by country)\n\nSELECT row_data->>'country' AS country,\n       SUM((row_data->>'revenue')::numeric) AS total_revenue\nFROM tabular_document_rows\nWHERE record_manager_id = '123'\nGROUP BY row_data->>'country';\n\nExample query: Group and aggregate (e.g. total revenue by country)\nSELECT row_data->>'salesperson' AS salesperson,\n       SUM((row_data->>'profit')::numeric) AS total_profit\nFROM tabular_document_rows\nWHERE record_manager_id = '123'\nGROUP BY row_data->>'salesperson';",
         "operation": "executeQuery",
-        "query": "{{ $fromAI('sql_query') }}",
+        "query": "={{ $fromAI('sql_query') }}",
         "options": {}
       },
       "type": "n8n-nodes-base.postgresTool",
@@ -550,7 +510,7 @@
         2512,
         448
       ],
-      "id": "0e89261f-22a4-49cb-abe2-ed9310e79b51",
+      "id": "430f7636-58c9-4303-ad24-d376eb501e2e",
       "name": "Query Tabular Rows2",
       "credentials": {
         "postgres": {
@@ -599,7 +559,7 @@
         2352,
         448
       ],
-      "id": "f238fefe-8653-45e9-9c23-8c971aa60768",
+      "id": "2fa5e625-f7f6-4090-ab3e-594dd29e0c77",
       "name": "Get datasets from record_manager2",
       "credentials": {
         "postgres": {
@@ -622,7 +582,7 @@
         1936,
         0
       ],
-      "id": "84355434-8cf9-45ee-bfa1-525aed03f5ae",
+      "id": "40df6ccd-7bf7-49f1-818e-3661a10d39f1",
       "name": "Sticky Note"
     },
     {
@@ -637,18 +597,18 @@
         160,
         80
       ],
-      "id": "083bf93c-97cd-4393-bb5e-07f70eee820f",
+      "id": "1699df7a-60da-4c37-abb1-a5cbeddbcbb3",
       "name": "Sticky Note29"
     },
     {
       "parameters": {
-        "description": "=Call this tool to query data from our knowledgebase using hybrid search (vector, lexical, ilike and fuzzy)\n\nYou can set different weights of this hybrid search depending on the type of query.\n\ndense_weight float DEFAULT 0.5,\nsparse_weight float DEFAULT 0.5,\nilike_weight float DEFAULT 0\nfuzzy_weight float DEFAULT 0\nfuzzy_threshold float DEFAULT 0.8\n\nFor semantic natural lanauge queries you can prioritise dense embeddings, \nFor technical terms and more traditional search you can priorize sparse lexical search\nFor exact matches for codes and IDs you can prioritze ilike wildcard matching\nFor typos that aren't picked up by semantic search, you can prioritize fuzzy matching\n\nIf looking for matches via ilike or fuzzy matches, the query should be extremely focused and short, as otherwise it will likely return zero results. (e.g. exact ID or code)\n\nAs pattern matching and fuzzy matching can add latency, I recommend defaulting this to zero unless you want to actually use it.\n\nTotal of the 4 weights much equal 1\n\nFuzzy Threshold adds significant latency should should be as high as possible - Default to 0.8",
+        "description": "Search the document knowledge base using hybrid search (dense vector + sparse BM25). Use this tool to find relevant information from ingested documents. Pass the user's query or a rephrased search query as input. Returns ranked document chunks with content, metadata, and relevance scores.",
         "workflowId": {
           "__rl": true,
-          "value": "Bgl5d3deLQufGLff",
+          "value": "UH7qTvJ71mZAN4Go",
           "mode": "list",
-          "cachedResultUrl": "/workflow/Bgl5d3deLQufGLff",
-          "cachedResultName": "SOTA RAG Retrieval Sub-Workflow"
+          "cachedResultUrl": "/workflow/UH7qTvJ71mZAN4Go",
+          "cachedResultName": "RAG Retrieval Sub-Workflow v0.2.1 Beta"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -755,7 +715,7 @@
         1424,
         448
       ],
-      "id": "c793ede6-b98d-4166-ba20-c7bc5a839b2c",
+      "id": "cdb404f5-4100-4d36-a47d-b7c5b383cfab",
       "name": "Dynamic Hybrid Search"
     },
     {
@@ -774,7 +734,7 @@
         2032,
         448
       ],
-      "id": "ce7123fa-2927-4892-a3c2-ec7228769394",
+      "id": "03fff22d-5ea4-454b-9a62-37a17b2c3f3a",
       "name": "Anthropic Chat Model1",
       "credentials": {
         "anthropicApi": {
@@ -800,7 +760,7 @@
         3824,
         480
       ],
-      "id": "c74fd6fd-21aa-4c0c-9742-b6663cd796c7",
+      "id": "90d7cb45-a77a-4cc3-9146-af1e9b963542",
       "name": "Anthropic Chat Model2",
       "credentials": {
         "anthropicApi": {
@@ -925,7 +885,7 @@
         2688,
         448
       ],
-      "id": "5c38a44e-a3a1-45cc-9c89-8f8f68d21fce",
+      "id": "afb2408c-d875-4d5b-a1b9-b40eae22a72c",
       "name": "Dynamic Hybrid Search1",
       "disabled": true
     },
@@ -1043,7 +1003,7 @@
         4480,
         480
       ],
-      "id": "49a970a2-b720-4fad-baba-14ba0c7c7fdd",
+      "id": "ee09fda8-f04e-4b69-9844-60c1aa51a62e",
       "name": "Dynamic Hybrid Search2",
       "disabled": true
     },
@@ -1068,7 +1028,7 @@
         1584,
         448
       ],
-      "id": "cbc62d85-1c51-4178-9bba-f327af8b851e",
+      "id": "8d368b7e-d825-4ed0-bb6c-ac576b4d4cb1",
       "name": "Fetch Document Hierarchy",
       "credentials": {
         "supabaseApi": {
@@ -1090,12 +1050,12 @@
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequestTool",
-      "typeVersion": 4.2,
+      "typeVersion": 4.4,
       "position": [
         1760,
         448
       ],
-      "id": "57fe1287-5f31-4ef9-b326-2dc6dae98190",
+      "id": "dde09053-aa0f-4412-9ad8-79ba674951a9",
       "name": "Context Expansion",
       "credentials": {
         "supabaseApi": {
@@ -1125,7 +1085,7 @@
         3024,
         448
       ],
-      "id": "8586b512-1f36-4c51-a609-91b50d9133e7",
+      "id": "2ff12715-6088-41ed-8abe-82b799e67763",
       "name": "Fetch Document Hierarchy1",
       "credentials": {
         "supabaseApi": {
@@ -1153,7 +1113,7 @@
         3200,
         448
       ],
-      "id": "d5cd206f-cf89-4838-a997-784088dbb27a",
+      "id": "800d85ee-be81-4248-aeea-3a2b9a2b3207",
       "name": "Context Expansion1",
       "disabled": true
     },
@@ -1178,7 +1138,7 @@
         4800,
         480
       ],
-      "id": "76bd219e-abb8-4edd-ad1c-da731cc3bd8e",
+      "id": "75b8db27-a8a3-4229-9196-1d6a4af425e3",
       "name": "Fetch Document Hierarchy2",
       "credentials": {
         "supabaseApi": {
@@ -1206,7 +1166,7 @@
         4976,
         480
       ],
-      "id": "33a485c2-d8de-415f-8ede-95c5a94dda60",
+      "id": "aff73665-dab1-4877-9b7b-a437d515d669",
       "name": "Context Expansion2",
       "disabled": true
     },
@@ -1215,16 +1175,17 @@
         "promptType": "define",
         "text": "={{ $('When chat message received').item.json.chatInput }}",
         "options": {
-          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information avaialble in the knowledgebase.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\n1. Based on your retrieval strategy, pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\nOnce you've collected enough information, then answer the question, based on the info in context.\n\n# Response Rules\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. Provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\"."
+          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information avaialble in the knowledgebase.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\n1. Based on your retrieval strategy, pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\nOnce you've collected enough information, then answer the question, based on the info in context.\n\n# Response Rules\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. Provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\".",
+          "maxIterations": 25
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.9,
+      "typeVersion": 3.1,
       "position": [
         1216,
         192
       ],
-      "id": "ea08250d-ac8c-441f-85a2-3bc0aa847582",
+      "id": "dae93eb5-545e-4059-bad3-17bc3225780c",
       "name": "Agentic RAG 1",
       "retryOnFail": true,
       "maxTries": 5
@@ -1243,7 +1204,7 @@
         2400,
         192
       ],
-      "id": "9047e3bd-d886-440b-94f5-ccabd9681b00",
+      "id": "ac46dfb5-d886-450f-ac37-6c9156269255",
       "name": "Agentic RAG 2",
       "retryOnFail": true,
       "maxTries": 5,
@@ -1263,7 +1224,7 @@
         4080,
         224
       ],
-      "id": "6f470dfa-ad4c-45a9-9e75-fb9f965d9421",
+      "id": "1c6be8c1-4804-4044-ad7b-f070e04ad60e",
       "name": "Agentic RAG 3",
       "retryOnFail": true,
       "maxTries": 5,
@@ -1311,7 +1272,7 @@
         1008,
         912
       ],
-      "id": "381330dd-c4bd-4823-9cd6-42e9affc6847",
+      "id": "e42d1e0d-2b8e-4ce1-93c0-7e7fdae83c26",
       "name": "When Executed by Another Workflow"
     },
     {
@@ -1336,52 +1297,17 @@
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "typeVersion": 4.4,
       "position": [
         2928,
         912
       ],
-      "id": "4ddccea1-252b-4b36-a215-751e59acd0a7",
+      "id": "8e9eafd5-0988-446f-b000-5f8657b8f268",
       "name": "Generate Embedding From Query",
       "credentials": {
         "openAiApi": {
           "id": "r6dwaEmQxKEvrskM",
           "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.cohere.com/v2/rerank",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "accept",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"rerank-v3.5\",\n  \"query\": \"{{ $('When Executed by Another Workflow').first().json.query }}\",\n  \"top_n\": 10,\n  \"documents\": {{ JSON.stringify($json.documents) }}\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        3984,
-        912
-      ],
-      "id": "367a82aa-79dd-49be-84d6-b0ef8d8a00e6",
-      "name": "Rerank with Cohere 3.5",
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "lSFkzmpI1ZAMZqHr",
-          "name": "Cohere"
         }
       }
     },
@@ -1395,7 +1321,7 @@
         3744,
         912
       ],
-      "id": "b7f5cd6d-98e0-4aa1-8b78-9ecbe038bb84",
+      "id": "79189f19-3d0d-4c4a-980f-47625ef396d7",
       "name": "Create Array"
     },
     {
@@ -1408,7 +1334,7 @@
         4208,
         912
       ],
-      "id": "836a4244-3842-4671-a96e-3883150ec856",
+      "id": "1a881e8d-5c1d-4809-872f-d5b437e883a1",
       "name": "Return Reordered Items1"
     },
     {
@@ -1424,7 +1350,7 @@
         2880,
         768
       ],
-      "id": "9a96da40-d132-47a4-8aed-3a5813c78100",
+      "id": "25713b42-4a72-46ad-a06a-76c40451d170",
       "name": "Sticky Note11"
     },
     {
@@ -1437,10 +1363,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        3424,
+        3440,
         768
       ],
-      "id": "f80e0734-462f-4e37-b4fd-d87ee40f9d1f",
+      "id": "44b547b4-22e6-43fa-811f-ca92adebf7ec",
       "name": "Sticky Note12",
       "disabled": true
     },
@@ -1448,10 +1374,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "loose"
           },
           "conditions": [
             {
@@ -1470,12 +1396,12 @@
         "options": {}
       },
       "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "typeVersion": 2.3,
       "position": [
         3472,
         912
       ],
-      "id": "5271a51a-4ce6-47c3-a4f8-3aa566e5f2e9",
+      "id": "1ba41b47-324f-47f1-80e3-0319eb56bd14",
       "name": "If3",
       "alwaysOutputData": false
     },
@@ -1489,7 +1415,7 @@
         3744,
         1136
       ],
-      "id": "3bce6d86-0dbe-40bf-8e78-3328e83ad0d4",
+      "id": "97930b1b-3708-416a-aaca-9ff429be440b",
       "name": "Code"
     },
     {
@@ -1546,12 +1472,12 @@
         "options": {}
       },
       "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
+      "typeVersion": 3.4,
       "position": [
         1200,
         912
       ],
-      "id": "5fe77fd1-7cf2-40a5-a369-3d4b6ff79660",
+      "id": "e675cbea-b56b-4a17-bec9-728a5c36b1e8",
       "name": "Switch2"
     },
     {
@@ -1571,7 +1497,7 @@
         1904,
         1520
       ],
-      "id": "7d848338-0909-49af-b74f-56c5a616b4a9",
+      "id": "9fa70eec-32db-4483-8e8a-23de841d3171",
       "name": "Query Graph",
       "disabled": true
     },
@@ -1585,7 +1511,7 @@
         2144,
         1520
       ],
-      "id": "dd793a66-c03b-4fcb-97c1-ef0f3fa6cfce",
+      "id": "0b7aacc8-062d-4315-8d2f-c710b43eb738",
       "name": "Tidy up response",
       "disabled": true
     },
@@ -1602,7 +1528,7 @@
         1760,
         1376
       ],
-      "id": "1e5811c3-1bb5-439f-bcff-53618f8f3750",
+      "id": "430fd36a-e495-45c7-b047-303cd810d455",
       "name": "Sticky Note13"
     },
     {
@@ -1618,7 +1544,7 @@
         1744,
         768
       ],
-      "id": "f1d067b7-c26d-4935-9323-42129d4da5a4",
+      "id": "9fbc417b-8299-4e68-b99b-15d41816b122",
       "name": "Sticky Note16"
     },
     {
@@ -1633,36 +1559,9 @@
         1456,
         880
       ],
-      "id": "7df39cd8-f5de-430a-a9c5-766d8813954e",
+      "id": "88bdc4ac-cc2e-4f4e-8fd7-56db863de223",
       "name": "Chat Memory Manager",
       "alwaysOutputData": true
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-5.2",
-          "mode": "list",
-          "cachedResultName": "gpt-5.2"
-        },
-        "options": {
-          "temperature": 0.4
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        2192,
-        1120
-      ],
-      "id": "3cc4cf87-eb90-4c0d-a665-43886f769f61",
-      "name": "OpenAI Chat Model4",
-      "credentials": {
-        "openAiApi": {
-          "id": "r6dwaEmQxKEvrskM",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -1675,15 +1574,16 @@
               "message": "=# Task\n\nYour task is to consider the following user query and then consider the following metadata keys with example values that we have that we can limit our result set from.\n\n# Metadata Filters and Possible Values\n\n{{ $json.filterPromptInstructions }}\n\n# Metadata Operators\n\nThe following operators are allowed:\n\n>\n<\n=\n!=\n>=\n<=\nIN\nNOT IN\n\nIF IN or NOT IN are provided, then an array of values must be provided.\n\nNow output a filter array with relevant filters with the following example format. The below filter_categories are just for exampe purposes. Use the \"Metadata Filters and Possible Values\" list above for the list of allowed filters.\n\n[\n    \"filter\": {\n      \"$and\": [\n        {\n          \"category\": {\n            \"operator\": \"IN\",\n            \"value\": [\n              \"F1\",\n              \"Rally\"\n            ]\n          }\n        },\n        {\n          \"year\": {\n            \"operator\": \">\",\n            \"value\": 2024\n          }\n        }\n      ]\n    }\n]\n\nIf the query does not have relevant metadatafilters, then do not output any ... for example\n\n{\n  \"filter\": {}\n}\n\nIf there is only 1 relevant metadafilter, then just output that ... for example\n\n[\n    \"filter\": {\n      \"$and\": [\n        {\n          \"motorsport_category\": {\n            \"operator\": \"IN\",\n            \"value\": [\n              \"F1\",\n              \"Rally\"\n            ]\n          }\n        }\n      ]\n    }\n]\n\nOnly output in JSON\n\nNote: Today's date is {{ $now }}"
             }
           ]
-        }
+        },
+        "batching": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "typeVersion": 1.6,
+      "typeVersion": 1.9,
       "position": [
         2480,
         896
       ],
-      "id": "da82091e-4255-4788-81a0-78fa9be0b77b",
+      "id": "c322af7b-d8db-4a95-b87f-b7de485d9e9a",
       "name": "Prep Metadata1",
       "retryOnFail": true,
       "maxTries": 5
@@ -1694,28 +1594,28 @@
         "inputSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"FlexibleFilterObject\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"filter\": {\n      \"type\": \"object\",\n      \"oneOf\": [\n        {\n          \"required\": [\"$and\"],\n          \"properties\": {\n            \"$and\": {\n              \"type\": \"array\",\n              \"items\": { \"$ref\": \"#/definitions/condition\" }\n            }\n          },\n          \"additionalProperties\": false\n        },\n        {\n          \"required\": [\"$or\"],\n          \"properties\": {\n            \"$or\": {\n              \"type\": \"array\",\n              \"items\": { \"$ref\": \"#/definitions/condition\" }\n            }\n          },\n          \"additionalProperties\": false\n        },\n        {\n          \"properties\": {},\n          \"additionalProperties\": false\n        }\n      ]\n    }\n  },\n  \"required\": [\"filter\"],\n  \"definitions\": {\n    \"condition\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\"field\", \"operator\", \"value\"],\n          \"properties\": {\n            \"field\": { \"type\": \"string\" },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\"=\", \"!=\", \">\", \"<\", \">=\", \"<=\", \"IN\", \"NOT IN\"]\n            },\n            \"value\": {\n              \"oneOf\": [\n                { \"type\": \"string\" },\n                { \"type\": \"number\" },\n                {\n                  \"type\": \"array\",\n                  \"items\": { \"type\": [\"string\", \"number\"] }\n                }\n              ]\n            }\n          },\n          \"additionalProperties\": false\n        },\n        {\n          \"type\": \"object\",\n          \"minProperties\": 1,\n          \"maxProperties\": 1,\n          \"patternProperties\": {\n            \"^.+$\": {\n              \"type\": \"object\",\n              \"required\": [\"operator\", \"value\"],\n              \"properties\": {\n                \"operator\": {\n                  \"type\": \"string\",\n                  \"enum\": [\"=\", \"!=\", \">\", \"<\", \">=\", \"<=\", \"IN\", \"NOT IN\"]\n                },\n                \"value\": {\n                  \"oneOf\": [\n                    { \"type\": \"string\" },\n                    { \"type\": \"number\" },\n                    {\n                      \"type\": \"array\",\n                      \"items\": { \"type\": [\"string\", \"number\"] }\n                    }\n                  ]\n                }\n              },\n              \"additionalProperties\": false\n            }\n          },\n          \"additionalProperties\": false\n        }\n      ]\n    }\n  }\n}"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.2,
+      "typeVersion": 1.3,
       "position": [
         2640,
         1120
       ],
-      "id": "c05c27ba-b559-4791-882b-4ac5975bb2c6",
+      "id": "9b64a7ee-7752-4520-a90d-48f56cbf200d",
       "name": "Structured Output Parser"
     },
     {
       "parameters": {
         "content": "# Retrieval Sub-Workflow",
-        "height": 552,
-        "width": 840,
+        "height": 488,
+        "width": 1224,
         "color": 6
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        896,
-        768
+        512,
+        816
       ],
-      "id": "fe4a3aa8-d310-44ab-b10b-0c94c5ceee3c",
+      "id": "12e4cb13-7438-4b9a-884d-4de261ee5ba1",
       "name": "Sticky Note17"
     },
     {
@@ -1729,7 +1629,7 @@
         1824,
         912
       ],
-      "id": "4e2b3b2e-00cd-4112-808d-528de011c20a",
+      "id": "cd44be34-68d0-4c25-8fc8-530051e70d6f",
       "name": "Fetch Metadata Fields1",
       "alwaysOutputData": true,
       "credentials": {
@@ -1749,14 +1649,14 @@
         2256,
         912
       ],
-      "id": "4ad9bbad-5b92-404c-9469-19e46094adf8",
+      "id": "1934fb51-320e-43c9-81ca-c1868e4f4103",
       "name": "Prep1"
     },
     {
       "parameters": {
         "sessionIdType": "customKey",
         "sessionKey": "={{ $('When Executed by Another Workflow').item.json.session_id }}",
-        "contextWindowLength": null
+        "contextWindowLength": {}
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
@@ -1764,7 +1664,7 @@
         1552,
         1072
       ],
-      "id": "67c908e0-1869-474b-b64e-4a67ed0aef3f",
+      "id": "68633367-c810-47d0-b7de-5b2c043e6eb3",
       "name": "Supabase Short-Term Memory1",
       "credentials": {
         "postgres": {
@@ -1785,7 +1685,7 @@
         1824,
         1424
       ],
-      "id": "fb316671-11f2-4f1e-b7a2-0a10f01c2c4b",
+      "id": "ead793f7-867e-4ad2-b0f9-b4c42c95aa2d",
       "name": "Sticky Note19",
       "disabled": true
     },
@@ -1793,10 +1693,10 @@
       "parameters": {
         "conditions": {
           "options": {
-            "caseSensitive": true,
+            "version": 2,
             "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
+            "caseSensitive": true,
+            "typeValidation": "loose"
           },
           "conditions": [
             {
@@ -1804,23 +1704,23 @@
               "leftValue": "={{ $json }}",
               "rightValue": "",
               "operator": {
-                "type": "object",
-                "operation": "notEmpty",
-                "singleValue": true
+                "type": "string",
+                "operation": "notEmpty"
               }
             }
           ],
           "combinator": "and"
         },
+        "looseTypeValidation": true,
         "options": {}
       },
       "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "typeVersion": 2.3,
       "position": [
         2032,
         1024
       ],
-      "id": "bdb3f321-b437-4cdb-a196-1bf1152c7826",
+      "id": "5c34de00-daba-46a9-bf8f-57aab5082a10",
       "name": "If"
     },
     {
@@ -1839,12 +1739,12 @@
         }
       },
       "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "typeVersion": 4.4,
       "position": [
         3168,
         944
       ],
-      "id": "8ef96bf7-05ac-4966-8429-a5b47511ec10",
+      "id": "208a92cc-c7a7-4b8f-ba13-144fa0cdfdb9",
       "name": "Trigger Dynamic Hybrid Search",
       "alwaysOutputData": true,
       "credentials": {
@@ -1866,7 +1766,7 @@
         3104,
         800
       ],
-      "id": "572664a1-c4de-415c-bf58-762df028829a",
+      "id": "e9671212-fc5d-4b43-8e8c-afbd62bd0d1b",
       "name": "Sticky Note22"
     },
     {
@@ -1881,79 +1781,31 @@
         3920,
         800
       ],
-      "id": "2ce29bcb-ed23-489e-81d7-3446d600f104",
+      "id": "8b08d323-5b56-45f1-af5c-380735daa636",
       "name": "Sticky Note23"
-    },
-    {
-      "parameters": {
-        "content": "",
-        "height": 648,
-        "width": 840,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        0,
-        768
-      ],
-      "id": "f70ed1ba-68da-4d60-ab8d-aefc32f5a20b",
-      "name": "Sticky Note24"
-    },
-    {
-      "parameters": {
-        "content": "## v2.3.3\nThis it the retrieval sub-workflow for both our SOTA RAG System and RAG At Scale System\n\nSOTA RAG Setup instructions here:\nhttps://community.theaiautomators.com/c/automation-templates/state-of-the-art-n8n-rag-agent\n\nRAG at Scale Setup instructions here:\nhttps://community.theaiautomators.com/c/automation-templates/rag-at-scale-system",
-        "height": 244,
-        "width": 580,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        160,
-        1136
-      ],
-      "id": "6e94fe3f-d975-4bbc-9871-2186ba58d5f1",
-      "name": "Sticky Note28"
-    },
-    {
-      "parameters": {
-        "content": "## TODO\n### Connect the Chat Trigger to your Agent of Choice",
-        "height": 256,
-        "width": 576
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        160,
-        848
-      ],
-      "id": "daa019ad-d010-428e-b688-d284d23facd6",
-      "name": "Sticky Note30"
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-5.2-2025-12-11",
+          "value": "claude-haiku-4-5-20251001",
           "mode": "list",
-          "cachedResultName": "gpt-5.2-2025-12-11"
+          "cachedResultName": "Claude Haiku 4.5"
         },
-        "builtInTools": {},
         "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        1088,
-        464
+        2464,
+        1120
       ],
-      "id": "f34209ef-55ef-4e60-b3d2-d70e9c444be6",
-      "name": "OpenAI Chat Model",
+      "id": "8d7b457e-627f-4997-9e00-3a7f0ca2ef66",
+      "name": "Anthropic Chat Model",
       "credentials": {
-        "openAiApi": {
-          "id": "r6dwaEmQxKEvrskM",
-          "name": "OpenAi account"
+        "anthropicApi": {
+          "id": "UyAehXbUNQAWwZOs",
+          "name": "Claude SEB"
         }
       }
     },
@@ -1961,24 +1813,59 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "claude-opus-4-5-20251101",
+          "value": "claude-sonnet-4-6",
           "mode": "list",
-          "cachedResultName": "Claude Opus 4.5"
+          "cachedResultName": "Claude Sonnet 4.6"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        2368,
-        1104
+        1072,
+        448
       ],
-      "id": "31ef7f0e-5fb8-45ba-ac5f-6cd53ec9f3c4",
-      "name": "Anthropic Chat Model",
+      "id": "60b15458-a027-46d1-9083-10a64b9b5c2c",
+      "name": "Anthropic Chat Model3",
       "credentials": {
         "anthropicApi": {
           "id": "UyAehXbUNQAWwZOs",
           "name": "Claude SEB"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.voyageai.com/v1/rerank",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"rerank-2.5\",\n  \"query\": \"{{ $('When Executed by Another Workflow').first().json.query }}\",\n  \"top_k\": 15,\n  \"documents\": {{ JSON.stringify($json.documents) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        3984,
+        928
+      ],
+      "id": "553c6090-05a1-41c8-9a99-6423d20905ea",
+      "name": "Rerank Voyage AI",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "Ox4ZpoIS0VxFfUw6",
+          "name": "Voyage AI"
         }
       }
     }
@@ -2283,28 +2170,6 @@
         ]
       ]
     },
-    "Rerank with Cohere 3.5": {
-      "main": [
-        [
-          {
-            "node": "Return Reordered Items1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Array": {
-      "main": [
-        [
-          {
-            "node": "Rerank with Cohere 3.5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If3": {
       "main": [
         [
@@ -2361,11 +2226,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "OpenAI Chat Model4": {
-      "ai_languageModel": [
-        []
       ]
     },
     "Prep Metadata1": {
@@ -2452,17 +2312,6 @@
         ]
       ]
     },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Agentic RAG 1",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "When chat message received": {
       "main": [
         [
@@ -2484,20 +2333,54 @@
           }
         ]
       ]
+    },
+    "Anthropic Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agentic RAG 1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Array": {
+      "main": [
+        [
+          {
+            "node": "Rerank Voyage AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rerank Voyage AI": {
+      "main": [
+        [
+          {
+            "node": "Return Reordered Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "callerPolicy": "workflowsFromSameOwner"
   },
-  "versionId": "1b6e68cc-d47c-4aee-a456-f0ace3ad0dd4",
+  "versionId": "8b94e420-4df7-43f8-b7db-7ea54b0b31f5",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "eaa3d31df30f69d853bf1887372824077726204755d7d83df055afd95f72246a"
   },
-  "id": "Bgl5d3deLQufGLff",
+  "id": "srB7bqtX7w0BVR7B",
   "tags": [
     {
       "updatedAt": "2026-02-15T11:24:51.266Z",

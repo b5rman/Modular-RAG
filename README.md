@@ -12,7 +12,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
          │                                                        │
          ▼                                                        ▼
  ┌────────────────┐                                   ┌─────────────────────────┐
- │ RAG INGESTION  │                                   │ RAG Retrieval (v1.0.8c) │
+ │ RAG INGESTION  │                                   │ RAG Retrieval (v0.2.1)  │
  │                │                                   │                         │
  │ Extract → Chunk│                                   │ Agent (Sonnet 4.6)      │
  │ → Embed → Store│                                   │ ├─ Dynamic Hybrid Search│
@@ -34,8 +34,8 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 | File | Version | Purpose |
 |------|---------|---------|
-| `RAG INGESTION v0.2.0.json` | v0.2.0 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
-| `RAG Retrieval Sub-Workflow v1.0.8c.json` | v1.0.8c | Agentic retrieval with dynamic hybrid search and context expansion |
+| `RAG INGESTION v0.2.1.json` | v0.2.1 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
+| `RAG Retrieval Sub-Workflow v0.2.1.json` | v0.2.1 | Agentic retrieval with dynamic hybrid search, Voyage AI reranking, and citation verification |
 | `Knowledge Graph Workflow (LightRAG).json` | v1.1 | Insert/update/delete documents in LightRAG knowledge graph |
 | `Multimodal RAG Ingestion Sub-workflow.json` | v1.2 | OCR via Mistral, image extraction to Supabase, enriched markdown output |
 | `Zep Update Long-Term Memories Sub-workflow.json` | — | Persist conversation messages to Zep threads for long-term memory |
@@ -94,7 +94,7 @@ The retrieval workflow uses an agentic RAG pattern with Claude Sonnet 4.6 (exten
 
 **Fetch Document Hierarchy** — Retrieves document structure from record_manager_v2
 
-**Cohere Reranking** — Results reranked by relevance using Cohere rerank-v3.5
+**Voyage AI Reranking** — Results reranked by relevance using Voyage AI rerank-2.5
 
 **Citation Verification** — Post-processing Code node that splits the agent's output on a `---SOURCES_JSON---` delimiter, validates structured citation objects (doc_name, doc_id, pages, chunk_indices), and builds a clean References section. Graceful fallback if no sources are provided.
 
@@ -140,12 +140,28 @@ Called by the retrieval workflow to persist conversation context:
 - **LightRAG** — Knowledge graph (optional)
 - **Zep** — Long-term memory (optional)
 - **LlamaParse** — Advanced document parsing for Word, PowerPoint, RTF, EPUB, and other complex formats
-- **Cohere** — Reranking (rerank-v3.5, active)
+- **Voyage AI** — Reranking (rerank-2.5)
 - **Firecrawl** — Web scraping (disabled by default)
 
 ---
 
 ## Changelog
+
+### v0.2.1 - 2026-02-26
+
+**Retrieval Workflow:**
+- **Replaced Cohere rerank-v3.5 with Voyage AI rerank-2.5** — new "Rerank Voyage AI" HTTP Request node (`top_k: 15`). Voyage response format matches Cohere, no downstream code changes needed
+- **Fixed If node type validation error** — changed from `object notEmpty` (strict) to `string notEmpty` (loose) to handle empty string from sub-workflow
+- **Fixed expression prefix on Query Tabular Rows** — `{{ $fromAI('sql_query') }}` → `={{ $fromAI('sql_query') }}` on both SQL tool nodes
+- **Upgraded Agentic RAG 1 agent node** — v1.9 → v3.1 with explicit `maxIterations: 25`
+- **Added toolDescription to Dynamic Hybrid Search** — concise action-oriented description for agent tool selection
+- **Removed orphaned nodes** — "Create Zep User" (disconnected), 4 unused sticky notes
+
+**Ingestion Workflow:**
+- **Fixed Insert into Vector Store expression** — `"query": "{{ $json.insertQuery }}"` → `"={{ $json.insertQuery }}"` (missing `=` prefix treated value as literal string)
+
+**Both Workflows:**
+- **Bumped 49 node typeVersions** — If (2.2→2.3), Switch (3.2→3.4), HTTP Request (4.2→4.4), Code (2→2.1), Extract From File (1→1.1), chainLlm (1.6→1.9), and others
 
 ### v0.2.0 - 2026-02-25
 
