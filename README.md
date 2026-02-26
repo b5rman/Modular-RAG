@@ -12,7 +12,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
          │                                                        │
          ▼                                                        ▼
  ┌────────────────┐                                   ┌─────────────────────────┐
- │ RAG INGESTION  │                                   │ RAG Retrieval (v0.2.1)  │
+ │ RAG INGESTION  │                                   │ RAG Retrieval           │
  │                │                                   │                         │
  │ Extract → Chunk│                                   │ Agent (Sonnet 4.6)      │
  │ → Embed → Store│                                   │ ├─ Dynamic Hybrid Search│
@@ -23,8 +23,8 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
         ▼            ▼           ▼                                  ▼
  ┌────────────┐ ┌──────────┐                             ┌──────────────────┐
  │ Multimodal │ │ Knowledge│    ┌───────────────┐        │ Zep Long-Term    │
- │ RAG (v1.2) │ │ Graph    │    │ documents_v2  │        │ Memories         │
- │            │ │ (v1.1)   │    │ (pgvector)    │◄───────│                  │
+ │ RAG        │ │ Graph    │    │ documents_v2  │        │ Memories         │
+ │            │ │          │    │ (pgvector)    │◄───────│                  │
  │ Mistral OCR│ │ LightRAG │    └───────────────┘        │ Persists chat    │
  │ → Supabase │ │          │                             │ context to Zep   │
  └────────────┘ └──────────┘                             └──────────────────┘
