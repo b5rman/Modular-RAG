@@ -2,6 +2,7 @@
 
 Beta/experimental workflows for the [Modular RAG](https://github.com/b5rman/Modular-RAG) system. These workflows test new features before they are merged into production.
 
+**Beta version:** v0.2.1
 **Production base version:** v0.2.0 (ingestion) / v1.0.8c (retrieval)
 
 ## Workflows
@@ -128,7 +129,7 @@ The `backups/` folder contains pre-edit snapshots of workflow files for rollback
 
 ## Changelog
 
-### 2026-02-25 — Citation Verification System Phase 1
+### v0.2.1 — 2026-02-25 — Citation Verification System Phase 1
 
 **New: Citation Verification pipeline**
 - Added `Format & Verify Citations` code node — validates structured citations, builds References section
@@ -146,7 +147,7 @@ The `backups/` folder contains pre-edit snapshots of workflow files for rollback
 **Removed: Orphaned nodes**
 - Removed disconnected nodes: Agentic RAG 1 (old), Create Zep User, Dynamic Hybrid Search (old), Query Tabular Rows (old)
 
-### 2026-02-21 — Beta-0.1.9: Batch Contextual Embeddings
+### v0.1.9 — 2026-02-21 — Batch Contextual Embeddings
 
 **New: Contextual Embedding Batch API sub-workflow**
 - OpenAI Batch API for async contextual embeddings (50% cheaper, separate rate limits)
