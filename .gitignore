@@ -6,6 +6,7 @@
 work/
 backup/
 live/
+beta/
 
 # Dev utilities
 compare_nodes.py
