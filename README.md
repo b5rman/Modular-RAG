@@ -12,7 +12,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
          │                                                        │
          ▼                                                        ▼
  ┌────────────────┐                                   ┌─────────────────────────┐
- │ RAG INGESTION  │                                   │ RAG Retrieval (v1.0.8c) │
+ │ RAG INGESTION  │                                   │ RAG Retrieval (v0.2.0) │
  │                │                                   │                         │
  │ Extract → Chunk│                                   │ Agent (Sonnet 4.6)      │
  │ → Embed → Store│                                   │ ├─ Dynamic Hybrid Search│
@@ -35,7 +35,7 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 | File | Version | Purpose |
 |------|---------|---------|
 | `RAG INGESTION v0.2.0.json` | v0.2.0 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
-| `RAG Retrieval Sub-Workflow v1.0.8c.json` | v1.0.8c | Agentic retrieval with dynamic hybrid search and context expansion |
+| `RAG Retrieval Sub-Workflow v0.2.0.json` | v0.2.0 | Agentic retrieval with dynamic hybrid search, context expansion, and GPT-5.2 |
 | `Knowledge Graph Workflow (LightRAG).json` | v1.1 | Insert/update/delete documents in LightRAG knowledge graph |
 | `Multimodal RAG Ingestion Sub-workflow.json` | v1.2 | OCR via Mistral, image extraction to Supabase, enriched markdown output |
 | `Zep Update Long-Term Memories Sub-workflow.json` | — | Persist conversation messages to Zep threads for long-term memory |
@@ -184,7 +184,7 @@ Called by the retrieval workflow to persist conversation context:
 - **Fixed HTTP Request parallel execution breaking cache** — n8n's HTTP Request node processes items in parallel by default (batch of 50). Added `batchSize: 1` to force sequential processing so each request can read the cache created by the previous one
 - **Fixed Recycling Bin deletion failing** — the `If` node in the deletion flow had strict type validation on `$json.id` (number exists) which failed when Supabase returned empty/string data. Changed to loose type validation
 
-### v1.0.8c - 2026-02-19
+### v0.2.0 - 2026-02-19
 
 **Retrieval Workflow:**
 - **Fixed sub-workflow trigger** — changed "When Executed by Another Workflow" from `inputSource: passthrough` to explicitly defined inputs (query, type, session_id, dense/sparse/ilike/fuzzy weights, fuzzy_threshold). Passthrough mode silently fails when called from an agent toolWorkflow — defined inputs are required for `$fromAI()` parameter binding
