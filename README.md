@@ -102,13 +102,13 @@ Optional (disabled): Knowledge Graph queries, Zep long-term memory
 
 ## Sub-Workflows
 
-### Knowledge Graph (LightRAG v1.1)
+### Knowledge Graph (LightRAG)
 Called by the ingestion pipeline when `lightrag_enabled = true`. Compares document hashes to determine action:
 - **New document** → Insert into LightRAG, store `graph_id` in record manager
 - **Changed document** → Delete old entry, re-insert
 - **Unchanged** → Skip
 
-### Multimodal RAG (v1.2)
+### Multimodal RAG
 Called by the ingestion pipeline when `multimodal_rag_enabled = true`:
 1. Uploads file to Mistral OCR (`mistral-ocr-latest`)
 2. Extracts pages and images
