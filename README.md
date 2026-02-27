@@ -165,6 +165,13 @@ Called by the retrieval workflow to persist conversation context:
 - **Voyage AI rerank top_k increased** — 15 → 20 for broader context coverage
 - **Citation sections field added** — references now include specific section headings from `cascading_path` metadata instead of meaningless `pages: [1]`
 
+**Temperature Optimization (all workflows):**
+- **Metadata prep LLMs set to 0.4** — Anthropic Chat Model1 (Haiku 4.5, ingestion) and Anthropic Chat Model (Haiku 4.5, retrieval Prep Metadata1). Was 0.7 default
+- **Mistral Cloud Chat Model set to 0.4** — fallback enrichment node (Enrich1). Was 0.7 default
+- **Contextual Embedding API set to 0.3** — lower variance for short factual summaries. Was 1.0 (Anthropic API default)
+- **Cache Warmup set to 0** — output is irrelevant, only triggers cache creation. Was 1.0 default
+- **Contextual embedding prompt enhanced** — added rule to include key entities, technical terms, and relationships in summaries to improve search recall
+
 ### v0.2.1 - 2026-02-26
 
 **Citation Verification System (Phase 1):**
