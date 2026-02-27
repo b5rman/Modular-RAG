@@ -32,19 +32,10 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 ## Workflows
 
-### Production
-
 | File | Nodes | Purpose |
 |------|-------|---------|
 | `RAG INGESTION v0.2.1.json` | 144 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
 | `RAG Retrieval Sub-Workflow v0.2.1.json` | 65 | Agentic retrieval with dynamic hybrid search, Voyage AI reranking, and citation verification |
-
-### Beta (`beta/` folder)
-
-| File | Nodes | Purpose |
-|------|-------|---------|
-| `RAG INGESTION v0.2.1 BETA.json` | 142 | Beta ingestion pipeline — mirrors production with experimental changes |
-| `RAG Retrieval Sub-Workflow v0.2.1 Beta.json` | 65 | Beta retrieval agent — mirrors production with experimental changes |
 
 > **Sub-workflows** (Knowledge Graph/LightRAG, Multimodal RAG, Zep Long-Term Memory) are configured in n8n but removed from GitHub — they are not active in production.
 

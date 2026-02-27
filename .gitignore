@@ -6,6 +6,7 @@
 work/
 backup/
 live/
+beta/
 n8n/
 
 # Sub-workflows (configured in n8n but not used in production)
