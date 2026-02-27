@@ -32,15 +32,21 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 
 ## Workflows
 
-| File | Purpose |
-|------|---------|
-| `RAG INGESTION v0.2.1.json` | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
-| `RAG Retrieval Sub-Workflow v0.2.1.json` | Agentic retrieval with dynamic hybrid search, Voyage AI reranking, and citation verification |
-| `Knowledge Graph Workflow (LightRAG).json` | Insert/update/delete documents in LightRAG knowledge graph |
-| `Multimodal RAG Ingestion Sub-workflow.json` | OCR via Mistral, image extraction to Supabase, enriched markdown output |
-| `Zep Update Long-Term Memories Sub-workflow.json` | Persist conversation messages to Zep threads for long-term memory |
+### Production
 
-> **Beta workflows** — Experimental features and pre-release versions are developed in a separate repository: [Modular-RAG-Beta](https://github.com/b5rman/Modular-RAG-Beta) (currently `v0.2.0-beta.1`).
+| File | Nodes | Purpose |
+|------|-------|---------|
+| `RAG INGESTION v0.2.1.json` | 144 | Main ingestion pipeline — extracts, chunks, embeds, and stores documents |
+| `RAG Retrieval Sub-Workflow v0.2.1.json` | 65 | Agentic retrieval with dynamic hybrid search, Voyage AI reranking, and citation verification |
+
+### Beta (`beta/` folder)
+
+| File | Nodes | Purpose |
+|------|-------|---------|
+| `RAG INGESTION v0.2.1 BETA.json` | 142 | Beta ingestion pipeline — mirrors production with experimental changes |
+| `RAG Retrieval Sub-Workflow v0.2.1 Beta.json` | 65 | Beta retrieval agent — mirrors production with experimental changes |
+
+> **Sub-workflows** (Knowledge Graph/LightRAG, Multimodal RAG, Zep Long-Term Memory) are configured in n8n but removed from GitHub — they are not active in production.
 
 ## Ingestion Pipeline
 
@@ -59,6 +65,9 @@ A production-grade n8n RAG (Retrieval-Augmented Generation) system composed of 5
 - **Deduplication** - SHA256 content hashing via `record_manager_v2`; skips unchanged docs, re-indexes changed ones
 - **LLM Enrichment** - Claude Haiku 4.5 extracts headline, summary, and custom metadata per document
 - **Batch Embedding** - Chunks batched (200/batch) with OpenAI `text-embedding-3-small`, inserted via PostgreSQL `UNNEST`
+- **Cache Warmup** - Pre-creates Anthropic ephemeral cache once per document before the chunk loop, ensuring 100% prompt cache reads on all contextual embedding requests
+- **Retry Mechanism** - Rate limit errors on contextual embedding trigger a 60s wait + retry, with fallback to regular embedding if retry also fails
+- **OOM Protection** - Document text truncated to 100K chars for contextual embedding context, preventing n8n worker memory exhaustion on large PDFs (200+ pages)
 - **Tabular Data** - Excel/CSV rows stored individually as JSON in `tabular_document_rows`, optionally embedded
 
 ### Optional Features (Toggle via Set Data node)
@@ -94,7 +103,7 @@ The retrieval workflow uses an agentic RAG pattern with Claude Sonnet 4.6 (exten
 
 **Fetch Document Hierarchy** — Retrieves document structure from record_manager_v2
 
-**Voyage AI Reranking** — Results reranked by relevance using Voyage AI rerank-2.5
+**Voyage AI Reranking** — Results reranked by relevance using Voyage AI rerank-2.5 (top_k: 20)
 
 **Citation Verification** — Post-processing Code node that splits the agent's output on a `---SOURCES_JSON---` delimiter, validates structured citation objects (doc_name, doc_id, pages, chunk_indices), and builds a clean References section. Graceful fallback if no sources are provided.
 
@@ -147,7 +156,23 @@ Called by the retrieval workflow to persist conversation context:
 
 ## Changelog
 
-### v0.2.1 - 2026-02-26
+### v0.2.1 - 2026-02-27
+
+**Ingestion Pipeline Reliability & Caching:**
+- **Added Cache Warmup node** — single HTTP Request that pre-creates the Anthropic ephemeral cache (once per document) before the chunk loop starts. All chunks read from the warm cache, eliminating the double-write on chunk 0. Zero net cost increase (~2-3s overhead per document)
+- **Added Restore Chunks node** — Code node between Cache Warmup and Split Out1 that restores the chunks data from Merger via `$('Merger').first().json`, since HTTP Request nodes replace their input data with the API response
+- **Added contextual embedding retry mechanism** — rate limit errors trigger a 60s wait + automatic retry, with fallback to regular embedding if the retry also fails. Handles Anthropic's 450K input tokens/minute limit on large documents
+- **OOM protection** — document text truncated to 100K chars (`.substring(0, 100000)`) at the `Set up Text for Embedding` source node, preventing n8n Cloud worker memory exhaustion on 200+ page PDFs
+- **Prompt caching regression fix** — restored `batchInterval: 500` on contextual embedding HTTP Request nodes after typeVersion hardening (4.2→4.4) silently stripped it
+- **Loop over Chunks batchSize increased** — 25 → 50 for reduced loop overhead (independent of HTTP Request batching which handles prompt cache pacing)
+- **Ingestion pipeline now 144 nodes** (was 140 in v0.2.0)
+
+**Answer Consistency Tuning (Retrieval):**
+- **Temperature reduced to 0.2** (was 0.7 default) on Claude Sonnet 4.6 for more deterministic factual answers
+- **Extended thinking properly configured** — `thinkingBudget: 10000` with `maxTokensToSample: 16000` (was missing, causing budget validation errors)
+- **SOP updated** — mandatory minimum 2 searches with different query formulations
+- **Voyage AI rerank top_k increased** — 15 → 20 for broader context coverage
+- **Citation sections field added** — references now include specific section headings from `cascading_path` metadata instead of meaningless `pages: [1]`
 
 **Citation Verification System (Phase 1):**
 - **Added `Format & Verify Citations` code node** — post-processes agent output by splitting on `---SOURCES_JSON---` delimiter, validating citation structure (doc_name, doc_id, pages, chunk_indices, relevance), and building a clean References section. Invalid citations are logged as warnings rather than silently dropped

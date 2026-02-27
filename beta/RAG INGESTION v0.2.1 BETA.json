@@ -1,14 +1,15 @@
 {
-  "updatedAt": "2026-02-27T14:23:52.424Z",
-  "createdAt": "2026-02-26T15:33:05.877Z",
-  "id": "wrfn22vvqWs7v7jj",
-  "name": "RAG INGESTION v0.2.1",
+  "updatedAt": "2026-02-27T14:18:33.816Z",
+  "createdAt": "2026-02-26T09:48:39.047Z",
+  "id": "OyJjoBU5OBY2UT9M",
+  "name": "RAG INGESTION v0.2.1 BETA",
   "description": null,
   "active": false,
   "isArchived": false,
   "nodes": [
     {
       "parameters": {
+        "type": "SHA256",
         "value": "={{ $json.text }}",
         "dataPropertyName": "hash"
       },
@@ -18,7 +19,7 @@
         19584,
         17120
       ],
-      "id": "1a179db6-0d78-4ba4-b71b-99788f6adfc6",
+      "id": "4ec689df-9e9e-486f-8da1-f0ba3c015798",
       "name": "Generate Hash"
     },
     {
@@ -47,7 +48,7 @@
         19824,
         17120
       ],
-      "id": "d0149770-1713-4fb6-8345-41aacce374a5",
+      "id": "7d5c127a-a557-4e39-85aa-1f97cf001f4a",
       "name": "Search Record Manager",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -100,7 +101,7 @@
         20960,
         16992
       ],
-      "id": "31bf63e6-d0ec-46dd-8188-0f401837eb09",
+      "id": "7c4151f3-c7d6-4fbd-9e9c-240247efeaef",
       "name": "Create Row in Record Manager",
       "retryOnFail": true,
       "credentials": {
@@ -120,7 +121,7 @@
         19136,
         13584
       ],
-      "id": "bc78e850-9a91-4f67-8a2d-9f60aa01d6de",
+      "id": "0387c4ec-cdef-4fbb-b4a3-9f574cafe7d5",
       "name": "Loop Over Items"
     },
     {
@@ -136,7 +137,7 @@
         20688,
         17280
       ],
-      "id": "b73f6aed-dfaf-4511-8200-dd2098cc816e",
+      "id": "d43a1799-ca17-4bee-bf4d-f01cec791d7e",
       "name": "Delete Previous Vectors",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -179,7 +180,7 @@
         21168,
         17280
       ],
-      "id": "3bf42ec3-dfd7-41e2-b7a0-16e57aed0b09",
+      "id": "42bb106c-c9a9-4622-bcf1-19ea3cebbd51",
       "name": "Update our Record Manager",
       "retryOnFail": true,
       "credentials": {
@@ -200,7 +201,7 @@
         20944,
         17280
       ],
-      "id": "23afdc85-ea1a-4416-9734-59ac224472ae",
+      "id": "a414ceb1-14bc-4653-a15b-91322980c031",
       "name": "Aggregate"
     },
     {
@@ -229,7 +230,7 @@
         26096,
         13936
       ],
-      "id": "6c306dc1-c9ed-454b-b571-187bcd0f9df6",
+      "id": "04e857b7-c60b-44a6-a49c-cf7ae862b763",
       "name": "Set Text"
     },
     {
@@ -258,7 +259,7 @@
         23600,
         17120
       ],
-      "id": "4f9b4493-aa27-49e1-9824-b65a8df286fc",
+      "id": "76d311c2-2af4-4f74-af40-b3c1facc4483",
       "name": "Set up Text for Embedding"
     },
     {
@@ -273,7 +274,7 @@
         23696,
         13984
       ],
-      "id": "4ae19cc8-80e0-44d5-8fc9-f340b082ea34",
+      "id": "9e3e32ba-4b68-4844-a801-86c10824aaa2",
       "name": "Extract from File"
     },
     {
@@ -305,7 +306,7 @@
         23680,
         13600
       ],
-      "id": "381d54c8-20f4-476b-98bf-c94604d0855c",
+      "id": "652ab71c-997e-4416-839e-c7f537507b7c",
       "name": "Upload File",
       "retryOnFail": true,
       "credentials": {
@@ -341,7 +342,7 @@
         18656,
         13584
       ],
-      "id": "6c639a8a-483f-406e-a895-e3f04d63740b",
+      "id": "0122fa41-159a-46f2-aba8-5764ad17d1b2",
       "name": "New Files",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -374,7 +375,7 @@
         18656,
         13824
       ],
-      "id": "e20ec671-6ff4-44e5-90f3-531f95544efa",
+      "id": "05c05547-1827-48a1-95b0-65af2ce57caf",
       "name": "Updated Files",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -400,7 +401,7 @@
         18560,
         12160
       ],
-      "id": "1c7c29e0-2dfa-4d23-a609-77279260a9b7",
+      "id": "ee95e32b-955f-4a3d-ae0f-365553c2bfd6",
       "name": "Trigger Firecrawl",
       "retryOnFail": false,
       "disabled": true
@@ -408,7 +409,7 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "20f51504-4b0c-4e1d-bcfc-717f5ba99b1d",
+        "path": "6a05257a-d9ce-48d6-9a9f-5cb750b86f63",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
@@ -417,9 +418,9 @@
         19184,
         12912
       ],
-      "id": "1e2fd46c-a8f6-4320-971b-6a9e92e0bb8e",
+      "id": "4e02d105-745b-42c9-ab7e-bd419c0912f2",
       "name": "Webhook",
-      "webhookId": "20f51504-4b0c-4e1d-bcfc-717f5ba99b1d"
+      "webhookId": "6a05257a-d9ce-48d6-9a9f-5cb750b86f63"
     },
     {
       "parameters": {
@@ -490,7 +491,7 @@
         19504,
         13680
       ],
-      "id": "4f9488e1-99d1-4b6f-a99d-d9d5db67b0a8",
+      "id": "4a1fed9b-54cf-4362-a457-443d92c57866",
       "name": "Set Data"
     },
     {
@@ -524,7 +525,7 @@
         19504,
         12912
       ],
-      "id": "c199795b-92bf-4658-bf47-c37b15f225bd",
+      "id": "52a46380-f2dc-4364-8583-d9459717a392",
       "name": "If2"
     },
     {
@@ -554,7 +555,7 @@
         18656,
         14592
       ],
-      "id": "787019d6-67f3-4117-a222-5a975f763064",
+      "id": "5847bf3b-b84e-45d9-ab81-c41882d44ec7",
       "name": "Archive File",
       "retryOnFail": true,
       "credentials": {
@@ -581,7 +582,7 @@
         18336,
         12160
       ],
-      "id": "0f3839e7-c212-45cd-98ad-6256cf23229b",
+      "id": "a8d4ba41-9adb-4074-9c99-370938ebeded",
       "name": "Schedule Trigger",
       "disabled": true
     },
@@ -595,10 +596,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        24592,
-        17104
+        24464,
+        17232
       ],
-      "id": "9ad0b4ae-3542-4cb0-b19f-62ac0ede9d6a",
+      "id": "99d9849c-ea9b-47e2-b8a6-cd3c681e3cb5",
       "name": "Loop over Chunks"
     },
     {
@@ -683,7 +684,7 @@
         20000,
         17088
       ],
-      "id": "d908e3f5-b270-4934-8660-c57ea5aea9ef",
+      "id": "6b585284-d7db-4beb-bbf8-1acffc5ca9da",
       "name": "Switch"
     },
     {
@@ -697,7 +698,7 @@
         25552,
         17632
       ],
-      "id": "cb6e2e75-2a95-4794-9926-c13f2b0f1409",
+      "id": "0819d3fc-4322-4eb2-8714-f30a9f7f0b86",
       "name": "Aggregate2"
     },
     {
@@ -713,7 +714,7 @@
         21456,
         16112
       ],
-      "id": "7f975796-e86b-4037-a80b-f7a0373ad2e0",
+      "id": "6b21771a-34e1-4f8d-b1a3-3054406e1d3a",
       "name": "Sticky Note14",
       "disabled": true
     },
@@ -728,7 +729,7 @@
         23168,
         17024
       ],
-      "id": "b5032d6c-7eef-48ce-a6c4-b658b6d61b6d",
+      "id": "a2f02be3-1c36-493b-b943-d76e96725cc1",
       "name": "Structured Output Parser2"
     },
     {
@@ -742,7 +743,7 @@
         22304,
         17088
       ],
-      "id": "7df55c93-08ef-47bc-bdc2-64e448a455d3",
+      "id": "98629bd7-d46d-4d49-9c93-753a2e6a792c",
       "name": "Fetch Metadata Fields",
       "retryOnFail": true,
       "alwaysOutputData": true,
@@ -763,7 +764,7 @@
         22528,
         16832
       ],
-      "id": "b4a53457-9506-4eaf-bb1a-c04944afc719",
+      "id": "2eaf6eed-d0de-473c-b2f7-d8f4997471bd",
       "name": "Prep"
     },
     {
@@ -777,8 +778,7 @@
               "message": "=Based on the provided file name and file contents, extract out ...\n\n# headline-style description\n\nA very short, headline-style description (7-10 words). This will be used to finish the sentence \"This chunk is from\" so start it with \"an\" or \"a\"... example output\n\nan SEC filing on ACME corp's performance in Q2 2023\n\n# document summary\n\nAlso extract out a 1 sentence description of what the document is about and classify the document according to the below fields.\n\nOnly output JSON in the following format\n\n{\n\"document_headline_description\":\"<ADD>\",\n\"document_summary\":\"<ADD>\",\n{{ $json.list_of_fields ? $json.list_of_fields : \"\" }}\n}\n\nIf you are unsure of any of these, just output N/A in the field.\n\n{{ $json.list_of_fields ? $json.filterPromptInstructions : \"\" }}"
             }
           ]
-        },
-        "batching": {}
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.9,
@@ -786,7 +786,7 @@
         23024,
         16816
       ],
-      "id": "fbaeb25c-6cb4-4670-aa82-4f755f21db1c",
+      "id": "386c849a-52a9-4318-8ce3-a248024ce0d3",
       "name": "Enrich",
       "retryOnFail": true,
       "maxTries": 5,
@@ -859,7 +859,7 @@
         21984,
         16960
       ],
-      "id": "2763e4db-8e89-499a-9923-f43e73909ae9",
+      "id": "44e34bff-581e-4e21-b25d-0027816f464d",
       "name": "Is LightRAG enabled?"
     },
     {
@@ -928,7 +928,7 @@
         21568,
         16400
       ],
-      "id": "b1c14c14-f6f8-41ba-884a-ddea84de4968",
+      "id": "0275034a-b608-4ec5-9a9a-2e212f68a9c6",
       "name": "Is LightRAG enabled?1",
       "disabled": true
     },
@@ -963,7 +963,7 @@
         22688,
         13536
       ],
-      "id": "0c920903-fb35-42e7-ae67-02a8a58a94d8",
+      "id": "b75db6d0-a9fb-44d5-879a-64a39df4c141",
       "name": "Is Multimodal enabled?"
     },
     {
@@ -977,7 +977,7 @@
         23392,
         13120
       ],
-      "id": "9775c468-fe36-4b69-9c8c-5b89f511217d",
+      "id": "ab18a7c0-fa89-4923-b2a9-b08e8b68d7f6",
       "name": "Get a document",
       "retryOnFail": true,
       "credentials": {
@@ -992,7 +992,7 @@
         "operation": "xlsx",
         "options": {}
       },
-      "id": "45b0701a-17e6-4102-94b5-d9e655803b52",
+      "id": "2963eae6-82c2-4127-9c98-bafebe164df3",
       "name": "Extract from Excel",
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
@@ -1011,7 +1011,7 @@
         23472,
         14784
       ],
-      "id": "2ae56633-7805-4f74-a17a-1ff427ccb17b",
+      "id": "06abb08f-3e6b-415e-ba5f-42e787e0ccfe",
       "name": "Extract from CSV"
     },
     {
@@ -1026,7 +1026,7 @@
         },
         "options": {}
       },
-      "id": "9bba56bb-4f6b-4e9e-a651-0727df1a1eb2",
+      "id": "7025e303-1bbe-4849-b380-27e6983360e6",
       "name": "Summarize",
       "type": "n8n-nodes-base.summarize",
       "typeVersion": 1.1,
@@ -1055,7 +1055,7 @@
         23472,
         15200
       ],
-      "id": "f6b066c0-4106-4d0e-a78b-0713fd7b2550",
+      "id": "3c274194-f8ee-46ff-9e93-10f3efff0d28",
       "name": "Get row(s) in sheet",
       "retryOnFail": true,
       "credentials": {
@@ -1085,7 +1085,7 @@
         24928,
         14736
       ],
-      "id": "8a9a8a0d-3740-4bfe-8d96-2bdcf82047f3",
+      "id": "4982fdfe-28a5-4704-9e0f-fb6dd25216eb",
       "name": "Array keys"
     },
     {
@@ -1100,7 +1100,7 @@
         25344,
         14800
       ],
-      "id": "34542f43-8bca-4326-b500-3905c703c00b",
+      "id": "bb4d54f6-ec08-465c-a959-7e23d509857f",
       "name": "Merge"
     },
     {
@@ -1141,7 +1141,7 @@
         25824,
         14800
       ],
-      "id": "b151ee20-f470-45cc-bcfd-ad3da376d7c4",
+      "id": "d0ad66a1-59d9-4cd8-b06e-b33845f47731",
       "name": "Set Text for Tabular Data"
     },
     {
@@ -1157,7 +1157,7 @@
         22528,
         14944
       ],
-      "id": "469d67a4-1605-4c39-b1a5-7d66bc3b9a28",
+      "id": "bc8d2aec-e077-4a1d-b02e-35f487bbec75",
       "name": "Get google sheet info",
       "retryOnFail": true,
       "credentials": {
@@ -1174,7 +1174,7 @@
         "fieldsToExclude": "row_number",
         "options": {}
       },
-      "id": "21a29b1a-419c-4c94-ace6-fb33f08202e3",
+      "id": "8fd187ec-2a38-4e49-af92-2c1966c52738",
       "name": "Aggregate3",
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
@@ -1423,7 +1423,7 @@
         21520,
         13584
       ],
-      "id": "a408389e-d67b-4cb2-a3cf-42c4d35ca19f",
+      "id": "dfd56104-3cb7-4da7-9604-a2df5652f1e5",
       "name": "Switch1"
     },
     {
@@ -1464,7 +1464,7 @@
         26320,
         14560
       ],
-      "id": "277eb577-fe44-4baf-8271-3451aaf6e0c1",
+      "id": "20f3e6e8-b8f4-4190-a22a-b6439d56aa14",
       "name": "Set Text (Merged)"
     },
     {
@@ -1480,7 +1480,7 @@
         23264,
         16112
       ],
-      "id": "2d5f69a0-aca7-4def-b442-a4b2fffe5b3c",
+      "id": "2cb157a6-1ac3-4e0b-bb27-0d4c2530d207",
       "name": "Sticky Note23"
     },
     {
@@ -1503,7 +1503,7 @@
         23440,
         16224
       ],
-      "id": "0510f4c7-43a6-47ce-8189-a2605df744b7",
+      "id": "0d58771b-4640-4259-9e6f-0c8f57aee5d7",
       "name": "Delete Old Data Rows",
       "alwaysOutputData": true,
       "executeOnce": true,
@@ -1590,7 +1590,7 @@
         24160,
         16224
       ],
-      "id": "e8aeafcf-e99d-4853-ac37-5df04d574b3e",
+      "id": "c76a92be-e086-446e-b329-cce3dff6a61f",
       "name": "Insert rows in a table",
       "retryOnFail": true,
       "credentials": {
@@ -1611,7 +1611,7 @@
         23920,
         16224
       ],
-      "id": "93569053-1735-4fab-98b9-6a1e366c8b56",
+      "id": "0adb021f-fbd0-4eea-883b-a6f4913f187a",
       "name": "Split Out"
     },
     {
@@ -1677,7 +1677,7 @@
         21776,
         16864
       ],
-      "id": "4c8c7406-17c3-448a-b54f-605169dd217b",
+      "id": "4688079a-f7b9-4dcb-a1be-c3ca87b10cc2",
       "name": "Check data type"
     },
     {
@@ -1700,7 +1700,7 @@
         23680,
         16224
       ],
-      "id": "3ce2479c-fcf4-4e9e-bea9-c3b79561ca18",
+      "id": "3120ac96-cff4-40fd-bc91-73651f3f1b47",
       "name": "data_rows"
     },
     {
@@ -1739,10 +1739,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        23936,
-        13376
+        23920,
+        13408
       ],
-      "id": "a49363f5-be57-4f63-9a81-d8d8bba89198",
+      "id": "34a6cd5d-4d49-414b-b2b5-14caa2d27ef3",
       "name": "Execute Workflow",
       "disabled": true
     },
@@ -1847,7 +1847,7 @@
         22480,
         16256
       ],
-      "id": "91be3920-5671-42ee-ba34-04758781df6c",
+      "id": "18f6278b-62c8-4f7d-943e-03c52ca3d2a3",
       "name": "Execute Knowledge Graph Updates",
       "alwaysOutputData": true,
       "disabled": true
@@ -1880,10 +1880,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        24880,
-        16976
+        24784,
+        17152
       ],
-      "id": "6b0b4419-3151-4a3e-b6fa-b7d848d64442",
+      "id": "29075918-8294-44f1-9870-d9329e571e45",
       "name": "Contextual embedding enabled?"
     },
     {
@@ -1909,10 +1909,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        25776,
-        16992
+        25696,
+        17072
       ],
-      "id": "04a2957a-4ca6-4fad-a014-72d710672f47",
+      "id": "33c9dc53-52be-4482-b585-f3781c342636",
       "name": "Chunk with contextual embedding"
     },
     {
@@ -1978,7 +1978,7 @@
         21904,
         16240
       ],
-      "id": "8b733c95-9a2a-44b5-a65e-b99e796797f8",
+      "id": "a66148cc-d036-4ea9-bab6-9abfefc5910c",
       "name": "Check data type1",
       "disabled": true
     },
@@ -1998,7 +1998,7 @@
         },
         "options": {}
       },
-      "id": "1ccc1e2d-ef78-48ab-a69f-561ca747b5ae",
+      "id": "4b528e02-9f63-4905-9744-bc8c562382f0",
       "name": "Get Processing Status",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
@@ -2148,7 +2148,7 @@
           "allMatchingOutputs": false
         }
       },
-      "id": "1cef9f15-4875-4c5b-aa71-2e34fb93ba84",
+      "id": "8b2a5495-ad10-4134-971a-b0c7fc756940",
       "name": "Is Job Ready?",
       "type": "n8n-nodes-base.switch",
       "position": [
@@ -2189,7 +2189,7 @@
           }
         }
       },
-      "id": "1e19469d-075d-4a66-b1fc-fffa42fa7ba1",
+      "id": "ce668f69-5e84-4b4c-a145-236fe9bc1e7f",
       "name": "Upload file to LlamaParse",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
@@ -2220,7 +2220,7 @@
           }
         }
       },
-      "id": "a37bb380-1f65-4e44-8c7c-fc0b047969ab",
+      "id": "7f1d5bcb-cf00-4856-8b54-12b21692dd3f",
       "name": "Get parsed document",
       "type": "n8n-nodes-base.httpRequest",
       "position": [
@@ -2240,14 +2240,14 @@
       "parameters": {
         "amount": 3
       },
-      "id": "cba4f9cd-3bac-49b1-981a-7cad0e898090",
+      "id": "ed5e5f9d-03fa-4a14-b7a1-044d83c95806",
       "name": "Wait",
       "type": "n8n-nodes-base.wait",
       "position": [
         24256,
         14464
       ],
-      "webhookId": "5ea902ed-4fa8-41bf-9f9b-93a8a76008ff",
+      "webhookId": "0149d805-cd41-4fc1-9f1d-5da0fd45e7e4",
       "typeVersion": 1.1
     },
     {
@@ -2260,9 +2260,9 @@
         23312,
         14240
       ],
-      "id": "2a11a92d-55c1-4112-b483-b9e1fe1fa65c",
+      "id": "8b668760-2bbc-4bc2-a3f0-2093568d2af2",
       "name": "Wait1",
-      "webhookId": "1a5ba7b5-43d7-439f-81c7-9891c990d7de"
+      "webhookId": "c6a8279e-1bfe-4aef-85ee-1c64e5a1ed45"
     },
     {
       "parameters": {
@@ -2296,7 +2296,7 @@
         23632,
         14464
       ],
-      "id": "dcebe874-219f-41a4-aa7a-e34354ff7426",
+      "id": "815a774a-fa9e-4420-bb3b-28d46c0c7b59",
       "name": "Counter"
     },
     {
@@ -2325,7 +2325,7 @@
         23552,
         14256
       ],
-      "id": "23efbaad-3ee4-4f02-9231-bcb99d0bc61c",
+      "id": "7944a699-bac9-40ba-a1da-d5a31eb60a7f",
       "name": "Set counter"
     },
     {
@@ -2369,7 +2369,7 @@
         24800,
         16352
       ],
-      "id": "e054530a-cdd3-4d9b-bd6e-1a76090afc58",
+      "id": "0df5f61d-2fa3-4648-aeff-f2c8dc216171",
       "name": "Send tabular data to vector store?"
     },
     {
@@ -2389,7 +2389,7 @@
         24464,
         16224
       ],
-      "id": "3f8b3366-adcd-4f39-8a59-2fe9379f8e6d",
+      "id": "307394c4-8b05-46a2-bd45-5fa7d17c2174",
       "name": "Aggregate4"
     },
     {
@@ -2409,7 +2409,7 @@
         26272,
         17168
       ],
-      "id": "e35fcb3c-2d45-4ee7-9c35-42c000034450",
+      "id": "8349f936-068b-41a2-9b95-06d7b78a40cb",
       "name": "Create OpenAI Embeddings",
       "retryOnFail": true,
       "maxTries": 5,
@@ -2429,10 +2429,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        25984,
-        17168
+        25968,
+        17216
       ],
-      "id": "8122d6a1-f3d4-45f1-8e94-0f0cc1587256",
+      "id": "eabe9020-c362-4adb-a815-f113b0d0e6e4",
       "name": "Setup Chunk for Embedding1"
     },
     {
@@ -2445,13 +2445,13 @@
         26528,
         17168
       ],
-      "id": "8db59877-308a-47ef-8b74-e9033e40210a",
+      "id": "c9f2e5cd-1e3b-4418-a16f-5b3b64d082d5",
       "name": "Setup Chunk for Batch Insertion"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "{{ $json.insertQuery }}",
+        "query": "={{ $json.insertQuery }}",
         "options": {
           "queryReplacement": "={{ $json.parameters }}"
         }
@@ -2462,7 +2462,7 @@
         26816,
         17232
       ],
-      "id": "5e7297d7-50e6-43cd-ac52-03bd958ffa6f",
+      "id": "5217894a-8659-472c-b552-b9cbf14e76fb",
       "name": "Insert into Vector Store",
       "retryOnFail": true,
       "maxTries": 5,
@@ -2505,7 +2505,7 @@
         23008,
         13600
       ],
-      "id": "a7ad15e4-f84f-4ca9-81e4-e44fafa8aa5f",
+      "id": "111299a4-9742-48e6-8035-2431676a4990",
       "name": "Is OCR enabled?"
     },
     {
@@ -2539,7 +2539,7 @@
         27728,
         15680
       ],
-      "id": "876c922c-700c-4083-9f39-f3829a1ca687",
+      "id": "ef96dae1-9bd9-4310-a69b-40e670687dab",
       "name": "If4"
     },
     {
@@ -2552,7 +2552,7 @@
         24208,
         13792
       ],
-      "id": "20550d82-1242-41db-8400-6fa0c9808acb",
+      "id": "8d484ea4-b3e8-45c4-90d0-a4c125763b4e",
       "name": "Sanitize Text"
     },
     {
@@ -2586,7 +2586,7 @@
         23920,
         13600
       ],
-      "id": "95144ed5-d5dc-407e-9c92-a641b8b4fdac",
+      "id": "5f6cdf3c-589a-4c6f-ab5d-4945349c4dd3",
       "name": "Get File URL",
       "retryOnFail": true,
       "credentials": {
@@ -2613,7 +2613,7 @@
         24144,
         13600
       ],
-      "id": "49cd4fdc-9a63-4c5e-95b3-936c18d3444a",
+      "id": "98ff2425-609b-4ce8-a887-01e49ecf7137",
       "name": "Get OCR",
       "retryOnFail": true,
       "credentials": {
@@ -2634,7 +2634,7 @@
         23680,
         13792
       ],
-      "id": "3438651c-a946-4e0a-afb7-52a08039c12d",
+      "id": "4af20d49-d1f5-4500-9a5d-85f3657f7eb6",
       "name": "Extract Text"
     },
     {
@@ -2647,9 +2647,9 @@
       "typeVersion": 1,
       "position": [
         23632,
-        13360
+        13408
       ],
-      "id": "3f06fc56-1d92-412e-ab51-b202c9cca30f",
+      "id": "14866a42-dc01-4f95-8f70-96b184c74a1b",
       "name": "Base64 File",
       "disabled": true
     },
@@ -2666,7 +2666,7 @@
         19088,
         13456
       ],
-      "id": "fc25bba7-55e5-40c6-b87a-951d10232011",
+      "id": "82a7e173-4ce6-43f7-9606-2b1c832905f3",
       "name": "Sticky Note31"
     },
     {
@@ -2700,7 +2700,7 @@
         22512,
         17088
       ],
-      "id": "7117428b-cf9d-47da-9605-884ad58c7a28",
+      "id": "8932b509-a64c-49ed-8765-5628cefd3be7",
       "name": "If3"
     },
     {
@@ -2723,7 +2723,7 @@
         21552,
         17056
       ],
-      "id": "838723be-8901-4411-930a-0388ec7f81a3",
+      "id": "a6190a44-335d-4783-a3e1-5dffa73213a3",
       "name": "Set up Record ID"
     },
     {
@@ -2734,7 +2734,7 @@
         28096,
         16640
       ],
-      "id": "3ff0139b-e97b-47cd-9309-6757ab4da1e5",
+      "id": "d1eef6b5-0fd0-40ed-9c79-b64f9b18b2ff",
       "name": "Continue"
     },
     {
@@ -2757,7 +2757,7 @@
         23360,
         12800
       ],
-      "id": "ffe264b8-9ad5-449d-bc3b-1b153737f9ff",
+      "id": "95b4d131-1fd7-46e0-bff9-9a6c44c02a81",
       "name": "Webpage Markdown"
     },
     {
@@ -2791,7 +2791,7 @@
         19808,
         13680
       ],
-      "id": "49162ba4-e789-4cf0-b3dd-3789e4c4aea8",
+      "id": "cd5ff864-b02d-4aa4-b8ad-29ae63ef9a65",
       "name": "File Check"
     },
     {
@@ -2806,7 +2806,7 @@
         23520,
         12928
       ],
-      "id": "658ab27d-c1ef-4cd9-9e2c-ea4d3aafd713",
+      "id": "71dfb58d-c9d9-41c9-ace7-04056cf21ed8",
       "name": "Extract from text file"
     },
     {
@@ -2821,7 +2821,7 @@
         18496,
         12064
       ],
-      "id": "9c6b2d98-f2f8-4633-8ddf-f6b903d226ee",
+      "id": "75468d31-0f5f-4a5d-9c2f-e6185dedd278",
       "name": "Sticky Note6",
       "disabled": true
     },
@@ -2841,7 +2841,7 @@
         20560,
         13808
       ],
-      "id": "ee48276e-8717-47e9-94f2-731f69cde282",
+      "id": "d0c9b1a0-849e-4634-af93-1a6b6e24cc67",
       "name": "Main File Download",
       "retryOnFail": true,
       "credentials": {
@@ -2863,7 +2863,7 @@
         23984,
         13984
       ],
-      "id": "c0cd1f67-c0a1-4647-8a01-08bd2de9c249",
+      "id": "6761cd8e-b0f4-4ad2-9ca3-c9a9933c8588",
       "name": "Markdown"
     },
     {
@@ -2893,7 +2893,7 @@
         19504,
         14256
       ],
-      "id": "f8424d47-e556-4188-83e6-f6f4badc0871",
+      "id": "94f19fa4-1de3-47f5-92ff-85b4f73a0ee3",
       "name": "Move to Error Folder",
       "retryOnFail": true,
       "credentials": {
@@ -2911,7 +2911,7 @@
         26320,
         14320
       ],
-      "id": "776e13ac-0bda-4bc8-a2c8-03de3c3a5a07",
+      "id": "9d9a64c6-92da-4fee-b2dd-2e647c16af60",
       "name": "Error Track"
     },
     {
@@ -2922,7 +2922,7 @@
         27728,
         15472
       ],
-      "id": "35a46eb0-7abe-4ef2-adbd-27020fff43b0",
+      "id": "a555aae8-e6ba-4912-9843-d95d644f95da",
       "name": "Error"
     },
     {
@@ -2938,7 +2938,7 @@
         18128,
         13600
       ],
-      "id": "cd8403d2-b77d-4722-8abd-40be7106c3a2",
+      "id": "629d4ec2-6490-4425-98aa-ae1c786df8c0",
       "name": "Sticky Note1"
     },
     {
@@ -2954,7 +2954,7 @@
         18128,
         13312
       ],
-      "id": "b94c9074-b2d3-46ca-bea3-a951bc9d3d97",
+      "id": "b489d4e0-05a7-477f-8bb9-f1361d37bec9",
       "name": "Sticky Note2"
     },
     {
@@ -2969,7 +2969,7 @@
         19424,
         13584
       ],
-      "id": "de0133bd-65f3-49bc-8d44-620d9fcce277",
+      "id": "1e8e9c34-f792-48a1-91eb-d7f0ffb19101",
       "name": "Sticky Note3"
     },
     {
@@ -2984,7 +2984,7 @@
         23840,
         13280
       ],
-      "id": "bdc6df0c-57dd-4a88-8124-752706575c0a",
+      "id": "7d8bf01b-c892-42d5-91c4-9ae814091d20",
       "name": "Sticky Note25"
     },
     {
@@ -2999,7 +2999,7 @@
         22400,
         16128
       ],
-      "id": "9fc48a7b-1e54-4593-8e44-2d0a761ccdb9",
+      "id": "ceea2d00-4dbf-4ee2-a705-0cbd04b9893c",
       "name": "Sticky Note26",
       "disabled": true
     },
@@ -3011,7 +3011,7 @@
         21968,
         16608
       ],
-      "id": "55e08173-fa62-4f9e-9c62-de607d46467f",
+      "id": "b69d6605-9e90-4024-9ac2-09de2646ec78",
       "name": "Next"
     },
     {
@@ -3027,7 +3027,7 @@
         19600,
         16784
       ],
-      "id": "42e0ea0c-2e1e-49f8-9d3b-7299e0b64b38",
+      "id": "a08c3f46-53e0-4fc4-b6a7-cf23bdb1fd5c",
       "name": "Sticky Note11"
     },
     {
@@ -3043,7 +3043,7 @@
         22320,
         16752
       ],
-      "id": "c06fbebf-9cea-40b3-8718-27740de6589c",
+      "id": "f7aaa357-6e7e-413d-a8fb-ef2f8d580e51",
       "name": "Sticky Note7"
     },
     {
@@ -3059,7 +3059,7 @@
         23552,
         16752
       ],
-      "id": "a55cd02a-f8a5-4155-9aab-974e71991412",
+      "id": "6e6946ed-8137-4591-a4ec-1fbd36b574a6",
       "name": "Sticky Note17"
     },
     {
@@ -3071,10 +3071,10 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        24512,
-        16896
+        24400,
+        17056
       ],
-      "id": "dea3072e-9b98-425d-a15e-d0c4430058b1",
+      "id": "383cfd94-53b6-4759-8b5d-76a24854bc8f",
       "name": "Sticky Note33"
     },
     {
@@ -3088,9 +3088,9 @@
       "typeVersion": 1,
       "position": [
         24768,
-        16736
+        16720
       ],
-      "id": "02ef7612-9200-491f-92d6-0bb9b7a875e1",
+      "id": "8bab3b04-ed5e-4b6b-924e-2d12cba2de4d",
       "name": "Sticky Note15"
     },
     {
@@ -3104,9 +3104,9 @@
       "typeVersion": 1,
       "position": [
         26016,
-        16736
+        16704
       ],
-      "id": "b09ceaa4-41a6-4ddb-b78a-fe37892fe56e",
+      "id": "1ff6a081-76c5-453b-a515-73f960a5ca5f",
       "name": "Sticky Note16"
     },
     {
@@ -3121,7 +3121,7 @@
         26192,
         17040
       ],
-      "id": "38eb7cbc-21f4-4c22-ae7d-b2dd4e345c5e",
+      "id": "0e5a65e7-89db-4651-8c88-21d300319170",
       "name": "Sticky Note28"
     },
     {
@@ -3137,7 +3137,7 @@
         17728,
         12048
       ],
-      "id": "a9c05ff8-749c-4416-a927-0fb9a6cfc2db",
+      "id": "0328693d-4d0a-428c-8bde-8c78eb8b8828",
       "name": "Sticky Note5",
       "disabled": true
     },
@@ -3151,7 +3151,7 @@
         24544,
         13632
       ],
-      "id": "457751c7-bb76-4001-8cb5-9b20ff011cfa",
+      "id": "bf682501-af78-4b88-9ee3-9a24c7ff2043",
       "name": "Aggregate Markdown with Page Numbers"
     },
     {
@@ -3164,7 +3164,7 @@
         23760,
         16944
       ],
-      "id": "c0fe0158-7df4-4cce-8060-63a6823a9c91",
+      "id": "1eb33ed7-9d56-46d5-b615-042d161f1d1b",
       "name": "Smart Chunker"
     },
     {
@@ -3177,7 +3177,7 @@
         23952,
         16944
       ],
-      "id": "0ccc19de-cac3-4764-aec1-26a4c89704a4",
+      "id": "902ed8c3-af94-4c67-8a86-3873c0f910f6",
       "name": "Document Hierarchy Extractor"
     },
     {
@@ -3190,7 +3190,7 @@
         24160,
         16944
       ],
-      "id": "1bd4aa9b-8f67-4f05-9fd3-66422397c6d5",
+      "id": "d3103248-188b-4068-ac37-ed146d96a502",
       "name": "Merger"
     },
     {
@@ -3201,10 +3201,10 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        24192,
-        17328
+        24224,
+        17232
       ],
-      "id": "2c23cada-8475-4c1b-9017-b14c270f43dd",
+      "id": "c5f735c7-62a8-41a3-b4d9-693b2f012696",
       "name": "Split Out1"
     },
     {
@@ -3247,7 +3247,7 @@
         25792,
         17632
       ],
-      "id": "2543925e-a4f6-488e-aac6-10d7e90b3fad",
+      "id": "271a5cb6-277b-4192-b64a-dee1ddb0c0b2",
       "name": "Update our Record Manager1",
       "retryOnFail": true,
       "credentials": {
@@ -3265,7 +3265,7 @@
         28640,
         17696
       ],
-      "id": "742f9a75-43cc-47ec-ba53-5f096d0f5d4d",
+      "id": "fe33bedd-7402-4bb0-baf4-eb1fd77f6e8a",
       "name": "Next1"
     },
     {
@@ -3299,7 +3299,7 @@
         18384,
         14608
       ],
-      "id": "92e5347f-daa0-4d4f-8555-d277edcfa80e",
+      "id": "791797df-5600-4519-9f02-a51348799a33",
       "name": "If a file"
     },
     {
@@ -3315,7 +3315,7 @@
         18304,
         14512
       ],
-      "id": "990caf7f-1d62-49cb-89c1-c703556a236b",
+      "id": "df95128c-da13-4857-abe1-574ad6d81a63",
       "name": "Sticky Note32"
     },
     {
@@ -3328,7 +3328,7 @@
         22240,
         16256
       ],
-      "id": "0ba086d2-d0a2-48f8-ba5f-c02acd63b5b6",
+      "id": "b3324b03-e009-4d2d-9154-f023117af780",
       "name": "Remove Page Number Placeholders",
       "disabled": true
     },
@@ -3342,9 +3342,9 @@
         22752,
         16288
       ],
-      "id": "b275dcd9-0736-45cb-9363-30f6d9808ea5",
+      "id": "8232376c-3fad-471d-b4c4-dc1346f0f104",
       "name": "Wait3",
-      "webhookId": "347f50c8-85ef-41e2-8cb4-6a34103ccbff",
+      "webhookId": "563d1d2b-359b-4741-b5df-086691daba42",
       "disabled": true
     },
     {
@@ -3359,7 +3359,7 @@
         19456,
         14176
       ],
-      "id": "2c6041b9-7474-4663-a4f4-a93e318ce3c8",
+      "id": "e90909de-d35d-4d04-99ce-5dcaed3be482",
       "name": "Sticky Note38"
     },
     {
@@ -3374,7 +3374,7 @@
         18608,
         14512
       ],
-      "id": "af6059c5-d9ce-45f8-8830-4657fbe8d3c6",
+      "id": "96d27fae-2819-4ffc-aaa3-06b49ea42ca4",
       "name": "Sticky Note39"
     },
     {
@@ -3389,7 +3389,7 @@
         18592,
         13760
       ],
-      "id": "3a67bc86-7ede-4a7e-ae0b-a58bba10eb69",
+      "id": "68891005-fe37-451b-b5a4-938ddad89a91",
       "name": "Sticky Note40"
     },
     {
@@ -3404,7 +3404,7 @@
         18592,
         13520
       ],
-      "id": "4b597716-69d4-4d0f-9dc1-f61380f8d785",
+      "id": "3e905a3f-c149-4198-aae9-8e399bc2bbe0",
       "name": "Sticky Note41"
     },
     {
@@ -3447,7 +3447,7 @@
         20288,
         16944
       ],
-      "id": "fc69ad68-d896-412f-b341-61ef69bae080",
+      "id": "ddf63da7-2cc2-453b-8271-07f370aa76a7",
       "name": "If Record is Complete"
     },
     {
@@ -3462,7 +3462,7 @@
         22704,
         16128
       ],
-      "id": "fc104521-be6c-4390-a6c8-b40fb4b252df",
+      "id": "b6ec0749-ea0f-4e48-a4e9-80716463d712",
       "name": "Sticky Note43",
       "disabled": true
     },
@@ -3494,7 +3494,7 @@
         27088,
         16304
       ],
-      "id": "aa99535a-a63d-4be5-b01b-497700ff3deb",
+      "id": "a529ed60-aa9e-49b9-913e-f3fbe7cdd02f",
       "name": "Update our Record Manager2",
       "retryOnFail": true,
       "credentials": {
@@ -3514,7 +3514,7 @@
         27264,
         16304
       ],
-      "id": "e0fd2fae-7ab0-4ade-968b-3168d5ab60dd",
+      "id": "75e4a7a0-0e81-4889-9698-d68c3e9128cd",
       "name": "Stop and Error"
     },
     {
@@ -3537,7 +3537,7 @@
         26912,
         16304
       ],
-      "id": "ef4620a8-4c8d-4c4d-aa25-fa707f28890f",
+      "id": "c12aa936-6361-445e-9f93-3adae0021d8c",
       "name": "Error Message"
     },
     {
@@ -3553,7 +3553,7 @@
         22336,
         17280
       ],
-      "id": "014a7af1-2fdf-4079-8310-8f6e77d31131",
+      "id": "8e3a55a8-efcb-4dbe-ac59-8fdd7b725686",
       "name": "Sticky Note35"
     },
     {
@@ -3566,7 +3566,7 @@
         18320,
         12752
       ],
-      "id": "65edce2b-d3c7-4f08-99a8-a3955f437506",
+      "id": "c327cb45-f417-4bab-a840-3112c84de5df",
       "name": "Loop Over Items1"
     },
     {
@@ -3582,7 +3582,7 @@
         19056,
         12656
       ],
-      "id": "b53947c6-f1de-48f4-877d-412828304787",
+      "id": "7c0072ce-346b-4612-82f7-98bf6f6a21f8",
       "name": "Delete Previous Vectors1",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -3604,7 +3604,7 @@
         19280,
         12656
       ],
-      "id": "037a12eb-071f-4dbb-9f5c-1065a4dee7cc",
+      "id": "6010d079-99ed-477d-b4f3-a22a79925982",
       "name": "Aggregate1"
     },
     {
@@ -3627,7 +3627,7 @@
         18560,
         12848
       ],
-      "id": "1b66e506-2197-4f6b-8c35-cb6e4ebc50d7",
+      "id": "ebd2db47-d19e-4536-bbc4-35a06dab9e27",
       "name": "Search Record Manager1",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -3669,7 +3669,7 @@
         18800,
         12848
       ],
-      "id": "33032004-3ba3-49c8-91aa-6e19074a2f41",
+      "id": "fdcafee1-e86b-46cf-9959-2a56d17eeb66",
       "name": "If"
     },
     {
@@ -3692,7 +3692,7 @@
         19744,
         12656
       ],
-      "id": "1cb97857-0743-4feb-9a4a-62876e8c44a9",
+      "id": "42dfb713-c4a7-43d1-93c4-5e22d84fb28a",
       "name": "Delete Record from Record Manager",
       "alwaysOutputData": true,
       "retryOnFail": true,
@@ -3719,7 +3719,7 @@
         20096,
         12864
       ],
-      "id": "cd882faa-26ef-478f-9322-5a7c2bc558e7",
+      "id": "f07591f8-04e1-4746-9ea7-0e391bd10617",
       "name": "Delete a file",
       "retryOnFail": true,
       "credentials": {
@@ -3749,7 +3749,7 @@
         19536,
         12656
       ],
-      "id": "4e00d10a-ee0b-44de-85ad-e4a8e0bf70cf",
+      "id": "619d089e-7929-4248-a977-77c0a7b87e16",
       "name": "Delete Old Tabular Data Rows",
       "alwaysOutputData": true,
       "executeOnce": true,
@@ -3774,7 +3774,7 @@
         17456,
         12528
       ],
-      "id": "7648e413-e5b7-403b-89b2-abeb419cfd88",
+      "id": "ef4e55da-ecd5-4a42-bdb2-0dade31f9785",
       "name": "Sticky Note"
     },
     {
@@ -3789,7 +3789,7 @@
         17984,
         12688
       ],
-      "id": "231001ab-9d98-47b6-9ee5-3398b6553a56",
+      "id": "b29acb6b-a473-4d6c-854d-99baf42472f4",
       "name": "Sticky Note42"
     },
     {
@@ -3816,7 +3816,7 @@
         18048,
         12752
       ],
-      "id": "9d40769a-4a22-4fe2-9a78-8c404fd55a1c",
+      "id": "f9671924-58c1-420c-9461-30aacc607185",
       "name": "Search files and folders",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -3841,7 +3841,7 @@
         17792,
         12752
       ],
-      "id": "92df3045-1069-4c9c-b292-c750c90114a6",
+      "id": "56363d5c-2ffa-4e87-a51e-b4b73fbe2fa4",
       "name": "Schedule Trigger1"
     },
     {
@@ -3854,7 +3854,7 @@
         23936,
         13808
       ],
-      "id": "8e3254b9-96a6-4b49-af47-7a90b2360c7d",
+      "id": "d881f815-eb8a-4f73-833d-cd866597cd53",
       "name": "Insert Page Markers",
       "onError": "continueRegularOutput"
     },
@@ -3874,7 +3874,7 @@
         23024,
         17024
       ],
-      "id": "41dc99ab-8f95-4536-94af-238d71d1f0bf",
+      "id": "82e2e233-5026-49c2-9646-3f11844d6da1",
       "name": "Anthropic Chat Model1",
       "credentials": {
         "anthropicApi": {
@@ -3894,8 +3894,7 @@
               "message": "=Based on the provided file name and file contents, extract out ...\n\n# headline-style description\n\nA very short, headline-style description (7-10 words). This will be used to finish the sentence \"This chunk is from\" so start it with \"an\" or \"a\"... example output\n\nan SEC filing on ACME corp's performance in Q2 2023\n\n# document summary\n\nAlso extract out a 1 sentence description of what the document is about and classify the document according to the below fields.\n\nOnly output JSON in the following format\n\n{\n\"document_headline_description\":\"<ADD>\",\n\"document_summary\":\"<ADD>\",\n{{ $json.list_of_fields ? $json.list_of_fields : \"\" }}\n}\n\nIf you are unsure of any of these, just output N/A in the field.\n\n{{ $json.list_of_fields ? $json.filterPromptInstructions : \"\" }}"
             }
           ]
-        },
-        "batching": {}
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.9,
@@ -3903,7 +3902,7 @@
         23024,
         17200
       ],
-      "id": "8eee2768-e7d7-4562-be80-c37e79247be4",
+      "id": "2842a62f-5ff0-41e5-a075-1220a377bfdd",
       "name": "Enrich1",
       "retryOnFail": true,
       "maxTries": 5,
@@ -3921,7 +3920,7 @@
         23168,
         17392
       ],
-      "id": "8378ff0b-37cc-42d7-82fc-52d96c1cd74e",
+      "id": "369dceee-82e4-4dfc-9a7d-28c86c53dcbf",
       "name": "Structured Output Parser"
     },
     {
@@ -3935,7 +3934,7 @@
         23024,
         17392
       ],
-      "id": "ced9e3aa-4db3-4a68-9cea-495f86fa4521",
+      "id": "b69252fc-ab2f-4f36-8363-9d65e50d82b7",
       "name": "Mistral Cloud Chat Model",
       "credentials": {
         "mistralCloudApi": {
@@ -3972,13 +3971,13 @@
           }
         }
       },
-      "id": "9426f3cb-6c1d-4583-ac1c-455b5152dd1c",
+      "id": "2c1eeca0-86aa-4e91-b235-33826dcd0dd8",
       "name": "Contextual Embedding API",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        25440,
-        16960
+        25296,
+        16992
       ],
       "retryOnFail": true,
       "maxTries": 3,
@@ -3992,118 +3991,76 @@
       "onError": "continueErrorOutput"
     },
     {
-      "parameters": {
-        "amount": 60
-      },
-      "id": "7d3e8f2a-1b4c-5d6e-8f9a-0b1c2d3e4f5a",
-      "name": "Wait for Rate Limit Reset",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        25312,
-        17216
-      ],
-      "webhookId": "4fb37efc-5de1-4cdb-af9d-49db51a4abe2"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.anthropic.com/v1/messages",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "anthropicApi",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "anthropic-version",
-              "value": "2023-06-01"
-            }
-          ]
-        },
-        "sendBody": true,
-        "contentType": "raw",
-        "rawContentType": "application/json",
-        "body": "={{ JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 300, system: [{ type: 'text', text: '<document>\\n' + $('Set up Text for Embedding').item.json.content.substring(0, 100000) + '\\n</document>', cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: 'Here is the chunk we want to situate within the whole document:\\n<chunk>\\n' + $('Contextual embedding enabled?').first().json.content + '\\n</chunk>\\nPlease give a short succinct context to situate this chunk within the overall document for the purposes of improving search retrieval of the chunk.\\n\\nRules:\\n- Start your response with \"Context:\" followed by the contextual summary.\\n- Keep it to 1-2 sentences maximum.\\n- Do not include anything else in your response.\\n\\nExample format:\\nContext: This section covers the authentication middleware setup within the API gateway architecture chapter.' }] }) }}",
-        "options": {
-          "batching": {
-            "batch": {
-              "batchSize": 1,
-              "batchInterval": 500
-            }
-          }
-        }
-      },
-      "id": "c8d9e0f1-2a3b-4c5d-6e7f-8a9b0c1d2e3f",
-      "name": "Contextual Embedding API Retry",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.4,
-      "position": [
-        25536,
-        17216
-      ],
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 2000,
-      "credentials": {
-        "anthropicApi": {
-          "id": "UyAehXbUNQAWwZOs",
-          "name": "Claude SEB"
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.anthropic.com/v1/messages",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "anthropicApi",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "anthropic-version",
-              "value": "2023-06-01"
-            }
-          ]
-        },
-        "sendBody": true,
-        "contentType": "raw",
-        "rawContentType": "application/json",
-        "body": "={{ JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 50, system: [{ type: 'text', text: '<document>\\n' + $('Set up Text for Embedding').item.json.content.substring(0, 100000) + '\\n</document>', cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: 'Respond with only the document title.' }] }) }}",
-        "options": {}
-      },
-      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "id": "b2c3d4e5-f6a7-8901-bcde-f23456789012",
       "name": "Cache Warmup",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        24336,
-        16944
+        24192,
+        17088
       ],
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 2000,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $credentials.apiKey }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "anthropic-beta",
+              "value": "prompt-caching-2024-07-31"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 50, system: [{ type: 'text', text: '<document>\\n' + $('Set up Text for Embedding').item.json.content.substring(0, 100000) + '\\n</document>', cache_control: { type: 'ephemeral' } }], messages: [{ role: 'user', content: 'Respond with only the document title.' }] }) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 0
+            }
+          },
+          "timeout": 60000
+        }
+      },
       "credentials": {
         "anthropicApi": {
           "id": "UyAehXbUNQAWwZOs",
           "name": "Claude SEB"
         }
       },
-      "onError": "continueRegularOutput"
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
     },
     {
-      "parameters": {
-        "jsCode": "// Pass through chunks data from Merger, ignoring Cache Warmup's API response\nreturn [{\n  json: $('Merger').first().json\n}];"
-      },
-      "id": "d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f9a",
+      "id": "e5f6a7b8-c9d0-1e2f-3a4b-5c6d7e8f9a0b",
       "name": "Restore Chunks",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        23920,
-        17328
-      ]
+        24192,
+        17160
+      ],
+      "parameters": {
+        "jsCode": "// Pass through chunks data from Merger, ignoring Cache Warmup's API response\nreturn [{\n  json: $('Merger').first().json\n}];"
+      }
     }
   ],
   "connections": {
@@ -5548,36 +5505,7 @@
         ],
         [
           {
-            "node": "Wait for Rate Limit Reset",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait for Rate Limit Reset": {
-      "main": [
-        [
-          {
-            "node": "Contextual Embedding API Retry",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Contextual Embedding API Retry": {
-      "main": [
-        [
-          {
-            "node": "Chunk with contextual embedding",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Setup Chunk for Embedding1",
+            "node": "Error Message",
             "type": "main",
             "index": 0
           }
@@ -5639,16 +5567,16 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "6b731afe-b018-48f5-9a01-954e0f7a6a56",
+  "versionId": "b5822b14-264d-41e9-a315-031107eedb2c",
   "activeVersionId": null,
-  "versionCounter": 46,
+  "versionCounter": 19,
   "triggerCount": 0,
   "shared": [
     {
-      "updatedAt": "2026-02-26T15:33:05.884Z",
-      "createdAt": "2026-02-26T15:33:05.884Z",
+      "updatedAt": "2026-02-26T09:48:39.060Z",
+      "createdAt": "2026-02-26T09:48:39.060Z",
       "role": "workflow:owner",
-      "workflowId": "wrfn22vvqWs7v7jj",
+      "workflowId": "OyJjoBU5OBY2UT9M",
       "projectId": "Ys8BXvZzU8k68ssn",
       "project": {
         "updatedAt": "2026-01-04T18:45:45.146Z",

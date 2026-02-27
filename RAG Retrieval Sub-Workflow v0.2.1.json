@@ -1,5 +1,11 @@
 {
+  "updatedAt": "2026-02-26T17:08:02.156Z",
+  "createdAt": "2026-02-26T15:28:45.576Z",
+  "id": "srB7bqtX7w0BVR7B",
   "name": "RAG Retrieval Sub-Workflow v0.2.1",
+  "description": null,
+  "active": true,
+  "isArchived": false,
   "nodes": [
     {
       "parameters": {
@@ -399,7 +405,9 @@
     {
       "parameters": {
         "public": true,
-        "options": {}
+        "options": {
+          "responseMode": "lastNode"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.4,
@@ -602,13 +610,13 @@
     },
     {
       "parameters": {
-        "description": "Search the document knowledge base using hybrid search (dense vector + sparse BM25). Use this tool to find relevant information from ingested documents. Pass the user's query or a rephrased search query as input. Returns ranked document chunks with content, metadata, and relevance scores.",
+        "description": "Searches the vector store using a weighted combination of dense (semantic), sparse (lexical), ilike (exact match), and fuzzy search. Returns relevant document chunks with metadata including doc_name, record_manager_id, chunk_index, and page numbers.",
         "workflowId": {
           "__rl": true,
-          "value": "UH7qTvJ71mZAN4Go",
+          "value": "srB7bqtX7w0BVR7B",
           "mode": "list",
-          "cachedResultUrl": "/workflow/UH7qTvJ71mZAN4Go",
-          "cachedResultName": "RAG Retrieval Sub-Workflow v0.2.1 Beta"
+          "cachedResultUrl": "/workflow/srB7bqtX7w0BVR7B",
+          "cachedResultName": "RAG Retrieval Sub-Workflow v0.2.1"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -1175,7 +1183,7 @@
         "promptType": "define",
         "text": "={{ $('When chat message received').item.json.chatInput }}",
         "options": {
-          "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information avaialble in the knowledgebase.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\n1. Based on your retrieval strategy, pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\nOnce you've collected enough information, then answer the question, based on the info in context.\n\n# Response Rules\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. Provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\".",
+          "systemMessage": "# Role\n\nYou are a RAG assistant that answers questions using a knowledgebase of documents and structured datasets.\n\n# Goal\n\nCreate and execute a retrieval strategy to answer the user's query. Your response must be fully grounded in the retrieved information — never fabricate content.\n\nConsider the conversation history alongside the current query.\n\n# Tools Available\n\n1. **Dynamic Hybrid Search** — Searches the vector store using a weighted combination of dense (semantic), sparse (lexical), ilike (exact match), and fuzzy search\n2. **Fetch Document Hierarchy** — Loads the full document structure (title, chunks, page ranges) from the record manager\n3. **Context Expansion** — Fetches neighbouring and parent chunks to expand context around relevant results\n4. **Query Tabular Rows** — Executes SQL queries against structured data (Excel, CSV, Google Sheets) stored in the tabular_document_rows table\n\n# Standard Operating Procedure\n\n## For document/text questions → Hybrid Search path\n\n1. Formulate your search query and call **Dynamic Hybrid Search**. Choose weights based on the query type:\n   - Semantic/natural language → prioritise dense (e.g. dense=0.7, sparse=0.3)\n   - Technical terms, keywords → prioritise sparse (e.g. dense=0.3, sparse=0.7)\n   - Exact codes, IDs, invoice numbers → use ilike (e.g. ilike=1.0)\n   - Misspellings or approximate terms → add fuzzy weight (e.g. dense=0.4, sparse=0.3, fuzzy=0.3)\n2. **Always run at least 2 searches** with different query formulations or weight strategies before answering. For multi-topic or comparative questions, run one search per major sub-topic (e.g. for \"compare X and Y\", search for X first, then Y separately). This ensures comprehensive coverage across the knowledgebase.\n3. From the most relevant chunks, call **Fetch Document Hierarchy** to load the source document structure\n4. Using the document structure and the chunk metadata (child_ranges, parent_ranges), call **Context Expansion** to retrieve surrounding context for the highest-relevance chunks\n5. If the results feel incomplete, run additional targeted searches with different formulations or weights before answering\n\n## For numerical/tabular questions → SQL path\n\nIf the question involves calculations, aggregations, comparisons, or structured data (sums, averages, counts, rankings, max/min values), the vector store is unreliable for this. Use the SQL path instead:\n\n1. First, use **Dynamic Hybrid Search** with a query about the dataset topic to identify which documents contain relevant tabular data. Look for record_manager_id values in the results.\n2. Call **Query Tabular Rows** with SQL to answer the question. Always filter by record_manager_id.\n3. Before applying WHERE filters on specific values, run a SELECT DISTINCT query first to verify the exact values that exist in the data.\n\n## For mixed questions\n\nUse both paths. Retrieve contextual information from the hybrid search, and precise numbers from the SQL queries.\n\n# Response Rules\n\n- Format: Multiple paragraphs with markdown headings where appropriate\n- Respond in the same language as the user's question\n- Include images from retrieved results in markdown format if available\n- Maintain continuity with conversation history\n- If no relevant information is found after searching, say: \"I couldn't find information about that in the knowledgebase. Could you rephrase your question or let me know which document to look in?\"\n- Never include information not provided by the tools\n\n# Output Format (CRITICAL — you must follow this exactly)\n\nYour output must have TWO sections separated by the exact delimiter `---SOURCES_JSON---`.\n\n## Section 1: Answer\nWrite your full answer in markdown. Do NOT include a References section in the answer — that will be generated automatically from your structured sources.\n\n## Section 2: Sources JSON\nAfter the delimiter, output a JSON array of source objects. Each object represents a document you cited in your answer.\n\nRequired fields for each source object:\n- `doc_name` (string): The document name exactly as it appears in the chunk metadata\n- `doc_id` (string): The record_manager_id from the chunk metadata\n- `pages` (array of integers): Page numbers referenced, e.g. [3, 4, 12]. Use an empty array [] if pages are not available or all show [1].\n- `sections` (array of strings): The section headings from the `cascading_path` metadata of the chunks you used. Extract the UNIQUE section names from the cascading_path field of each chunk. Example: [\"11. Smart Query Routing Architecture\", \"3.4 Ragie.ai\", \"6. Market Validation\"]\n- `chunk_indices` (array of integers): The chunk_index values from the chunks you used, e.g. [0, 3, 7]\n- `relevance` (string): A short phrase describing what this source contributed to the answer\n\n## Example Output\n\nHere is a detailed compliance report based on the retrieved documents...\n\n[Answer content continues here in markdown...]\n\n---SOURCES_JSON---\n[\n  {\n    \"doc_name\": \"Microsoft 365 Audit Report\",\n    \"doc_id\": \"abc123-def456\",\n    \"pages\": [3, 4, 12],\n    \"sections\": [\"Executive Summary\", \"3.2 Compliance Findings\", \"7. Risk Assessment\"],\n    \"chunk_indices\": [5, 8, 22],\n    \"relevance\": \"Primary source for compliance findings\"\n  },\n  {\n    \"doc_name\": \"Security Policy Template\",\n    \"doc_id\": \"xyz789-ghi012\",\n    \"pages\": [],\n    \"sections\": [\"1. Introduction\", \"4.1 Access Control Requirements\"],\n    \"chunk_indices\": [0, 2],\n    \"relevance\": \"Referenced for baseline security requirements\"\n  }\n]\n\n## Source Rules\n- Only cite documents whose chunks were actually returned by the tools\n- Every factual claim in your answer must trace to at least one source\n- Use the exact `doc_name` and `doc_id` (record_manager_id) from the chunk metadata — do not modify or abbreviate them\n- The `chunk_indices` must be actual chunk_index values from the tool results\n- The `sections` must be actual `cascading_path` values from the chunk metadata — these are the section headings each chunk belongs to. Include all unique sections referenced.\n- For tabular queries, use the dataset name as doc_name and the record_manager_id as doc_id",
           "maxIterations": 25
         }
       },
@@ -1817,7 +1825,12 @@
           "mode": "list",
           "cachedResultName": "Claude Sonnet 4.6"
         },
-        "options": {}
+        "options": {
+          "temperature": 0.2,
+          "thinking": true,
+          "thinkingBudget": 10000,
+          "maxTokensToSample": 16000
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
@@ -1851,7 +1864,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"rerank-2.5\",\n  \"query\": \"{{ $('When Executed by Another Workflow').first().json.query }}\",\n  \"top_k\": 15,\n  \"documents\": {{ JSON.stringify($json.documents) }}\n}",
+        "jsonBody": "={\n  \"model\": \"rerank-2.5\",\n  \"query\": \"{{ $('When Executed by Another Workflow').first().json.query }}\",\n  \"top_k\": 20,\n  \"documents\": {{ JSON.stringify($json.documents) }}\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -1868,27 +1881,21 @@
           "name": "Voyage AI"
         }
       }
+    },
+    {
+      "id": "c02cd4ac-1a00-4aca-b43a-1c862c679e19",
+      "name": "Format & Verify Citations",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1712,
+        192
+      ],
+      "parameters": {
+        "jsCode": "// Format & Verify Citations — Phase 1.1\n// Splits agent output on ---SOURCES_JSON--- delimiter,\n// validates citation structure (with sections support), builds clean References section.\n\nconst rawOutput = $input.item.json.output || $input.item.json.text || '';\nconst DELIMITER = '---SOURCES_JSON---';\nconst parts = rawOutput.split(DELIMITER);\n\nlet answer = (parts[0] || '').trim();\nlet sourcesRaw = (parts[1] || '').trim();\nlet sources = [];\nlet citationWarnings = [];\n\n// Parse the sources JSON\nif (sourcesRaw) {\n  try {\n    // Strip markdown code fences if the agent wrapped the JSON\n    sourcesRaw = sourcesRaw.replace(/^```json?\\s*/i, '').replace(/\\s*```\\s*$/, '');\n    sources = JSON.parse(sourcesRaw);\n    if (!Array.isArray(sources)) {\n      citationWarnings.push('sources_used was not an array; wrapped it');\n      sources = [sources];\n    }\n  } catch (e) {\n    citationWarnings.push(`Failed to parse sources JSON: ${e.message}`);\n    sources = [];\n  }\n} else {\n  citationWarnings.push('No ---SOURCES_JSON--- delimiter found in agent output');\n}\n\n// Validate each source object\nconst validSources = [];\nfor (const src of sources) {\n  const issues = [];\n  if (!src.doc_name || typeof src.doc_name !== 'string') issues.push('missing/invalid doc_name');\n  if (!src.doc_id || typeof src.doc_id !== 'string') issues.push('missing/invalid doc_id');\n  if (!Array.isArray(src.pages)) issues.push('missing/invalid pages array');\n  if (!Array.isArray(src.chunk_indices)) issues.push('missing/invalid chunk_indices');\n  // sections is recommended but not required — don't fail validation if missing\n  if (src.sections && !Array.isArray(src.sections)) {\n    citationWarnings.push(`Source \"${src.doc_name || 'unknown'}\": sections should be an array, got ${typeof src.sections}`);\n    src.sections = [];\n  }\n\n  if (issues.length === 0) {\n    validSources.push(src);\n  } else {\n    citationWarnings.push(`Source \"${src.doc_name || 'unknown'}\": ${issues.join(', ')}`);\n  }\n}\n\n// Build clean References section from validated sources\nlet referencesSection = '';\nif (validSources.length > 0) {\n  referencesSection = '\\n\\n## References\\n\\n';\n  validSources.forEach((src, idx) => {\n    // Build location info: prefer sections, fall back to pages\n    const sections = (src.sections && src.sections.length > 0) ? src.sections : [];\n    const pages = (src.pages && src.pages.length > 0 && !(src.pages.length === 1 && src.pages[0] === 1)) ? src.pages : [];\n    \n    let locationInfo = '';\n    if (sections.length > 0) {\n      locationInfo = ` (Sections: ${sections.join('; ')})`;\n    } else if (pages.length > 0) {\n      locationInfo = ` (Pages: ${pages.join(', ')})`;\n    }\n    \n    const relevance = src.relevance ? ` \\u2014 ${src.relevance}` : '';\n    referencesSection += `${idx + 1}. **${src.doc_name}**${locationInfo}${relevance}\\n`;\n  });\n} else if (answer && !answer.toLowerCase().includes(\"couldn't find information\")) {\n  citationWarnings.push('Agent produced an answer but no valid source citations');\n  referencesSection = '\\n\\n## References\\n\\n_No verified sources available for this response._\\n';\n}\n\n// Strip any References section the agent may have included in the answer body\nanswer = answer.replace(/\\n##?\\s*References[\\s\\S]*$/i, '').trim();\n\nconst finalOutput = answer + referencesSection;\n\nreturn {\n  json: {\n    output: finalOutput,\n    sources: validSources,\n    citationWarnings: citationWarnings,\n    sourceCount: validSources.length,\n    hasWarnings: citationWarnings.length > 0\n  }\n};"
+      }
     }
   ],
-  "pinData": {
-    "When Executed by Another Workflow": [
-      {
-        "json": {
-          "query": "Microsoft 365 E3 users",
-          "type": "hybrid",
-          "session_id": "e23baebe995f4227be5fba73e4804fc5",
-          "dense_weight": 0.4,
-          "sparse_weight": 0.6,
-          "ilike_weight": 0,
-          "fuzzy_weight": 0,
-          "fuzzy_threshold": 0.8
-        },
-        "pairedItem": {
-          "item": 0
-        }
-      }
-    ]
-  },
   "connections": {
     "Supabase Short-Term Memory": {
       "ai_memory": [
@@ -2366,21 +2373,71 @@
           }
         ]
       ]
+    },
+    "Agentic RAG 1": {
+      "main": [
+        [
+          {
+            "node": "Format & Verify Citations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false,
     "callerPolicy": "workflowsFromSameOwner"
   },
-  "versionId": "8b94e420-4df7-43f8-b7db-7ea54b0b31f5",
+  "staticData": null,
   "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "eaa3d31df30f69d853bf1887372824077726204755d7d83df055afd95f72246a"
+    "templateCredsSetupCompleted": true
   },
-  "id": "srB7bqtX7w0BVR7B",
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "query": "Microsoft 365 E3 users",
+          "type": "hybrid",
+          "session_id": "e23baebe995f4227be5fba73e4804fc5",
+          "dense_weight": 0.4,
+          "sparse_weight": 0.6,
+          "ilike_weight": 0,
+          "fuzzy_weight": 0,
+          "fuzzy_threshold": 0.8
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "versionId": "b3cde857-83d3-4f00-bcee-a3e656460b50",
+  "activeVersionId": "b3cde857-83d3-4f00-bcee-a3e656460b50",
+  "versionCounter": 37,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-02-26T15:28:45.617Z",
+      "createdAt": "2026-02-26T15:28:45.617Z",
+      "role": "workflow:owner",
+      "workflowId": "srB7bqtX7w0BVR7B",
+      "projectId": "Ys8BXvZzU8k68ssn",
+      "project": {
+        "updatedAt": "2026-01-04T18:45:45.146Z",
+        "createdAt": "2026-01-04T18:45:40.610Z",
+        "id": "Ys8BXvZzU8k68ssn",
+        "name": "bruno Vijverman <bruno@vijverman.eu>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "accb6a45-2a24-42f1-8582-0c6af280cf77"
+      }
+    }
+  ],
   "tags": [
     {
       "updatedAt": "2026-02-15T11:24:51.266Z",
@@ -2394,5 +2451,2405 @@
       "id": "Z2OUf4P51HExgS2t",
       "name": "DEV"
     }
-  ]
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-02-26T17:08:02.157Z",
+    "createdAt": "2026-02-26T17:08:02.157Z",
+    "versionId": "b3cde857-83d3-4f00-bcee-a3e656460b50",
+    "workflowId": "srB7bqtX7w0BVR7B",
+    "nodes": [
+      {
+        "parameters": {
+          "content": "# State-of-the-Art RAG Agent (With Dynamic Hybrid Search & Context Expansion)",
+          "height": 648,
+          "width": 1052,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          880,
+          16
+        ],
+        "id": "74c20038-93af-406c-b23d-c40ced7f8227",
+        "name": "Sticky Note6"
+      },
+      {
+        "parameters": {
+          "content": "",
+          "height": 648,
+          "width": 840,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "43b5cb25-e503-4bf1-9311-8e59e6012489",
+        "name": "Sticky Note18"
+      },
+      {
+        "parameters": {
+          "contextWindowLength": 10
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+        "typeVersion": 1.3,
+        "position": [
+          1248,
+          448
+        ],
+        "id": "3283fcc6-e7fc-4fe3-babd-b7e89e5456c3",
+        "name": "Supabase Short-Term Memory",
+        "credentials": {
+          "postgres": {
+            "id": "tRlTzpjOmrCVSNLF",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "# State-of-the-Art RAG Agent (With Long Term Memory)",
+          "height": 648,
+          "width": 2076,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          3440,
+          0
+        ],
+        "id": "531e8732-16d5-4ce7-b769-201fce264166",
+        "name": "Sticky Note20",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "name": "Query_Knowledge_Graph",
+          "description": "Call this to query data from our knowledge graph",
+          "workflowId": {
+            "__rl": true,
+            "value": "A4BVrX5qYlJ7HUMI",
+            "mode": "list",
+            "cachedResultName": "TheAIAutomators.com - RAG Masterclass - Lesson 9 - SOTA - v2.0 Dev 0.3"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
+              "session_id": "={{ $json.sessionId }}",
+              "type": "graph"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "query",
+                "displayName": "query",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "type",
+                "displayName": "type",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "session_id",
+                "displayName": "session_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.1,
+        "position": [
+          4640,
+          480
+        ],
+        "id": "7f9c2d97-3276-4b92-a94c-caba4af774a6",
+        "name": "Query Knowledge Graph1",
+        "retryOnFail": true,
+        "maxTries": 5,
+        "waitBetweenTries": 5000,
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "contextWindowLength": 10
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+        "typeVersion": 1.3,
+        "position": [
+          3984,
+          480
+        ],
+        "id": "a11ba588-99f4-4743-95f7-a23b4a9d8812",
+        "name": "Supabase Short-Term Memory2",
+        "credentials": {
+          "postgres": {
+            "id": "tRlTzpjOmrCVSNLF",
+            "name": "Postgres account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.getzep.com/api/v2/graph/search",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"user_id\": \"{{ $json.user_id }}\",\n  \"query\": {{ JSON.stringify($('When chat message received').item.json.chatInput) }},\n  \"scope\": \"edges\",\n  \"limit\": 5,\n  \"search_filters\": {\n    \"min_relevance\": 0.7\n  }\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3872,
+          224
+        ],
+        "id": "0cdab873-701c-47ff-8d82-253738044297",
+        "name": "Get Long Term Memories",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.4,
+        "position": [
+          4784,
+          288
+        ],
+        "id": "15d98d5d-57b4-47c3-a8ed-1920f63678dd",
+        "name": "Respond to Webhook",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "c2e95998-ad5f-4676-b307-b91f5c4adaad",
+                "name": "user_id",
+                "value": "user1234",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          3616,
+          224
+        ],
+        "id": "93ed8bbb-81bd-4f8e-bbf7-d64d74deab4e",
+        "name": "user_id",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "content": "Note: This template uses n8n chat and by default, this long term memory is shared across all chat sessions. To maintain separate long term memories for different users, check out our community post here, as there are multiple approaches for this depending on how you're deploying the agent. ",
+          "height": 192,
+          "width": 256,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          3536,
+          400
+        ],
+        "typeVersion": 1,
+        "id": "4ee4dc46-b29c-4b0b-bbb9-47f2f250edca",
+        "name": "Sticky Note25",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "content": "## TODO\n### Add User ID here",
+          "height": 232,
+          "width": 232
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          3552,
+          144
+        ],
+        "id": "6b59c28a-0327-411d-99cf-a6c78eac22ae",
+        "name": "Sticky Note26",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "descriptionType": "manual",
+          "toolDescription": "Execute a SQL query on the tabular_document_rows table.\n\nInstructions:\n\nYou will always be querying based on a specific id.\n\nEach row in the table contains a row_data field (of type jsonb) that holds the data for that row, with keys matching the file schema defined in the record_manager table.\n\nThe record_manager_id is the id field from the record_manager table. Always filter based on this specific id when querying the tabular_document_rows table.\n\nWhen writing your SELECT clause, extract values from the row_data JSON using the ->> operator and cast them as needed (e.g., to numeric for calculations).\n\nItems within your SELECT needs to use the data within row_data field.\n\nExample query: Find maximum value for a field (e.g. \"profit\")\n\nSELECT MAX((row_data->>'profit')::numeric) AS max_profit\nFROM tabular_document_rows\nWHERE file_id = '123';\n\nExample query: Group and aggregate (e.g. total revenue by country)\n\nSELECT row_data->>'country' AS country,\n       SUM((row_data->>'revenue')::numeric) AS total_revenue\nFROM tabular_document_rows\nWHERE record_manager_id = '123'\nGROUP BY row_data->>'country';\n\nExample query: Group and aggregate (e.g. total revenue by country)\nSELECT row_data->>'salesperson' AS salesperson,\n       SUM((row_data->>'profit')::numeric) AS total_profit\nFROM tabular_document_rows\nWHERE record_manager_id = '123'\nGROUP BY row_data->>'salesperson';",
+          "operation": "executeQuery",
+          "query": "={{ $fromAI('sql_query') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgresTool",
+        "typeVersion": 2.5,
+        "position": [
+          4304,
+          480
+        ],
+        "id": "ec312b1f-7a3b-4858-a409-6dd8d61644a2",
+        "name": "Query Tabular Rows1",
+        "credentials": {
+          "postgres": {
+            "id": "tRlTzpjOmrCVSNLF",
+            "name": "Postgres account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "descriptionType": "manual",
+          "toolDescription": "Use this tool to fetch all available documents from the record_manager, this will include the table schema and the id",
+          "operation": "select",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "record_manager_v2",
+            "mode": "list",
+            "cachedResultName": "record_manager_v2"
+          },
+          "returnAll": true,
+          "where": {
+            "values": [
+              {
+                "column": "data_type",
+                "value": "tabular"
+              }
+            ]
+          },
+          "options": {
+            "outputColumns": [
+              "id",
+              "document_title",
+              "schema"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.postgresTool",
+        "typeVersion": 2.5,
+        "position": [
+          4144,
+          480
+        ],
+        "id": "6d6e0139-079b-499e-a464-850839100b87",
+        "name": "Get datasets from record_manager1",
+        "credentials": {
+          "postgres": {
+            "id": "tRlTzpjOmrCVSNLF",
+            "name": "Postgres account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "content": "## TODO\n### Run this node once to manually create a Zep user",
+          "height": 312,
+          "width": 232
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          5184,
+          192
+        ],
+        "id": "7cf8dbed-cbfb-4664-bec3-00f05ac6a33f",
+        "name": "Sticky Note27",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "jfvPAjwlf1jVaW3Y",
+            "mode": "list",
+            "cachedResultName": "Zep - Update Long Term Memories - BLUEPRINT"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "session_id": "={{ $('When chat message received').item.json.sessionId }}",
+              "user_id": "={{ $('user_id').item.json.user_id }}",
+              "message_content": "={{ $('When chat message received').item.json.chatInput }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "session_id",
+                "displayName": "session_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "user_id",
+                "displayName": "user_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "message_content",
+                "displayName": "message_content",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {
+            "waitForSubWorkflow": false
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          4784,
+          80
+        ],
+        "id": "491f311d-d5db-41b1-9140-e9c46df43e18",
+        "name": "Execute workflow - Save Zep long term memories",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "public": true,
+          "options": {
+            "responseMode": "lastNode"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "typeVersion": 1.4,
+        "position": [
+          352,
+          176
+        ],
+        "id": "f1b2f57a-c6db-494e-826d-b0caff576a8b",
+        "name": "When chat message received",
+        "webhookId": "f53e8aa0-a8b5-4773-b8a8-8c9ed1d9bf8a"
+      },
+      {
+        "parameters": {
+          "name": "Query_Knowledge_Graph",
+          "description": "Call this to query data from our knowledge graph",
+          "workflowId": {
+            "__rl": true,
+            "value": "suQZAl0QM15VyY3R",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/suQZAl0QM15VyY3R",
+            "cachedResultName": "TheAIAutomators.com - SOTA RAG AGENT - v2.3 Blueprint"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
+              "session_id": "={{ $json.sessionId }}",
+              "type": "graph"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "query",
+                "displayName": "query",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "type",
+                "displayName": "type",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              },
+              {
+                "id": "session_id",
+                "displayName": "session_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string"
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.1,
+        "position": [
+          2864,
+          448
+        ],
+        "id": "38890640-4fa2-4350-a19b-afe1c2498db8",
+        "name": "Query Knowledge Graph2",
+        "retryOnFail": true,
+        "maxTries": 5,
+        "waitBetweenTries": 5000,
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "contextWindowLength": 10
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+        "typeVersion": 1.3,
+        "position": [
+          2192,
+          448
+        ],
+        "id": "630923cc-dcc3-4403-9bd9-a8d901040d67",
+        "name": "Supabase Short-Term Memory3",
+        "credentials": {
+          "postgres": {
+            "id": "tRlTzpjOmrCVSNLF",
+            "name": "Postgres account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "descriptionType": "manual",
+          "toolDescription": "Execute a SQL query on the tabular_document_rows table. \n\nInstructions:\n\nYou will always be querying based on a specific id.\n\nEach row in the table contains a row_data field (of type jsonb) that holds the data for that row, with keys matching the file schema defined in the record_manager table.\n\nThe record_manager_id is the id field from the record_manager table. Always filter based on this specific id when querying the tabular_document_rows table.\n\nWhen writing your SELECT clause, extract values from the row_data JSON using the ->> operator and cast them as needed (e.g., to numeric for calculations).\n\nWhen applying WHERE clauses, you should run SELECT DISTINCT queries (LIMIT 100) on the relevant fields first to understand the valid options. This applies even if the user provides a specific value—you must verify that the value exists in the data before using it.\n\nDo NOT run SELECT DISTINCT queries for ID columns.\n\nItems within your SELECT needs to use the data within row_data field.\n\nExample query: Find maximum value for a field (e.g. \"profit\")\n\nSELECT MAX((row_data->>'profit')::numeric) AS max_profit\nFROM tabular_document_rows\nWHERE file_id = '123';\n\nExample query: Group and aggregate (e.g. total revenue by country)\n\nSELECT row_data->>'country' AS country,\n       SUM((row_data->>'revenue')::numeric) AS total_revenue\nFROM tabular_document_rows\nWHERE record_manager_id = '123'\nGROUP BY row_data->>'country';\n\nExample query: Group and aggregate (e.g. total revenue by country)\nSELECT row_data->>'salesperson' AS salesperson,\n       SUM((row_data->>'profit')::numeric) AS total_profit\nFROM tabular_document_rows\nWHERE record_manager_id = '123'\nGROUP BY row_data->>'salesperson';",
+          "operation": "executeQuery",
+          "query": "={{ $fromAI('sql_query') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgresTool",
+        "typeVersion": 2.5,
+        "position": [
+          2512,
+          448
+        ],
+        "id": "430f7636-58c9-4303-ad24-d376eb501e2e",
+        "name": "Query Tabular Rows2",
+        "credentials": {
+          "postgres": {
+            "id": "tRlTzpjOmrCVSNLF",
+            "name": "Postgres account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "descriptionType": "manual",
+          "toolDescription": "Use this tool to fetch all available documents from the record_manager, this will include the table schema and the id",
+          "operation": "select",
+          "schema": {
+            "__rl": true,
+            "mode": "list",
+            "value": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "record_manager_v2",
+            "mode": "list",
+            "cachedResultName": "record_manager_v2"
+          },
+          "returnAll": true,
+          "where": {
+            "values": [
+              {
+                "column": "data_type",
+                "value": "tabular"
+              }
+            ]
+          },
+          "options": {
+            "outputColumns": [
+              "id",
+              "document_title",
+              "schema"
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.postgresTool",
+        "typeVersion": 2.5,
+        "position": [
+          2352,
+          448
+        ],
+        "id": "2fa5e625-f7f6-4090-ab3e-594dd29e0c77",
+        "name": "Get datasets from record_manager2",
+        "credentials": {
+          "postgres": {
+            "id": "tRlTzpjOmrCVSNLF",
+            "name": "Postgres account"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "content": "# State-of-the-Art RAG Agent (With GraphRAG + NLQ)",
+          "height": 648,
+          "width": 1468,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1936,
+          0
+        ],
+        "id": "40df6ccd-7bf7-49f1-818e-3661a10d39f1",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "content": "## TODO\n### Connect the Chat Trigger to your Agent of Choice",
+          "height": 256,
+          "width": 576
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          160,
+          80
+        ],
+        "id": "1699df7a-60da-4c37-abb1-a5cbeddbcbb3",
+        "name": "Sticky Note29"
+      },
+      {
+        "parameters": {
+          "description": "Searches the vector store using a weighted combination of dense (semantic), sparse (lexical), ilike (exact match), and fuzzy search. Returns relevant document chunks with metadata including doc_name, record_manager_id, chunk_index, and page numbers.",
+          "workflowId": {
+            "__rl": true,
+            "value": "srB7bqtX7w0BVR7B",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/srB7bqtX7w0BVR7B",
+            "cachedResultName": "RAG Retrieval Sub-Workflow v0.2.1"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
+              "session_id": "={{ $json.sessionId }}",
+              "sparse_weight": "={{ $fromAI('sparse_weight', ``, 'number', 0.5) }}",
+              "dense_weight": "={{ $fromAI('dense_weight', ``, 'number', 0.5) }}",
+              "fuzzy_threshold": "={{ $fromAI('fuzzy_threshold', `this is the word similarity threshold in postgres - lower means more candidates however the call may time out`, 'number', 0.8) }}",
+              "fuzzy_weight": "={{ $fromAI('fuzzy_weight', ``, 'number', 0) }}",
+              "ilike_weight": "={{ $fromAI('ilike_weight', ``, 'number', 0) }}",
+              "type": "hybrid"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "query",
+                "displayName": "query",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "type",
+                "displayName": "type",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "session_id",
+                "displayName": "session_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "dense_weight",
+                "displayName": "dense_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "sparse_weight",
+                "displayName": "sparse_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "ilike_weight",
+                "displayName": "ilike_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "fuzzy_weight",
+                "displayName": "fuzzy_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "fuzzy_threshold",
+                "displayName": "fuzzy_threshold",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
+        "position": [
+          1424,
+          448
+        ],
+        "id": "cdb404f5-4100-4d36-a47d-b7c5b383cfab",
+        "name": "Dynamic Hybrid Search"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "claude-sonnet-4-5-20250929",
+            "mode": "list",
+            "cachedResultName": "Claude Sonnet 4.5"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.3,
+        "position": [
+          2032,
+          448
+        ],
+        "id": "03fff22d-5ea4-454b-9a62-37a17b2c3f3a",
+        "name": "Anthropic Chat Model1",
+        "credentials": {
+          "anthropicApi": {
+            "id": "UyAehXbUNQAWwZOs",
+            "name": "Claude SEB"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "claude-sonnet-4-5-20250929",
+            "mode": "list",
+            "cachedResultName": "Claude Sonnet 4.5"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.3,
+        "position": [
+          3824,
+          480
+        ],
+        "id": "90d7cb45-a77a-4cc3-9146-af1e9b963542",
+        "name": "Anthropic Chat Model2",
+        "credentials": {
+          "anthropicApi": {
+            "id": "UyAehXbUNQAWwZOs",
+            "name": "Claude SEB"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "description": "=Call this tool to query data from our knowledgebase using hybrid search (vector, lexical, ilike and fuzzy)\n\nYou can set different weights of this hybrid search depending on the type of query.\n\ndense_weight float DEFAULT 0.5,\nsparse_weight float DEFAULT 0.5,\nilike_weight float DEFAULT 0\nfuzzy_weight float DEFAULT 0\nfuzzy_threshold float DEFAULT 0.8\n\nFor semantic natural lanauge queries you can prioritise dense embeddings, \nFor technical terms and more traditional search you can priorize sparse lexical search\nFor exact matches for codes and IDs you can prioritze ilike wildcard matching\nFor typos that aren't picked up by semantic search, you can prioritize fuzzy matching\n\nIf looking for matches via ilike or fuzzy matches, the query should be extremely focused and short, as otherwise it will likely return zero results. (e.g. exact ID or code)\n\nAs pattern matching and fuzzy matching can add latency, I recommend defaulting this to zero unless you want to actually use it.\n\nTotal of the 4 weights much equal 1\n\nFuzzy Threshold adds significant latency should should be as high as possible - Default to 0.8",
+          "workflowId": {
+            "__rl": true,
+            "value": "suQZAl0QM15VyY3R",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/suQZAl0QM15VyY3R",
+            "cachedResultName": "TheAIAutomators.com - SOTA RAG AGENT - v2.3 Blueprint"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
+              "session_id": "={{ $json.sessionId }}",
+              "sparse_weight": "={{ $fromAI('sparse_weight', ``, 'number', 0.5) }}",
+              "dense_weight": "={{ $fromAI('dense_weight', ``, 'number', 0.5) }}",
+              "fuzzy_threshold": "={{ $fromAI('fuzzy_threshold', `this is the word similarity threshold in postgres - lower means more candidates however the call may time out`, 'number', 0.8) }}",
+              "fuzzy_weight": "={{ $fromAI('fuzzy_weight', ``, 'number', 0) }}",
+              "ilike_weight": "={{ $fromAI('ilike_weight', ``, 'number', 0) }}",
+              "type": "hybrid"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "query",
+                "displayName": "query",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "type",
+                "displayName": "type",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "session_id",
+                "displayName": "session_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "dense_weight",
+                "displayName": "dense_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "sparse_weight",
+                "displayName": "sparse_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "ilike_weight",
+                "displayName": "ilike_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "fuzzy_weight",
+                "displayName": "fuzzy_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "fuzzy_threshold",
+                "displayName": "fuzzy_threshold",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
+        "position": [
+          2688,
+          448
+        ],
+        "id": "afb2408c-d875-4d5b-a1b9-b40eae22a72c",
+        "name": "Dynamic Hybrid Search1",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "description": "=Call this tool to query data from our knowledgebase using hybrid search (vector, lexical, ilike and fuzzy)\n\nYou can set different weights of this hybrid search depending on the type of query.\n\ndense_weight float DEFAULT 0.5,\nsparse_weight float DEFAULT 0.5,\nilike_weight float DEFAULT 0\nfuzzy_weight float DEFAULT 0\nfuzzy_threshold float DEFAULT 0.8\n\nFor semantic natural lanauge queries you can prioritise dense embeddings, \nFor technical terms and more traditional search you can priorize sparse lexical search\nFor exact matches for codes and IDs you can prioritze ilike wildcard matching\nFor typos that aren't picked up by semantic search, you can prioritize fuzzy matching\n\nIf looking for matches via ilike or fuzzy matches, the query should be extremely focused and short, as otherwise it will likely return zero results. (e.g. exact ID or code)\n\nAs pattern matching and fuzzy matching can add latency, I recommend defaulting this to zero unless you want to actually use it.\n\nTotal of the 4 weights much equal 1\n\nFuzzy Threshold adds significant latency should should be as high as possible - Default to 0.8",
+          "workflowId": {
+            "__rl": true,
+            "value": "BBep2uTA4ZltoqZF",
+            "mode": "list",
+            "cachedResultName": "TheAIAutomators.com - SOTA RAG AGENT - v2.2 Active"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}",
+              "session_id": "={{ $json.sessionId }}",
+              "sparse_weight": "={{ $fromAI('sparse_weight', ``, 'number', 0.5) }}",
+              "dense_weight": "={{ $fromAI('dense_weight', ``, 'number', 0.5) }}",
+              "fuzzy_threshold": "={{ $fromAI('fuzzy_threshold', `this is the word similarity threshold in postgres - lower means more candidates however the call may time out`, 'number', 0.8) }}",
+              "fuzzy_weight": "={{ $fromAI('fuzzy_weight', ``, 'number', 0) }}",
+              "ilike_weight": "={{ $fromAI('ilike_weight', ``, 'number', 0) }}",
+              "type": "hybrid"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "query",
+                "displayName": "query",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "type",
+                "displayName": "type",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "session_id",
+                "displayName": "session_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "dense_weight",
+                "displayName": "dense_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "sparse_weight",
+                "displayName": "sparse_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "ilike_weight",
+                "displayName": "ilike_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "fuzzy_weight",
+                "displayName": "fuzzy_weight",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              },
+              {
+                "id": "fuzzy_threshold",
+                "displayName": "fuzzy_threshold",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "number",
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+        "typeVersion": 2.2,
+        "position": [
+          4480,
+          480
+        ],
+        "id": "ee09fda8-f04e-4b69-9844-60c1aa51a62e",
+        "name": "Dynamic Hybrid Search2",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "record_manager_v2",
+          "limit": 1,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "doc_id",
+                "condition": "eq",
+                "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Field_Value', ``, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          1584,
+          448
+        ],
+        "id": "8d368b7e-d825-4ed0-bb6c-ac576b4d4cb1",
+        "name": "Fetch Document Hierarchy",
+        "credentials": {
+          "supabaseApi": {
+            "id": "JXvQLWfqIjdcMyqm",
+            "name": "Supabase B5rman"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "toolDescription": "Based on the most promising chunks retrieved from the knowledgebase, use this tool to expand out the context by fetching neighbouring chunks, parent chunks etc\n\nThe body of this call must be in this format and the values you need are in the chunk metadata. You can retrieve chunks from one or multiple documents if you like\n[\n    {\n      doc_id: \"doc-id-12345-abcde\",\n      chunk_ranges: [[0, 5]]\n    },\n    {\n      doc_id: \"another-doc-id-12345\",\n      chunk_ranges: [[10, 15], [20, 25]]\n    }\n  ]\n",
+          "method": "POST",
+          "url": "https://mgistrmwhxccyuchokbh.supabase.co/functions/v1/context-expansion",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "supabaseApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', ``, 'json') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.4,
+        "position": [
+          1760,
+          448
+        ],
+        "id": "dde09053-aa0f-4412-9ad8-79ba674951a9",
+        "name": "Context Expansion",
+        "credentials": {
+          "supabaseApi": {
+            "id": "JXvQLWfqIjdcMyqm",
+            "name": "Supabase B5rman"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "record_manager_v2",
+          "limit": 1,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "doc_id",
+                "condition": "eq",
+                "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Field_Value', ``, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          3024,
+          448
+        ],
+        "id": "2ff12715-6088-41ed-8abe-82b799e67763",
+        "name": "Fetch Document Hierarchy1",
+        "credentials": {
+          "supabaseApi": {
+            "id": "JXvQLWfqIjdcMyqm",
+            "name": "Supabase B5rman"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "toolDescription": "Based on the most promising chunks retrieved from the knowledgebase, use this tool to expand out the context by fetching neighbouring chunks, parent chunks etc\n\nThe body of this call must be in this format and the values you need are in the chunk metadata. You can retrieve chunks from one or multiple documents if you like\n[\n    {\n      doc_id: \"doc-id-12345-abcde\",\n      chunk_ranges: [[0, 5]]\n    },\n    {\n      doc_id: \"another-doc-id-12345\",\n      chunk_ranges: [[10, 15], [20, 25]]\n    }\n  ]\n",
+          "method": "POST",
+          "url": "https://iwcionhpeltdhfrtimtp.supabase.co/functions/v1/context-expansion",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "supabaseApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', ``, 'json') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          3200,
+          448
+        ],
+        "id": "800d85ee-be81-4248-aeea-3a2b9a2b3207",
+        "name": "Context Expansion1",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "record_manager_v2",
+          "limit": 1,
+          "filters": {
+            "conditions": [
+              {
+                "keyName": "doc_id",
+                "condition": "eq",
+                "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Field_Value', ``, 'string') }}"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.supabaseTool",
+        "typeVersion": 1,
+        "position": [
+          4800,
+          480
+        ],
+        "id": "75b8db27-a8a3-4229-9196-1d6a4af425e3",
+        "name": "Fetch Document Hierarchy2",
+        "credentials": {
+          "supabaseApi": {
+            "id": "JXvQLWfqIjdcMyqm",
+            "name": "Supabase B5rman"
+          }
+        },
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "toolDescription": "Based on the most promising chunks retrieved from the knowledgebase, use this tool to expand out the context by fetching neighbouring chunks, parent chunks etc\n\nThe body of this call must be in this format and the values you need are in the chunk metadata. You can retrieve chunks from one or multiple documents if you like\n[\n    {\n      doc_id: \"doc-id-12345-abcde\",\n      chunk_ranges: [[0, 5]]\n    },\n    {\n      doc_id: \"another-doc-id-12345\",\n      chunk_ranges: [[10, 15], [20, 25]]\n    }\n  ]\n",
+          "method": "POST",
+          "url": "https://iwcionhpeltdhfrtimtp.supabase.co/functions/v1/context-expansion",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "supabaseApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('JSON', ``, 'json') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          4976,
+          480
+        ],
+        "id": "aff73665-dab1-4877-9b7b-a437d515d669",
+        "name": "Context Expansion2",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $('When chat message received').item.json.chatInput }}",
+          "options": {
+            "systemMessage": "# Role\n\nYou are a RAG assistant that answers questions using a knowledgebase of documents and structured datasets.\n\n# Goal\n\nCreate and execute a retrieval strategy to answer the user's query. Your response must be fully grounded in the retrieved information — never fabricate content.\n\nConsider the conversation history alongside the current query.\n\n# Tools Available\n\n1. **Dynamic Hybrid Search** — Searches the vector store using a weighted combination of dense (semantic), sparse (lexical), ilike (exact match), and fuzzy search\n2. **Fetch Document Hierarchy** — Loads the full document structure (title, chunks, page ranges) from the record manager\n3. **Context Expansion** — Fetches neighbouring and parent chunks to expand context around relevant results\n4. **Query Tabular Rows** — Executes SQL queries against structured data (Excel, CSV, Google Sheets) stored in the tabular_document_rows table\n\n# Standard Operating Procedure\n\n## For document/text questions → Hybrid Search path\n\n1. Formulate your search query and call **Dynamic Hybrid Search**. Choose weights based on the query type:\n   - Semantic/natural language → prioritise dense (e.g. dense=0.7, sparse=0.3)\n   - Technical terms, keywords → prioritise sparse (e.g. dense=0.3, sparse=0.7)\n   - Exact codes, IDs, invoice numbers → use ilike (e.g. ilike=1.0)\n   - Misspellings or approximate terms → add fuzzy weight (e.g. dense=0.4, sparse=0.3, fuzzy=0.3)\n2. **Always run at least 2 searches** with different query formulations or weight strategies before answering. For multi-topic or comparative questions, run one search per major sub-topic (e.g. for \"compare X and Y\", search for X first, then Y separately). This ensures comprehensive coverage across the knowledgebase.\n3. From the most relevant chunks, call **Fetch Document Hierarchy** to load the source document structure\n4. Using the document structure and the chunk metadata (child_ranges, parent_ranges), call **Context Expansion** to retrieve surrounding context for the highest-relevance chunks\n5. If the results feel incomplete, run additional targeted searches with different formulations or weights before answering\n\n## For numerical/tabular questions → SQL path\n\nIf the question involves calculations, aggregations, comparisons, or structured data (sums, averages, counts, rankings, max/min values), the vector store is unreliable for this. Use the SQL path instead:\n\n1. First, use **Dynamic Hybrid Search** with a query about the dataset topic to identify which documents contain relevant tabular data. Look for record_manager_id values in the results.\n2. Call **Query Tabular Rows** with SQL to answer the question. Always filter by record_manager_id.\n3. Before applying WHERE filters on specific values, run a SELECT DISTINCT query first to verify the exact values that exist in the data.\n\n## For mixed questions\n\nUse both paths. Retrieve contextual information from the hybrid search, and precise numbers from the SQL queries.\n\n# Response Rules\n\n- Format: Multiple paragraphs with markdown headings where appropriate\n- Respond in the same language as the user's question\n- Include images from retrieved results in markdown format if available\n- Maintain continuity with conversation history\n- If no relevant information is found after searching, say: \"I couldn't find information about that in the knowledgebase. Could you rephrase your question or let me know which document to look in?\"\n- Never include information not provided by the tools\n\n# Output Format (CRITICAL — you must follow this exactly)\n\nYour output must have TWO sections separated by the exact delimiter `---SOURCES_JSON---`.\n\n## Section 1: Answer\nWrite your full answer in markdown. Do NOT include a References section in the answer — that will be generated automatically from your structured sources.\n\n## Section 2: Sources JSON\nAfter the delimiter, output a JSON array of source objects. Each object represents a document you cited in your answer.\n\nRequired fields for each source object:\n- `doc_name` (string): The document name exactly as it appears in the chunk metadata\n- `doc_id` (string): The record_manager_id from the chunk metadata\n- `pages` (array of integers): Page numbers referenced, e.g. [3, 4, 12]. Use an empty array [] if pages are not available or all show [1].\n- `sections` (array of strings): The section headings from the `cascading_path` metadata of the chunks you used. Extract the UNIQUE section names from the cascading_path field of each chunk. Example: [\"11. Smart Query Routing Architecture\", \"3.4 Ragie.ai\", \"6. Market Validation\"]\n- `chunk_indices` (array of integers): The chunk_index values from the chunks you used, e.g. [0, 3, 7]\n- `relevance` (string): A short phrase describing what this source contributed to the answer\n\n## Example Output\n\nHere is a detailed compliance report based on the retrieved documents...\n\n[Answer content continues here in markdown...]\n\n---SOURCES_JSON---\n[\n  {\n    \"doc_name\": \"Microsoft 365 Audit Report\",\n    \"doc_id\": \"abc123-def456\",\n    \"pages\": [3, 4, 12],\n    \"sections\": [\"Executive Summary\", \"3.2 Compliance Findings\", \"7. Risk Assessment\"],\n    \"chunk_indices\": [5, 8, 22],\n    \"relevance\": \"Primary source for compliance findings\"\n  },\n  {\n    \"doc_name\": \"Security Policy Template\",\n    \"doc_id\": \"xyz789-ghi012\",\n    \"pages\": [],\n    \"sections\": [\"1. Introduction\", \"4.1 Access Control Requirements\"],\n    \"chunk_indices\": [0, 2],\n    \"relevance\": \"Referenced for baseline security requirements\"\n  }\n]\n\n## Source Rules\n- Only cite documents whose chunks were actually returned by the tools\n- Every factual claim in your answer must trace to at least one source\n- Use the exact `doc_name` and `doc_id` (record_manager_id) from the chunk metadata — do not modify or abbreviate them\n- The `chunk_indices` must be actual chunk_index values from the tool results\n- The `sections` must be actual `cascading_path` values from the chunk metadata — these are the section headings each chunk belongs to. Include all unique sections referenced.\n- For tabular queries, use the dataset name as doc_name and the record_manager_id as doc_id",
+            "maxIterations": 25
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          1216,
+          192
+        ],
+        "id": "dae93eb5-545e-4059-bad3-17bc3225780c",
+        "name": "Agentic RAG 1",
+        "retryOnFail": true,
+        "maxTries": 5
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $('When chat message received').item.json.chatInput }}",
+          "options": {
+            "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information provided by multiple knowledgebases - Hybrid Search, Knowledge Graph and Structured datasets.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\nBased on your retrieval strategy\n\n## Hybrid Search & Context Expansion\n\n1. Pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\n## Tabular Data\n\nIf the question involves tabular data—such as calculating sums, averages, or finding maximum values—the vector store and graph tools may be unreliable. \n\nIn that case, start by reviewing the available datasets, identify the ones most likely to contain the answer, and then construct a SQL query to analyze them.\n\n## Knowledge Graph\n\nIf you are asked questions that you think would be best answered with insights from a knowledge graph then please seach the graph\n\n---Response Rules---\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. (Mark the source as (KB) for Knowledgebase, (GR) for Graph or (DB) for Database). If information is from chunks, then provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\"."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.9,
+        "position": [
+          2400,
+          192
+        ],
+        "id": "ac46dfb5-d886-450f-ac37-6c9156269255",
+        "name": "Agentic RAG 2",
+        "retryOnFail": true,
+        "maxTries": 5,
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "={{ $('When chat message received').item.json.chatInput }}",
+          "options": {
+            "systemMessage": "=# Role\n\nYou are an AI assistant responding to a user's query based on the information provided by multiple knowledgebases - Hybrid Search, Knowledge Graph and Structured datasets.\n\n# Goal\n\nYou are tasked with creating and executing a retrieval strategy to best answer the users question.\n\nThe output should be a well-reserached response to the users query based on the output from these tools and to follow the Operating Procedures and Response Rules as set about below.\n\nYou must consider both the conversation history and the current query.\n\nYour goal is to provide a fully grounded, accurate answer based on the output from these tools ONLY.\n\n# Standard Operating Procedure\n\nBased on your retrieval strategy\n\n## Hybrid Search & Context Expansion\n\n1. Pass relevant query(s) to the dynamic hybrid search to narrow the search and retrieve candidate chunks\n\n2. Based on the most relevant chunk(s); Trigger the Fetch Document Hierarchy Tool to load the source Documents Structure\n\n3. Based on this document structure (which includes chunk ranges) along with any relevant child_ranges and parent_ranges from the retrieved chunks, trigger the Context Expansion tool to expand your insight into the document.\n\n## Tabular Data\n\nIf the question involves tabular data—such as calculating sums, averages, or finding maximum values—the vector store and graph tools may be unreliable. \n\nIn that case, start by reviewing the available datasets, identify the ones most likely to contain the answer, and then construct a SQL query to analyze them.\n\n## Knowledge Graph\n\nIf you are asked questions that you think would be best answered with insights from a knowledge graph then please seach the graph\n\n---Response Rules---\n\n- Ideal target format and length: Multiple Paragraphs\n- Use markdown formatting with appropriate section headings\n- Please respond in the same language as the user's question.\n- If there are images provided from the retrieved information, you should return this in markdown format.\n- Ensure the response maintains continuity with the conversation history.\n- List between 1-5 important reference sources at the end under \"References\" section. (Mark the source as (KB) for Knowledgebase, (GR) for Graph or (DB) for Database). If information is from chunks, then provide Document Names and Page Numbers that these sources appear in the documents - this is in the chunk metadata.\n- Do not make anything up. \n- Do not include information not provided by the Knowledge Bases.\n- If you cannot answer the question using the provided information or if no information is returned from the tools, say \"Sorry I don't know\".\n\n{{\n(() => {\n  const raw = $json.data;\n  if (raw == null) return '';\n\n  const toText = v => (typeof v === 'string' ? v : JSON.stringify(v));\n  const rawText = toText(raw);\n  const cleaned = rawText.replace(/[\\u0000-\\u001F\\u007F]/g, '').trim();\n  if (!cleaned || cleaned === '{}' || cleaned === '[]') return '';\n\n  // Parse only if the cleaned text looks like JSON\n  let obj = raw;\n  if (typeof raw === 'string') {\n    const first = cleaned[0];\n    if (first === '{' || first === '[') {\n      try { obj = JSON.parse(cleaned); } catch { return ''; }\n    } else {\n      return '';\n    }\n  }\n\n  // Support either { edges: [...] } or a bare array of edges\n  const edges = Array.isArray(obj?.edges) ? obj.edges : (Array.isArray(obj) ? obj : []);\n  if (!edges.length) return '';\n\n  const facts = [...new Set(\n    edges\n      .map(e => (e && typeof e.fact === 'string') ? e.fact.replace(/\\s+/g, ' ').trim() : '')\n      .filter(Boolean)\n  )];\n\n  return facts.length\n    ? \"---User Information---\\nThis is information about the user:\\n\" + facts.map(f => \"- \" + f).join(\"\\n\")\n    : '';\n})()\n}}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.9,
+        "position": [
+          4080,
+          224
+        ],
+        "id": "1c6be8c1-4804-4044-ad7b-f070e04ad60e",
+        "name": "Agentic RAG 3",
+        "retryOnFail": true,
+        "maxTries": 5,
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "workflowInputs": {
+            "values": [
+              {
+                "name": "query"
+              },
+              {
+                "name": "type"
+              },
+              {
+                "name": "session_id"
+              },
+              {
+                "name": "dense_weight",
+                "type": "number"
+              },
+              {
+                "name": "sparse_weight",
+                "type": "number"
+              },
+              {
+                "name": "ilike_weight",
+                "type": "number"
+              },
+              {
+                "name": "fuzzy_weight",
+                "type": "number"
+              },
+              {
+                "name": "fuzzy_threshold",
+                "type": "number"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          1008,
+          912
+        ],
+        "id": "e42d1e0d-2b8e-4ce1-93c0-7e7fdae83c26",
+        "name": "When Executed by Another Workflow"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.openai.com/v1/embeddings",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "openAiApi",
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "input",
+                "value": "={{ $('When Executed by Another Workflow').item.json.query }}"
+              },
+              {
+                "name": "model",
+                "value": "text-embedding-3-small"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          2928,
+          912
+        ],
+        "id": "8e9eafd5-0988-446f-b000-5f8657b8f268",
+        "name": "Generate Embedding From Query",
+        "credentials": {
+          "openAiApi": {
+            "id": "r6dwaEmQxKEvrskM",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// --- This Code Node extracts 'content' from multiple input items ---\n\n// Step 1: Use .map() to iterate over ALL incoming items ($input.all()).\n// For each item, access its 'json' property, and then the 'content' field within that.\nconst contentArray = $input.all().map(item => {\n  // Basic safety check: ensure item.json and item.json.content exist.\n  // Return null or an empty string if not found, otherwise return the content.\n  // Adjust the fallback value (null) if needed.\n  return item.json?.content ?? null;\n});\n\n// Step 2: Filter out any potential null values if an item was missing content (optional)\n// If you are certain all items will have content, you can skip this filter.\nconst validContentArray = contentArray.filter(content => content !== null);\n\n// Step 3: Return the result as a *single* new n8n item.\n// This item contains your final array of strings under the 'documents' key.\nreturn [{\n  json: {\n    // Use validContentArray if you filtered, otherwise use contentArray\n    documents: validContentArray\n    // documents: contentArray // <-- Use this if you didn't filter\n  }\n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3744,
+          912
+        ],
+        "id": "79189f19-3d0d-4c4a-980f-47625ef396d7",
+        "name": "Create Array"
+      },
+      {
+        "parameters": {
+          "jsCode": "// --- Code Node to Reorder Items Based on Rerank Results (WITH METADATA) ---\n// Fixed: Handles HTTP Request node response format where results come as\n// a single n8n item containing an array, not as multiple n8n items.\n\n// --- Step 1: Get Data from Input Nodes ---\nconst rawItems = $('Trigger Dynamic Hybrid Search').all();\n\n// HTTP Request nodes return a single n8n item where json IS the array,\n// or json contains the array. We need to normalize to individual items.\nlet originalFullItems;\nif (rawItems.length === 1 && Array.isArray(rawItems[0].json)) {\n  // Case 1: json is directly an array (e.g., [{id:1,...}, {id:2,...}])\n  originalFullItems = rawItems[0].json.map(item => ({ json: item }));\n} else if (rawItems.length === 1 && rawItems[0].json && typeof rawItems[0].json === 'object') {\n  const firstItem = rawItems[0].json;\n  // Case 2: Single object that might be a result itself\n  if (firstItem.content || firstItem.id || firstItem.metadata) {\n    originalFullItems = rawItems;\n  } else {\n    // Case 3: Object wrapping an array (e.g., {data: [...]})\n    const arrayKey = Object.keys(firstItem).find(k => Array.isArray(firstItem[k]));\n    if (arrayKey) {\n      originalFullItems = firstItem[arrayKey].map(item => ({ json: item }));\n    } else {\n      originalFullItems = rawItems;\n    }\n  }\n} else {\n  // Case 4: Already multiple n8n items (normal case)\n  originalFullItems = rawItems;\n}\n\n// Get the rerank results array from the Cohere Rerank node\nconst rerankOrderInfo = $input.first().json.results;\n\n// --- Step 2: Validate Inputs ---\nif (!Array.isArray(originalFullItems) || originalFullItems.length === 0) {\n  return [{ json: { message: 'No original items to reorder', count: 0 } }];\n}\n\nif (!Array.isArray(rerankOrderInfo) || rerankOrderInfo.length === 0) {\n  // No rerank results — return original items as-is\n  return originalFullItems.map(item => ({ json: item.json || item }));\n}\n\n// --- Step 3: Reorder the FULL Items (content + metadata) ---\nconst sortedItems = rerankOrderInfo\n  .map(rankInfo => {\n    const idx = rankInfo.index;\n    if (idx >= 0 && idx < originalFullItems.length) {\n      const originalItem = originalFullItems[idx].json || originalFullItems[idx];\n      return { ...originalItem, rerank_score: rankInfo.relevance_score };\n    }\n    return null;\n  })\n  .filter(item => item !== null);\n\nreturn sortedItems.map(item => ({ json: item }));\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          4208,
+          912
+        ],
+        "id": "1a881e8d-5c1d-4809-872f-d5b437e883a1",
+        "name": "Return Reordered Items1"
+      },
+      {
+        "parameters": {
+          "content": "## Hybrid Search",
+          "height": 552,
+          "width": 536,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          2880,
+          768
+        ],
+        "id": "25713b42-4a72-46ad-a06a-76c40451d170",
+        "name": "Sticky Note11"
+      },
+      {
+        "parameters": {
+          "content": "## Reranking",
+          "height": 552,
+          "width": 1044,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          3440,
+          768
+        ],
+        "id": "44b547b4-22e6-43fa-811f-ca92adebf7ec",
+        "name": "Sticky Note12",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "loose"
+            },
+            "conditions": [
+              {
+                "id": "71326cd6-1316-4b5e-bf34-0d0b3c086005",
+                "leftValue": "={{ $('Trigger Dynamic Hybrid Search').item.json.keys().length}}",
+                "rightValue": 0,
+                "operator": {
+                  "type": "number",
+                  "operation": "gt"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "looseTypeValidation": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          3472,
+          912
+        ],
+        "id": "1ba41b47-324f-47f1-80e3-0319eb56bd14",
+        "name": "If3",
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "jsCode": "return [{\n  message: \"no documents found\" \n}];"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3744,
+          1136
+        ],
+        "id": "97930b1b-3708-416a-aaca-9ff429be440b",
+        "name": "Code"
+      },
+      {
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "leftValue": "={{ $json.type }}",
+                      "rightValue": "hybrid",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      },
+                      "id": "322d7a20-e584-4a2c-ad39-987298dabdf1"
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "leftValue": "",
+                    "typeValidation": "strict",
+                    "version": 2
+                  },
+                  "conditions": [
+                    {
+                      "id": "4c020ce0-c212-4e62-9c42-863f0358d065",
+                      "leftValue": "={{ $json.type }}",
+                      "rightValue": "graph",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals",
+                        "name": "filter.operator.equals"
+                      }
+                    }
+                  ],
+                  "combinator": "and"
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.4,
+        "position": [
+          1200,
+          912
+        ],
+        "id": "e675cbea-b56b-4a17-bec9-728a5c36b1e8",
+        "name": "Switch2"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://YOUR_LIGHTRAG_URL/query",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"query\": \"{{ $('When Executed by Another Workflow').item.json.query }}\",\n  \"mode\": \"hybrid\",\n  \"only_need_context\": true,\n  \"only_need_prompt\": false,\n  \"response_type\": \"multiple paragraphs\",\n  \"top_k\": 20,\n  \"chunk_top_k\": 1,\n  \"max_entity_tokens\": 10000,\n  \"max_relation_tokens\": 10000,\n  \"max_total_tokens\": 32000,\n  \"enable_rerank\": false\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1904,
+          1520
+        ],
+        "id": "9fa70eec-32db-4483-8e8a-23de841d3171",
+        "name": "Query Graph",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "jsCode": "// Loop over input items and extract everything before \"-----Document Chunks(DC)-----\"\nfor (const item of $input.all()) {\n\n  const intro = \"The following entities and relationships were retrived.\\n\\n\"\n  const outro = \"-----How to use this data-----\\n\\nWhen considering relationships with timestamps:\\n\\nEach relationship has a \\\"created_at\\\" timestamp indicating when we acquired this knowledge. When encountering conflicting relationships, consider both the semantic content and the timestamp. Don't automatically prefer the most recently created relationships - use judgment based on the context. For time-specific queries, prioritize temporal information in the content before considering creation timestamps\"\n  \n  // Get the input string - adjust this based on where your string is located\n  const inputString = item.json.response; // Change 'response' to your actual field name\n  \n  // Define the substring to search for\n  const separator = \"-----Document Chunks(DC)-----\";\n  \n  // Find the position of the separator\n  const separatorIndex = inputString.indexOf(separator);\n  \n  let extractedContent = \"\";\n  \n  if (separatorIndex !== -1) {\n    // Extract everything before the separator\n    extractedContent = inputString.substring(0, separatorIndex);\n  } else {\n    // If separator not found, return the entire string\n    extractedContent = inputString;\n  }\n  \n  // Add the extracted content to the item\n  item.json.response = intro + extractedContent + outro;\n\n}\n\nreturn $input.all();"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2144,
+          1520
+        ],
+        "id": "0b7aacc8-062d-4315-8d2f-c710b43eb738",
+        "name": "Tidy up response",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "content": "## Graph Search",
+          "height": 348,
+          "width": 800,
+          "color": 7
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1760,
+          1376
+        ],
+        "id": "430fd36a-e495-45c7-b047-303cd810d455",
+        "name": "Sticky Note13"
+      },
+      {
+        "parameters": {
+          "content": "## Advanced Metadata Filtering",
+          "height": 552,
+          "width": 1104,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1744,
+          768
+        ],
+        "id": "9fbc417b-8299-4e68-b99b-15d41816b122",
+        "name": "Sticky Note16"
+      },
+      {
+        "parameters": {
+          "options": {
+            "groupMessages": false
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryManager",
+        "typeVersion": 1.1,
+        "position": [
+          1456,
+          880
+        ],
+        "id": "88bdc4ac-cc2e-4f4e-8fd7-56db863de223",
+        "name": "Chat Memory Manager",
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=# User Query\n{{ $('When Executed by Another Workflow').first().json.query }}\n\n# Conversation History (if any)\n{{ JSON.stringify($('Chat Memory Manager').first().json) }}",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {
+                "message": "=# Task\n\nYour task is to consider the following user query and then consider the following metadata keys with example values that we have that we can limit our result set from.\n\n# Metadata Filters and Possible Values\n\n{{ $json.filterPromptInstructions }}\n\n# Metadata Operators\n\nThe following operators are allowed:\n\n>\n<\n=\n!=\n>=\n<=\nIN\nNOT IN\n\nIF IN or NOT IN are provided, then an array of values must be provided.\n\nNow output a filter array with relevant filters with the following example format. The below filter_categories are just for exampe purposes. Use the \"Metadata Filters and Possible Values\" list above for the list of allowed filters.\n\n[\n    \"filter\": {\n      \"$and\": [\n        {\n          \"category\": {\n            \"operator\": \"IN\",\n            \"value\": [\n              \"F1\",\n              \"Rally\"\n            ]\n          }\n        },\n        {\n          \"year\": {\n            \"operator\": \">\",\n            \"value\": 2024\n          }\n        }\n      ]\n    }\n]\n\nIf the query does not have relevant metadatafilters, then do not output any ... for example\n\n{\n  \"filter\": {}\n}\n\nIf there is only 1 relevant metadafilter, then just output that ... for example\n\n[\n    \"filter\": {\n      \"$and\": [\n        {\n          \"motorsport_category\": {\n            \"operator\": \"IN\",\n            \"value\": [\n              \"F1\",\n              \"Rally\"\n            ]\n          }\n        }\n      ]\n    }\n]\n\nOnly output in JSON\n\nNote: Today's date is {{ $now }}"
+              }
+            ]
+          },
+          "batching": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.9,
+        "position": [
+          2480,
+          896
+        ],
+        "id": "c322af7b-d8db-4a95-b87f-b7de485d9e9a",
+        "name": "Prep Metadata1",
+        "retryOnFail": true,
+        "maxTries": 5
+      },
+      {
+        "parameters": {
+          "schemaType": "manual",
+          "inputSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"FlexibleFilterObject\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"filter\": {\n      \"type\": \"object\",\n      \"oneOf\": [\n        {\n          \"required\": [\"$and\"],\n          \"properties\": {\n            \"$and\": {\n              \"type\": \"array\",\n              \"items\": { \"$ref\": \"#/definitions/condition\" }\n            }\n          },\n          \"additionalProperties\": false\n        },\n        {\n          \"required\": [\"$or\"],\n          \"properties\": {\n            \"$or\": {\n              \"type\": \"array\",\n              \"items\": { \"$ref\": \"#/definitions/condition\" }\n            }\n          },\n          \"additionalProperties\": false\n        },\n        {\n          \"properties\": {},\n          \"additionalProperties\": false\n        }\n      ]\n    }\n  },\n  \"required\": [\"filter\"],\n  \"definitions\": {\n    \"condition\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\"field\", \"operator\", \"value\"],\n          \"properties\": {\n            \"field\": { \"type\": \"string\" },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\"=\", \"!=\", \">\", \"<\", \">=\", \"<=\", \"IN\", \"NOT IN\"]\n            },\n            \"value\": {\n              \"oneOf\": [\n                { \"type\": \"string\" },\n                { \"type\": \"number\" },\n                {\n                  \"type\": \"array\",\n                  \"items\": { \"type\": [\"string\", \"number\"] }\n                }\n              ]\n            }\n          },\n          \"additionalProperties\": false\n        },\n        {\n          \"type\": \"object\",\n          \"minProperties\": 1,\n          \"maxProperties\": 1,\n          \"patternProperties\": {\n            \"^.+$\": {\n              \"type\": \"object\",\n              \"required\": [\"operator\", \"value\"],\n              \"properties\": {\n                \"operator\": {\n                  \"type\": \"string\",\n                  \"enum\": [\"=\", \"!=\", \">\", \"<\", \">=\", \"<=\", \"IN\", \"NOT IN\"]\n                },\n                \"value\": {\n                  \"oneOf\": [\n                    { \"type\": \"string\" },\n                    { \"type\": \"number\" },\n                    {\n                      \"type\": \"array\",\n                      \"items\": { \"type\": [\"string\", \"number\"] }\n                    }\n                  ]\n                }\n              },\n              \"additionalProperties\": false\n            }\n          },\n          \"additionalProperties\": false\n        }\n      ]\n    }\n  }\n}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+        "typeVersion": 1.3,
+        "position": [
+          2640,
+          1120
+        ],
+        "id": "9b64a7ee-7752-4520-a90d-48f56cbf200d",
+        "name": "Structured Output Parser"
+      },
+      {
+        "parameters": {
+          "content": "# Retrieval Sub-Workflow",
+          "height": 488,
+          "width": 1224,
+          "color": 6
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          512,
+          816
+        ],
+        "id": "12e4cb13-7438-4b9a-884d-4de261ee5ba1",
+        "name": "Sticky Note17"
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "tableId": "metadata_fields"
+        },
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          1824,
+          912
+        ],
+        "id": "cd44be34-68d0-4c25-8fc8-530051e70d6f",
+        "name": "Fetch Metadata Fields1",
+        "alwaysOutputData": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "JXvQLWfqIjdcMyqm",
+            "name": "Supabase B5rman"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Get input items\nconst items = $input.all();\n\n// Initialize output string\nlet output = '';\n\n// Loop through each input item\nfor (const item of items) {\n  const data = item.json;\n\n  const key = data.metadata_name;\n  const values = data.allowed_values;\n\n  output += `## ${key}\\n`;\n  output += `The filter key ${key} can have the following possible values\\n\\n`;\n  output += `${values.trim()}\\n\\n`;\n}\n\n// Take the first item and modify it with aggregated data\nconst firstItem = items[0];\nfirstItem.json.filterPromptInstructions = output.trim();\n\n// Return only the first item (now containing aggregated data)\nreturn [firstItem];\n"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2256,
+          912
+        ],
+        "id": "1934fb51-320e-43c9-81ca-c1868e4f4103",
+        "name": "Prep1"
+      },
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $('When Executed by Another Workflow').item.json.session_id }}",
+          "contextWindowLength": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+        "typeVersion": 1.3,
+        "position": [
+          1552,
+          1072
+        ],
+        "id": "68633367-c810-47d0-b7de-5b2c043e6eb3",
+        "name": "Supabase Short-Term Memory1",
+        "credentials": {
+          "postgres": {
+            "id": "tRlTzpjOmrCVSNLF",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## TODO\n### Add LightRAG Server URL",
+          "height": 252,
+          "width": 280
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1824,
+          1424
+        ],
+        "id": "ead793f7-867e-4ad2-b0f9-b4c42c95aa2d",
+        "name": "Sticky Note19",
+        "disabled": true
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "loose"
+            },
+            "conditions": [
+              {
+                "id": "a4697977-31b6-4740-ae7c-0e3a35ecfdf0",
+                "leftValue": "={{ $json }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "looseTypeValidation": true,
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          2032,
+          1024
+        ],
+        "id": "5c34de00-daba-46a9-bf8f-57aab5082a10",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://mgistrmwhxccyuchokbh.supabase.co/functions/v1/dynamic-hybrid-search",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "supabaseApi",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n        \"query_text\": \"{{ $('When Executed by Another Workflow').item.json.query }}\",\n        \"query_embedding\": [{{ $json.data[0].embedding }}],\n        \"match_count\": 30,\n        \"filter\": {{ $('Prep Metadata1').isExecuted ? JSON.stringify($('Prep Metadata1').item.json.output.filter) : \"[]\" }},\n\"dense_weight\": {{ $('When Executed by Another Workflow').item.json.dense_weight }},\n\"sparse_weight\": {{ $('When Executed by Another Workflow').item.json.sparse_weight }},\n\"ilike_weight\": {{ $('When Executed by Another Workflow').item.json.ilike_weight }},\n\"fuzzy_weight\": {{ $('When Executed by Another Workflow').item.json.fuzzy_weight }},\n\"fuzzy_threshold\": {{ $('When Executed by Another Workflow').item.json.fuzzy_threshold }}\n      }",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          3168,
+          944
+        ],
+        "id": "208a92cc-c7a7-4b8f-ba13-144fa0cdfdb9",
+        "name": "Trigger Dynamic Hybrid Search",
+        "alwaysOutputData": true,
+        "credentials": {
+          "supabaseApi": {
+            "id": "JXvQLWfqIjdcMyqm",
+            "name": "Supabase B5rman"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## TODO\n### Add Edge Function URL\nYou can also change number of results returned",
+          "height": 332,
+          "width": 232
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          3104,
+          800
+        ],
+        "id": "e9671212-fc5d-4b43-8e8c-afbd62bd0d1b",
+        "name": "Sticky Note22"
+      },
+      {
+        "parameters": {
+          "content": "## TODO (Optional)\nYou can change the number of results returned",
+          "height": 300,
+          "width": 232
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          3920,
+          800
+        ],
+        "id": "8b08d323-5b56-45f1-af5c-380735daa636",
+        "name": "Sticky Note23"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "claude-haiku-4-5-20251001",
+            "mode": "list",
+            "cachedResultName": "Claude Haiku 4.5"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.3,
+        "position": [
+          2464,
+          1120
+        ],
+        "id": "8d7b457e-627f-4997-9e00-3a7f0ca2ef66",
+        "name": "Anthropic Chat Model",
+        "credentials": {
+          "anthropicApi": {
+            "id": "UyAehXbUNQAWwZOs",
+            "name": "Claude SEB"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "claude-sonnet-4-6",
+            "mode": "list",
+            "cachedResultName": "Claude Sonnet 4.6"
+          },
+          "options": {
+            "temperature": 0.2,
+            "thinking": true,
+            "thinkingBudget": 10000,
+            "maxTokensToSample": 16000
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+        "typeVersion": 1.3,
+        "position": [
+          1072,
+          448
+        ],
+        "id": "60b15458-a027-46d1-9083-10a64b9b5c2c",
+        "name": "Anthropic Chat Model3",
+        "credentials": {
+          "anthropicApi": {
+            "id": "UyAehXbUNQAWwZOs",
+            "name": "Claude SEB"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.voyageai.com/v1/rerank",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpHeaderAuth",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "accept",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"model\": \"rerank-2.5\",\n  \"query\": \"{{ $('When Executed by Another Workflow').first().json.query }}\",\n  \"top_k\": 20,\n  \"documents\": {{ JSON.stringify($json.documents) }}\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          3984,
+          928
+        ],
+        "id": "553c6090-05a1-41c8-9a99-6423d20905ea",
+        "name": "Rerank Voyage AI",
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "Ox4ZpoIS0VxFfUw6",
+            "name": "Voyage AI"
+          }
+        }
+      },
+      {
+        "id": "c02cd4ac-1a00-4aca-b43a-1c862c679e19",
+        "name": "Format & Verify Citations",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1712,
+          192
+        ],
+        "parameters": {
+          "jsCode": "// Format & Verify Citations — Phase 1.1\n// Splits agent output on ---SOURCES_JSON--- delimiter,\n// validates citation structure (with sections support), builds clean References section.\n\nconst rawOutput = $input.item.json.output || $input.item.json.text || '';\nconst DELIMITER = '---SOURCES_JSON---';\nconst parts = rawOutput.split(DELIMITER);\n\nlet answer = (parts[0] || '').trim();\nlet sourcesRaw = (parts[1] || '').trim();\nlet sources = [];\nlet citationWarnings = [];\n\n// Parse the sources JSON\nif (sourcesRaw) {\n  try {\n    // Strip markdown code fences if the agent wrapped the JSON\n    sourcesRaw = sourcesRaw.replace(/^```json?\\s*/i, '').replace(/\\s*```\\s*$/, '');\n    sources = JSON.parse(sourcesRaw);\n    if (!Array.isArray(sources)) {\n      citationWarnings.push('sources_used was not an array; wrapped it');\n      sources = [sources];\n    }\n  } catch (e) {\n    citationWarnings.push(`Failed to parse sources JSON: ${e.message}`);\n    sources = [];\n  }\n} else {\n  citationWarnings.push('No ---SOURCES_JSON--- delimiter found in agent output');\n}\n\n// Validate each source object\nconst validSources = [];\nfor (const src of sources) {\n  const issues = [];\n  if (!src.doc_name || typeof src.doc_name !== 'string') issues.push('missing/invalid doc_name');\n  if (!src.doc_id || typeof src.doc_id !== 'string') issues.push('missing/invalid doc_id');\n  if (!Array.isArray(src.pages)) issues.push('missing/invalid pages array');\n  if (!Array.isArray(src.chunk_indices)) issues.push('missing/invalid chunk_indices');\n  // sections is recommended but not required — don't fail validation if missing\n  if (src.sections && !Array.isArray(src.sections)) {\n    citationWarnings.push(`Source \"${src.doc_name || 'unknown'}\": sections should be an array, got ${typeof src.sections}`);\n    src.sections = [];\n  }\n\n  if (issues.length === 0) {\n    validSources.push(src);\n  } else {\n    citationWarnings.push(`Source \"${src.doc_name || 'unknown'}\": ${issues.join(', ')}`);\n  }\n}\n\n// Build clean References section from validated sources\nlet referencesSection = '';\nif (validSources.length > 0) {\n  referencesSection = '\\n\\n## References\\n\\n';\n  validSources.forEach((src, idx) => {\n    // Build location info: prefer sections, fall back to pages\n    const sections = (src.sections && src.sections.length > 0) ? src.sections : [];\n    const pages = (src.pages && src.pages.length > 0 && !(src.pages.length === 1 && src.pages[0] === 1)) ? src.pages : [];\n    \n    let locationInfo = '';\n    if (sections.length > 0) {\n      locationInfo = ` (Sections: ${sections.join('; ')})`;\n    } else if (pages.length > 0) {\n      locationInfo = ` (Pages: ${pages.join(', ')})`;\n    }\n    \n    const relevance = src.relevance ? ` \\u2014 ${src.relevance}` : '';\n    referencesSection += `${idx + 1}. **${src.doc_name}**${locationInfo}${relevance}\\n`;\n  });\n} else if (answer && !answer.toLowerCase().includes(\"couldn't find information\")) {\n  citationWarnings.push('Agent produced an answer but no valid source citations');\n  referencesSection = '\\n\\n## References\\n\\n_No verified sources available for this response._\\n';\n}\n\n// Strip any References section the agent may have included in the answer body\nanswer = answer.replace(/\\n##?\\s*References[\\s\\S]*$/i, '').trim();\n\nconst finalOutput = answer + referencesSection;\n\nreturn {\n  json: {\n    output: finalOutput,\n    sources: validSources,\n    citationWarnings: citationWarnings,\n    sourceCount: validSources.length,\n    hasWarnings: citationWarnings.length > 0\n  }\n};"
+        }
+      }
+    ],
+    "connections": {
+      "Supabase Short-Term Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "Agentic RAG 1",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Supabase Short-Term Memory2": {
+        "ai_memory": [
+          [
+            {
+              "node": "Agentic RAG 3",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Long Term Memories": {
+        "main": [
+          [
+            {
+              "node": "Agentic RAG 3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "user_id": {
+        "main": [
+          [
+            {
+              "node": "Get Long Term Memories",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Query Tabular Rows1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 3",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get datasets from record_manager1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 3",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Query Knowledge Graph2": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 2",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Supabase Short-Term Memory3": {
+        "ai_memory": [
+          [
+            {
+              "node": "Agentic RAG 2",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Query Tabular Rows2": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 2",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get datasets from record_manager2": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 2",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Dynamic Hybrid Search": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 1",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model1": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agentic RAG 2",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model2": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agentic RAG 3",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Dynamic Hybrid Search1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 2",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Dynamic Hybrid Search2": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 3",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch Document Hierarchy": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 1",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Context Expansion": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 1",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch Document Hierarchy1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 2",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Context Expansion1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 2",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Query Knowledge Graph1": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 3",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch Document Hierarchy2": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 3",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Context Expansion2": {
+        "ai_tool": [
+          [
+            {
+              "node": "Agentic RAG 3",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agentic RAG 3": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Execute workflow - Save Zep long term memories",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When Executed by Another Workflow": {
+        "main": [
+          [
+            {
+              "node": "Switch2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Generate Embedding From Query": {
+        "main": [
+          [
+            {
+              "node": "Trigger Dynamic Hybrid Search",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If3": {
+        "main": [
+          [
+            {
+              "node": "Create Array",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Switch2": {
+        "main": [
+          [
+            {
+              "node": "Chat Memory Manager",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Query Graph",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Query Graph": {
+        "main": [
+          [
+            {
+              "node": "Tidy up response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Chat Memory Manager": {
+        "main": [
+          [
+            {
+              "node": "Fetch Metadata Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prep Metadata1": {
+        "main": [
+          [
+            {
+              "node": "Generate Embedding From Query",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Structured Output Parser": {
+        "ai_outputParser": [
+          [
+            {
+              "node": "Prep Metadata1",
+              "type": "ai_outputParser",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Fetch Metadata Fields1": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Prep1": {
+        "main": [
+          [
+            {
+              "node": "Prep Metadata1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Supabase Short-Term Memory1": {
+        "ai_memory": [
+          [
+            {
+              "node": "Chat Memory Manager",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Prep1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Generate Embedding From Query",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Trigger Dynamic Hybrid Search": {
+        "main": [
+          [
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "When chat message received": {
+        "main": [
+          [
+            {
+              "node": "Agentic RAG 1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Prep Metadata1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Anthropic Chat Model3": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "Agentic RAG 1",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Array": {
+        "main": [
+          [
+            {
+              "node": "Rerank Voyage AI",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Rerank Voyage AI": {
+        "main": [
+          [
+            {
+              "node": "Return Reordered Items1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agentic RAG 1": {
+        "main": [
+          [
+            {
+              "node": "Format & Verify Citations",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "bruno Vijverman",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-02-26T17:08:02.472Z",
+        "id": 166,
+        "workflowId": "srB7bqtX7w0BVR7B",
+        "versionId": "b3cde857-83d3-4f00-bcee-a3e656460b50",
+        "event": "activated",
+        "userId": "accb6a45-2a24-42f1-8582-0c6af280cf77"
+      }
+    ]
+  }
 }
