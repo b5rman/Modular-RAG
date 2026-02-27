@@ -156,7 +156,7 @@ Called by the retrieval workflow to persist conversation context:
 
 ## Changelog
 
-### v0.2.1 - 2026-02-27
+### v0.2.2 - 2026-02-27
 
 **Ingestion Pipeline Reliability & Caching:**
 - **Added Cache Warmup node** — single HTTP Request that pre-creates the Anthropic ephemeral cache (once per document) before the chunk loop starts. All chunks read from the warm cache, eliminating the double-write on chunk 0. Zero net cost increase (~2-3s overhead per document)
@@ -173,6 +173,8 @@ Called by the retrieval workflow to persist conversation context:
 - **SOP updated** — mandatory minimum 2 searches with different query formulations
 - **Voyage AI rerank top_k increased** — 15 → 20 for broader context coverage
 - **Citation sections field added** — references now include specific section headings from `cascading_path` metadata instead of meaningless `pages: [1]`
+
+### v0.2.1 - 2026-02-26
 
 **Citation Verification System (Phase 1):**
 - **Added `Format & Verify Citations` code node** — post-processes agent output by splitting on `---SOURCES_JSON---` delimiter, validating citation structure (doc_name, doc_id, pages, chunk_indices, relevance), and building a clean References section. Invalid citations are logged as warnings rather than silently dropped
